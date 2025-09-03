@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TNT Limousine - GNET Partner Pricing</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: white;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .partner-badge {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            z-index: 1000;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border-radius: 25px;
+            padding: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .logo {
+            font-size: 2.8rem;
+            font-weight: bold;
+            color: #DC2626;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px rgba(220, 38, 38, 0.3);
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+
+        .partnership {
+            font-size: 0.9rem;
+            color: #667eea;
+            font-weight: 500;
+        }
+
+        .form-section {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 35px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #DC2626;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        select, input, textarea {
+            padding: 15px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        select:focus, input:focus {
+            outline: none;
+            border-color: #DC2626;
+            box-shadow: 0 0 20px rgba(220, 38, 38, 0.2);
+        }
+
+        select option {
+            background: #1a1a2e;
+            color: white;
+            padding: 10px;
+        }
+
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .calculate-btn {
+            background: linear-gradient(135deg, #DC2626 0%, #B91C1C 50%, #991B1B 100%);
+            color: white;
+            border: none;
+            padding: 18px 50px;
+            border-radius: 15px;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin: 25px 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .calculate-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(220, 38, 38, 0.4);
+        }
+
+        .results {
+            background: linear-gradient(135deg, rgba(220, 38, 38, 0.1) 0%, rgba(185, 28, 28, 0.1) 100%);
+            border: 2px solid #DC2626;
+            border-radius: 20px;
+            padding: 35px;
+            margin-top: 30px;
+            display: none;
+        }
+
+        .results.show {
+            display: block;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .price-breakdown {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+
+        .breakdown-section {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .breakdown-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #DC2626;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .price-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 14px;
+        }
+
+        .price-item:last-child {
+            border-bottom: none;
+        }
+
+        .total-price {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #DC2626;
+            text-align: center;
+            margin: 25px 0;
+            padding: 25px;
+            background: rgba(220, 38, 38, 0.1);
+            border-radius: 15px;
+            text-shadow: 0 0 20px rgba(220, 38, 38, 0.3);
+        }
+
+        .contact-info {
+            text-align: center;
+            margin-top: 25px;
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .gnet-integration {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            border: 1px solid #667eea;
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .form-row, .price-breakdown {
+                grid-template-columns: 1fr;
+            }
+            .partner-badge {
+                position: relative;
+                top: 0;
+                right: 0;
+                margin-bottom: 20px;
+                display: inline-block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="partner-badge">GNET Partner Demo</div>
+    
+    <div class="container">
+        <div class="header">
+            <div class="logo">TNT LIMOUSINE</div>
+            <div class="subtitle">Live Pricing Calculator</div>
+            <div class="partnership">GNET Affiliate Platform Integration Demo</div>
+        </div>
+
+        <div class="form-section">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="serviceType">Service Type</label>
+                    <select id="serviceType" onchange="updateForm()">
+                        <option value="hourly">Hourly Service (Round Trip)</option>
+                        <option value="point-to-point">Point to Point</option>
+                        <option value="airport">Airport Transfer</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="vehicleType">Vehicle Type</label>
+                    <select id="vehicleType">
+                        <option value="sedan">Sedan (04/05) - 3 passengers</option>
+                        <option value="transit">Transit - 12-15 passengers</option>
+                        <option value="executive-mini-bus">Executive Mini Bus (09) - 12 passengers</option>
+                        <option value="mini-bus-sofa">Mini Bus Sofa (01) - 10 passengers</option>
+                        <option value="stretch-limo">Stretch Limo (03) - 8 passengers</option>
+                        <option value="sprinter-limo">Sprinter Limo (02) - 10 passengers</option>
+                        <option value="limo-bus">Limo Bus (10) - 18 passengers</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row" id="hourlyOptions">
+                <div class="form-group">
+                    <label for="hours">Number of Hours</label>
+                    <select id="hours">
+                        <option value="3">3 Hours (Minimum)</option>
+                        <option value="4">4 Hours</option>
+                        <option value="5">5 Hours</option>
+                        <option value="6">6 Hours</option>
+                        <option value="7">7 Hours</option>
+                        <option value="8">8 Hours</option>
+                        <option value="9">9 Hours</option>
+                        <option value="10">10+ Hours</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="dayType">Day Type</label>
+                    <select id="dayType">
+                        <option value="weekday">Monday-Thursday (10% Discount)</option>
+                        <option value="weekend">Friday-Sunday</option>
+                        <option value="holiday">Holiday (+25%)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row" id="airportOptions" style="display: none;">
+                <div class="form-group">
+                    <label for="airportCode">Airport Destination</label>
+                    <select id="airportCode">
+                        <option value="richmond">Richmond International (RIC)</option>
+                        <option value="charlottesville">Charlottesville/Williamsburg</option>
+                        <option value="national">Reagan National (DCA)</option>
+                        <option value="dulles">Washington Dulles (IAD)</option>
+                        <option value="bwi">Baltimore Washington (BWI)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="tripType">Trip Type</label>
+                    <select id="tripType">
+                        <option value="one-way">One Way</option>
+                        <option value="round-trip">Round Trip</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="serviceDate">Service Date</label>
+                    <input type="date" id="serviceDate">
+                </div>
+                <div class="form-group">
+                    <label for="serviceTime">Service Time</label>
+                    <input type="time" id="serviceTime">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="pickupLocation">Pickup Location</label>
+                    <input type="text" id="pickupLocation" placeholder="Enter pickup address">
+                </div>
+                <div class="form-group">
+                    <label for="dropoffLocation">Destination</label>
+                    <input type="text" id="dropoffLocation" placeholder="Enter destination address">
+                </div>
+            </div>
+
+            <button class="calculate-btn" onclick="calculatePrice()">Get Instant Quote</button>
+        </div>
+
+        <div class="results" id="results">
+            <h3 style="text-align: center; margin-bottom: 25px; color: #DC2626; font-size: 1.8rem;">Detailed Price Breakdown</h3>
+            
+            <div class="price-breakdown">
+                <div class="breakdown-section">
+                    <div class="breakdown-title">Service Details</div>
+                    <div id="serviceDetails"></div>
+                </div>
+                <div class="breakdown-section">
+                    <div class="breakdown-title">Cost Breakdown</div>
+                    <div id="priceBreakdown"></div>
+                </div>
+            </div>
+            
+            <div class="total-price" id="totalPrice">$0.00</div>
+            
+            <div class="contact-info">
+                <p style="font-size: 1.2rem; margin-bottom: 15px;"><strong>Ready to Book Through GNET?</strong></p>
+                <p style="margin-bottom: 10px;">Call: <strong>(804) 972-4550</strong></p>
+                <p style="margin-bottom: 15px;">Email: <strong>info@tntlimousine.com</strong></p>
+                <p style="font-size: 14px; opacity: 0.9;">
+                    *All prices include gratuity. Additional fees may apply for tolls and parking.
+                </p>
+            </div>
+            
+            <div class="gnet-integration">
+                <h4 style="color: #667eea; margin-bottom: 10px;">GNET Integration Features</h4>
+                <p style="font-size: 14px; opacity: 0.9;">
+                    This quote can be automatically submitted to TNT's dispatch system (FastTrak Invision) 
+                    and tracked through our Zoho CRM integration. Perfect for seamless affiliate partnerships.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Updated TNT Pricing Data with detailed breakdowns
+        const pricingData = {
+            vehicles: {
+                'sedan': {
+                    name: 'Sedan',
+                    unitNo: '04/05',
+                    capacity: 3,
+                    roundTrip: {
+                        baseHourly: 60,
+                        gratuity: 12,
+                        fuelSurcharge: 10,
+                        mileageCharge: 18,
+                        totalHourly: 100,
+                        minHours: 3
+                    },
+                    pointToPoint: {
+                        baseHourly: 95,
+                        gratuityFlat: 40,
+                        fuelSurcharge: 10,
+                        mileageCharge: 10,
+                        totalHourly: 155
+                    },
+                    airportRates: {
+                        richmond: 105,
+                        charlottesville: 333,
+                        national: 450,
+                        dulles: 460,
+                        bwi: 657
+                    }
+                },
+                'transit': {
+                    name: 'Transit',
+                    unitNo: '',
+                    capacity: '12-15',
+                    roundTrip: {
+                        baseHourly: 90,
+                        gratuity: 19,
+                        fuelSurcharge: 10,
+                        mileageCharge: 18,
+                        totalHourly: 137,
+                        minHours: 3
+                    },
+                    pointToPoint: {
+                        baseHourly: 165,
+                        gratuityFlat: 40,
+                        fuelSurcharge: 10,
+                        mileageCharge: 10,
+                        totalHourly: 225
+                    },
+                    airportRates: {
+                        richmond: 175,
+                        charlottesville: 525,
+                        national: 700,
+                        dulles: 710,
+                        bwi: 854
+                    }
+                },
+                'executive-mini-bus': {
+                    name: 'Executive Mini Bus',
+                    unitNo: '09',
+                    capacity: 12,
+                    roundTrip: {
+                        baseHourly: 95,
+                        gratuity: 19,
+                        fuelSurcharge: 10,
+                        mileageCharge: 18,
+                        totalHourly: 142,
+                        minHours: 3
+                    },
+                    pointToPoint: {
+                        baseHourly: 170,
+                        gratuityFlat: 50,
+                        fuelSurcharge: 10,
+                        mileageCharge: 10,
+                        totalHourly: 240
+                    }
+                },
+                'mini-bus-sofa': {
+                    name: 'Mini Bus (Sofa)',
+                    unitNo: '01',
+                    capacity: 10,
+                    roundTrip: {
+                        baseHourly: 95,
+                        gratuity: 19,
+                        fuelSurcharge: 10,
+                        mileageCharge: 18,
+                        totalHourly: 142,
+                        minHours: 3
+                    },
+                    pointToPoint: {
+                        baseHourly: 170,
+                        gratuityFlat: 50,
+                        fuelSurcharge: 10,
+                        mileageCharge: 10,
+                        totalHourly: 240
+                    }
+                },
+                'stretch-limo': {
+                    name: 'Stretch Limo',
+                    unitNo: '03',
+                    capacity: 8,
+                    roundTrip: {
+                        baseHourly: 113,
+                        gratuity: 19,
+                        fuelSurcharge: 10,
+                        mileageCharge: 18,
+                        totalHourly: 160,
+                        minHours: 3
+                    },
+                    pointToPoint: {
+                        baseHourly: 230,
+                        gratuityFlat: 50,
+                        fuelSurcharge: 10,
+                        mileageCharge: 10,
+                        totalHourly: 300
+                    }
+                },
+                'sprinter-limo': {
+                    name: 'Sprinter Limo',
+                    unitNo: '02',
+                    capacity: 10,
+                    roundTrip: {
+                        baseHourly: 113,
+                        gratuity: 19,
+                        fuelSurcharge: 10,
+                        mileageCharge: 18,
+                        totalHourly: 160,
+                        minHours: 3
+                    },
+                    pointToPoint: {
+                        baseHourly: 260,
+                        gratuityFlat: 50,
+                        fuelSurcharge: 10,
+                        mileageCharge: 10,
+                        totalHourly: 330
+                    },
+                    airportRates: {
+                        richmond: 194,
+                        charlottesville: 575,
+                        national: 780,
+                        dulles: 790,
+                        bwi: 910
+                    }
+                },
+                'limo-bus': {
+                    name: 'Limo Bus',
+                    unitNo: '10',
+                    capacity: 18,
+                    roundTrip: {
+                        baseHourly: 152,
+                        gratuity: 28,
+                        fuelSurcharge: 10,
+                        mileageCharge: 18,
+                        totalHourly: 208,
+                        minHours: 3
+                    },
+                    pointToPoint: {
+                        baseHourly: 300,
+                        gratuityFlat: 50,
+                        fuelSurcharge: 10,
+                        mileageCharge: 10,
+                        totalHourly: 370
+                    },
+                    airportRates: {
+                        richmond: 225,
+                        charlottesville: 624,
+                        national: 1020,
+                        dulles: 1045,
+                        bwi: 1265
+                    }
+                }
+            },
+            surcharges: {
+                afterHourPickupFee: 20,
+                discounts: {
+                    sixPlusHourTrip: 0.10,
+                    mondayThursdayService: 0.10,
+                    lateInquiry: 0.15
+                },
+                holidaySurcharge: 0.25
+            }
+        };
+
+        function updateForm() {
+            const serviceType = document.getElementById('serviceType').value;
+            const hourlyOptions = document.getElementById('hourlyOptions');
+            const airportOptions = document.getElementById('airportOptions');
+
+            if (serviceType === 'airport') {
+                hourlyOptions.style.display = 'none';
+                airportOptions.style.display = 'grid';
+            } else {
+                hourlyOptions.style.display = 'grid';
+                airportOptions.style.display = 'none';
+            }
+        }
+
+        function calculatePrice() {
+            const serviceType = document.getElementById('serviceType').value;
+            const vehicleType = document.getElementById('vehicleType').value;
+            const vehicle = pricingData.vehicles[vehicleType];
+            
+            let basePrice = 0;
+            let breakdown = [];
+            let serviceDetails = [];
+            
+            if (serviceType === 'hourly') {
+                const hours = parseInt(document.getElementById('hours').value);
+                const dayType = document.getElementById('dayType').value;
+                const actualHours = Math.max(hours, vehicle.roundTrip.minHours);
+                
+                serviceDetails.push({item: 'Service Type', value: 'Hourly (Round Trip)'});
+                serviceDetails.push({item: 'Vehicle', value: `${vehicle.name} ${vehicle.unitNo ? '(' + vehicle.unitNo + ')' : ''}`});
+                serviceDetails.push({item: 'Hours', value: `${actualHours} hours`});
+                serviceDetails.push({item: 'Day Type', value: dayType === 'weekday' ? 'Mon-Thu (Discount)' : dayType === 'weekend' ? 'Weekend' : 'Holiday'});
+                
+                breakdown.push({item: `Base Rate (${actualHours} hrs × $${vehicle.roundTrip.baseHourly})`, amount: vehicle.roundTrip.baseHourly * actualHours});
+                breakdown.push({item: `Gratuity (${actualHours} hrs × $${vehicle.roundTrip.gratuity})`, amount: vehicle.roundTrip.gratuity * actualHours});
+                breakdown.push({item: `Fuel Surcharge (${actualHours} hrs × $${vehicle.roundTrip.fuelSurcharge})`, amount: vehicle.roundTrip.fuelSurcharge * actualHours});
+                breakdown.push({item: `Mileage Charge (${actualHours} hrs × $${vehicle.roundTrip.mileageCharge})`, amount: vehicle.roundTrip.mileageCharge * actualHours});
+                
+                basePrice = vehicle.roundTrip.totalHourly * actualHours;
+                
+                // Apply discounts/surcharges
+                if (dayType === 'weekday') {
+                    const discount = basePrice * pricingData.surcharges.discounts.mondayThursdayService;
+                    breakdown.push({item: 'Monday-Thursday Discount (10%)', amount: -discount});
+                    basePrice -= discount;
+                } else if (dayType === 'holiday') {
+                    const surcharge = basePrice * pricingData.surcharges.holidaySurcharge;
+                    breakdown.push({item: 'Holiday Surcharge (25%)', amount: surcharge});
+                    basePrice += surcharge;
+                }
+                
+                if (hours >= 6) {
+                    const discount = basePrice * pricingData.surcharges.discounts.sixPlusHourTrip;
+                    breakdown.push({item: '6+ Hour Discount (10%)', amount: -discount});
+                    basePrice -= discount;
+                }
+                
+            } else if (serviceType === 'point-to-point') {
+                serviceDetails.push({item: 'Service Type', value: 'Point to Point'});
+                serviceDetails.push({item: 'Vehicle', value: `${vehicle.name} ${vehicle.unitNo ? '(' + vehicle.unitNo + ')' : ''}`});
+                
+                breakdown.push({item: 'Base Rate', amount: vehicle.pointToPoint.baseHourly});
+                breakdown.push({item: 'Gratuity (Flat)', amount: vehicle.pointToPoint.gratuityFlat});
+                breakdown.push({item: 'Fuel Surcharge', amount: vehicle.pointToPoint.fuelSurcharge});
+                breakdown.push({item: 'Mileage Charge', amount: vehicle.pointToPoint.mileageCharge});
+                
+                basePrice = vehicle.pointToPoint.totalHourly;
+                
+            } else if (serviceType === 'airport') {
+                const airportCode = document.getElementById('airportCode').value;
+                const tripType = document.getElementById('tripType').value;
+                
+                if (!vehicle.airportRates || !vehicle.airportRates[airportCode]) {
+                    alert('Airport transfer not available for this vehicle. Please select a different vehicle.');
+                    return;
+                }
+                
+                const airportNames = {
+                    richmond: 'Richmond International (RIC)',
+                    charlottesville: 'Charlottesville/Williamsburg',
+                    national: 'Reagan National (DCA)',
+                    dulles: 'Washington Dulles (IAD)',
+                    bwi: 'Baltimore Washington (BWI)'
+                };
+                
+                serviceDetails.push({item: 'Service Type', value: 'Airport Transfer'});
+                serviceDetails.push({item: 'Vehicle', value: `${vehicle.name} ${vehicle.unitNo ? '(' + vehicle.unitNo + ')' : ''}`});
+                serviceDetails.push({item: 'Airport', value: airportNames[airportCode]});
+                serviceDetails.push({item: 'Trip Type', value: tripType === 'round-trip' ? 'Round Trip' : 'One Way'});
+                
+                basePrice = vehicle.airportRates[airportCode];
+                if (tripType === 'round-trip') {
+                    basePrice *= 1.8; // Round trip pricing adjustment
+                }
+                
+                breakdown.push({item: `${airportNames[airportCode]} - ${tripType}`, amount: basePrice});
+            }
+            
+            // Check for after-hour pickup
+            const serviceTime = document.getElementById('serviceTime').value;
+            if (serviceTime) {
+                const hour = parseInt(serviceTime.split(':')[0]);
+                if (hour >= 23 || hour < 6) {
+                    breakdown.push({item: 'After-Hour Pickup Fee (11pm-6am)', amount: pricingData.surcharges.afterHourPickupFee});
+                    basePrice += pricingData.surcharges.afterHourPickupFee;
+                }
+            }
+            
+            displayResults(serviceDetails, breakdown, basePrice);
+        }
+        
+        function displayResults(serviceDetails, breakdown, totalPrice) {
+            const resultsDiv = document.getElementById('results');
+            const serviceDetailsDiv = document.getElementById('serviceDetails');
+            const priceBreakdownDiv = document.getElementById('priceBreakdown');
+            const totalPriceDiv = document.getElementById('totalPrice');
+            
+            // Clear previous results
+            serviceDetailsDiv.innerHTML = '';
+            priceBreakdownDiv.innerHTML = '';
+            
+            // Add service details
+            serviceDetails.forEach(detail => {
+                const detailDiv = document.createElement('div');
+                detailDiv.className = 'price-item';
+                detailDiv.innerHTML = `<span>${detail.item}:</span><span>${detail.value}</span>`;
+                serviceDetailsDiv.appendChild(detailDiv);
+            });
+            
+            // Add breakdown items
+            breakdown.forEach(item => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'price-item';
+                const sign = item.amount >= 0 ? '+' : '';
+                const color = item.amount < 0 ? 'color: #10b981;' : '';
+                itemDiv.innerHTML = `
+                    <span>${item.item}</span>
+                    <span style="${color}">${sign}$${Math.abs(item.amount).toFixed(2)}</span>
+                `;
+                priceBreakdownDiv.appendChild(itemDiv);
+            });
+            
+            // Set total price
+            totalPriceDiv.textContent = `Total: $${totalPrice.toFixed(2)}`;
+            
+            // Show results
+            resultsDiv.classList.add('show');
+            resultsDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Set default date to today
+        document.getElementById('serviceDate').valueAsDate = new Date();
+        
+        // Set default time to current hour + 2
+        const now = new Date();
+        now.setHours(now.getHours() + 2);
+        document.getElementById('serviceTime').value = now.toTimeString().slice(0, 5);
+    </script>
+</body>
+</html>
