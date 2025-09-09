@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TNT Limousine - Transportation Services</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #2c2c2c 0%, #1a1a1a 50%, #000000 100%);
+            color: white;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* Platform-specific styling */
+        body.platform-retail {
+            --primary-color: #DC2626;
+            --secondary-color: #10b981;
+            --accent-color: #C0C0C0;
+        }
+
+        body.platform-gnet {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --accent-color: #C0C0C0;
+        }
+
+        body.platform-groundspan {
+            --primary-color: #DC2626;
+            --secondary-color: #B91C1C;
+            --accent-color: #C0C0C0;
+        }
+
+        .platform-badge {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(45deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            z-index: 1000;
+            color: white;
+            border: 2px solid var(--accent-color);
+            display: none;
+        }
+
+        .platform-badge.show {
+            display: block;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(220, 38, 38, 0.1);
+            backdrop-filter: blur(15px);
+            border-radius: 25px;
+            padding: 40px;
+            border: 2px solid rgba(192, 192, 192, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        
+        .logo-svg {
+            width: 300px;
+            height: 120px;
+        }
+        
+        .tnt-oval {
+            fill: url(#primaryGradient);
+            stroke: var(--accent-color);
+            stroke-width: 3;
+        }
+        
+        .tnt-text {
+            fill: white;
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            font-size: 48px;
+            text-anchor: middle;
+        }
+        
+        .limousine-script {
+            fill: white;
+            font-family: 'Brush Script MT', cursive;
+            font-size: 24px;
+            font-style: italic;
+            text-anchor: middle;
+        }
+
+        .platform-info {
+            font-size: 1.2rem;
+            color: var(--accent-color);
+            font-weight: 500;
+            padding: 15px 25px;
+            background: linear-gradient(135deg, rgba(220, 38, 38, 0.1) 0%, rgba(185, 28, 28, 0.1) 100%);
+            border-radius: 15px;
+            border: 1px solid rgba(192, 192, 192, 0.3);
+            margin: 20px 0;
+        }
+
+        .service-section {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 35px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: var(--primary-color);
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        select, input {
+            padding: 15px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        select:focus, input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 20px rgba(220, 38, 38, 0.2);
+        }
+
+        select option {
+            background: #1a1a2e;
+            color: white;
+            padding: 10px;
+        }
+
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .calculate-btn {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            border: none;
+            padding: 20px 50px;
+            border-radius: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin: 25px 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 1px solid var(--accent-color);
+        }
+
+        .calculate-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(220, 38, 38, 0.4);
+        }
+
+        .results {
+            background: linear-gradient(135deg, rgba(220, 38, 38, 0.1) 0%, rgba(185, 28, 28, 0.1) 100%);
+            border: 2px solid var(--primary-color);
+            border-radius: 20px;
+            padding: 35px;
+            margin-top: 30px;
+            display: none;
+        }
+
+        .results.show {
+            display: block;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .quote-display {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .service-summary {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 25px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .summary-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 10px;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 14px;
+        }
+
+        .summary-item:last-child {
+            border-bottom: none;
+        }
+
+        .price-display {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 30px 25px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .rate-label {
+            font-size: 16px;
+            color: var(--primary-color);
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .total-price {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin: 15px 0;
+            text-shadow: 0 0 20px rgba(220, 38, 38, 0.3);
+        }
+
+        /* Commission display for GNET */
+        .commission-display {
+            display: none;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            border: 2px solid var(--primary-color);
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 20px;
+        }
+
+        /* Commission display disabled for GNET partners - can be enabled by uncommenting below */
+        body.platform-gnet .commission-display { 
+            display: none; 
+        }
+        /* To enable GNET commission tracking, uncomment this line:
+           body.platform-gnet .commission-display { display: block; } */
+
+        .commission-price {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin: 10px 0;
+        }
+
+        .commission-rate {
+            font-size: 14px;
+            opacity: 0.8;
+            color: var(--secondary-color);
+        }
+
+        /* Platform-specific elements */
+        [data-platform="retail"] { display: none; }
+        [data-platform="gnet"] { display: none; }  
+        [data-platform="groundspan"] { display: none; }
+
+        body.platform-retail [data-platform="retail"] { display: block; }
+        body.platform-gnet [data-platform="gnet"] { display: block; }
+        body.platform-groundspan [data-platform="groundspan"] { display: block; }
+
+        .contact-info {
+            text-align: center;
+            margin-top: 30px;
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .book-btn {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .book-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
+        }
+
+        .partner-btn {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+        }
+
+        @media (max-width: 768px) {
+            .form-row, .quote-display {
+                grid-template-columns: 1fr;
+            }
+            .platform-badge {
+                position: relative;
+                top: 0;
+                right: 0;
+                margin-bottom: 20px;
+                display: inline-block;
+            }
+            .total-price {
+                font-size: 2.2rem;
+            }
+            select, input {
+                font-size: 14px;
+                padding: 12px;
+            }
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+        }
+
+        /* Additional mobile responsiveness for small screens */
+        @media (max-width: 380px) {
+            .container {
+                padding: 15px;
+                margin: 5px;
+            }
+            select, input {
+                font-size: 12px;
+                padding: 10px;
+                min-height: 44px; /* Touch target minimum */
+            }
+            .form-group label {
+                font-size: 13px;
+                margin-bottom: 4px;
+            }
+            .total-price {
+                font-size: 1.8rem;
+            }
+            .quote-display {
+                padding: 15px;
+            }
+            .form-row {
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="platform-badge" id="platformBadge">Retail Customer</div>
+    
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                <svg class="logo-svg" viewBox="0 0 300 120">
+                    <defs>
+                        <radialGradient id="primaryGradient" cx="50%" cy="30%" r="70%">
+                            <stop offset="0%" stop-color="#FF4444" />
+                            <stop offset="50%" stop-color="#DC2626" />
+                            <stop offset="100%" stop-color="#B91C1C" />
+                        </radialGradient>
+                    </defs>
+                    <ellipse class="tnt-oval" cx="150" cy="45" rx="140" ry="35" />
+                    <text class="tnt-text" x="150" y="58">TNT</text>
+                    <text class="limousine-script" x="150" y="105">Limousine</text>
+                </svg>
+            </div>
+            <div class="platform-info" id="platformInfo">
+                Premium Transportation Services
+            </div>
+        </div>
+
+        <div class="service-section">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="serviceType">Service Type</label>
+                    <select id="serviceType" onchange="updateServiceOptions()">
+                        <option value="hourly">Hourly Charter Service</option>
+                        <option value="airport">Airport Transfer</option>
+                        <option value="point-to-point">Point-to-Point</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="vehicleType">Vehicle Selection</label>
+                    <select id="vehicleType" onchange="updateVehicleInfo()">
+                        <option value="sedan">Executive Sedan (Lincoln MKT/Aviator) - Up to 3 passengers</option>
+                        <option value="transit">Transit Van - Up to 15 passengers</option>
+                        <option value="executive-mini-bus">Executive Mini Bus (Unit 09) - Up to 12 passengers</option>
+                        <option value="mini-bus-sofa">Mini Bus with Sofa Seating (Unit 01) - Up to 10 passengers</option>
+                        <option value="stretch-limo">Stretch Limousine (Lincoln Continental, Unit 03) - Up to 8 passengers</option>
+                        <option value="sprinter-limo">Sprinter Limousine (Unit 02) - Up to 10 passengers</option>
+                        <option value="limo-bus">Executive Limo Bus (Unit 10) - Up to 18 passengers</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row" id="hourlyOptions">
+                <div class="form-group">
+                    <label for="hours">Duration</label>
+                    <select id="hours">
+                        <option value="3">3 Hours (Minimum)</option>
+                        <option value="4">4 Hours</option>
+                        <option value="5">5 Hours</option>
+                        <option value="6">6 Hours</option>
+                        <option value="8">8 Hours</option>
+                        <option value="10">10 Hours</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="passengers">Number of Passengers</label>
+                    <select id="passengers">
+                        <option value="1">1 Passenger</option>
+                        <option value="2">2 Passengers</option>
+                        <option value="3">3 Passengers</option>
+                        <option value="4">4+ Passengers</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row" id="airportOptions" style="display: none;">
+                <div class="form-group">
+                    <label for="pickupZone">Pickup Zone</label>
+                    <select id="pickupZone" onchange="updateAirportOptions()">
+                        <option value="central-virginia">Central Virginia</option>
+                        <option value="prince-george">Prince George</option>
+                        <option value="norfolk">Norfolk</option>
+                        <option value="charlottesville">Charlottesville</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="airportCode">Airport Destination</label>
+                    <select id="airportCode">
+                        <option value="ric">Richmond International (RIC)</option>
+                        <option value="dca">Reagan National (DCA)</option>
+                        <option value="iad">Washington Dulles (IAD)</option>
+                        <option value="bwi">Baltimore Washington (BWI)</option>
+                        <option value="cho">Charlottesville (CHO)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row" id="pointToPointOptions" style="display: none;">
+                <div class="form-group">
+                    <label for="pickupLocation">Pickup Location</label>
+                    <input type="text" id="pickupLocation" placeholder="Enter pickup address">
+                </div>
+                <div class="form-group">
+                    <label for="dropoffLocation">Destination</label>
+                    <input type="text" id="dropoffLocation" placeholder="Enter destination address">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="serviceDate">Service Date</label>
+                    <input type="date" id="serviceDate">
+                </div>
+                <div class="form-group">
+                    <label for="serviceTime">Service Time</label>
+                    <input type="time" id="serviceTime">
+                </div>
+            </div>
+
+            <button class="calculate-btn" onclick="calculateAdaptivePrice()">
+                Get Quote
+            </button>
+        </div>
+
+        <div class="results" id="results">
+            <h3 style="text-align: center; margin-bottom: 30px; color: var(--primary-color); font-size: 1.8rem;" id="resultsTitle">
+                Your Transportation Quote
+            </h3>
+            
+            <div class="quote-display">
+                <div class="service-summary">
+                    <div class="summary-title">Service Details</div>
+                    <div id="serviceDetails"></div>
+                </div>
+                <div class="price-display">
+                    <div class="rate-label" id="rateLabel">Total Rate</div>
+                    <div class="total-price" id="totalPrice">$0.00</div>
+                    <div class="gratuity-note" id="gratuityNote">*Rate includes gratuity, fuel, and standard fees</div>
+                    
+                    <!-- Commission display for GNET partners -->
+                    <div class="commission-display" id="commissionDisplay">
+                        <div class="rate-label">Your Commission</div>
+                        <div class="commission-price" id="commissionPrice">$0.00</div>
+                        <div class="commission-rate" id="commissionRate">12% Standard Commission</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="contact-info">
+                <p style="font-size: 1.2rem; margin-bottom: 15px;" id="bookingPrompt">
+                    <strong>Ready to Book Your Transportation?</strong>
+                </p>
+                
+                <!-- Platform-specific booking buttons -->
+                <div data-platform="retail">
+                    <button class="book-btn" onclick="bookRetailService()">
+                        Book Now
+                    </button>
+                    <button class="book-btn" style="background: linear-gradient(135deg, #0066cc 0%, #004499 100%);" onclick="contactForQuote()">
+                        Contact for Custom Quote
+                    </button>
+                </div>
+
+                <div data-platform="gnet">
+                    <button class="partner-btn book-btn" onclick="bookGNETService()">
+                        Submit to TNT Dispatch
+                    </button>
+                    <button class="partner-btn book-btn" onclick="exportToGNET()">
+                        Export to GNET System
+                    </button>
+                </div>
+
+                <div data-platform="groundspan">
+                    <button class="book-btn" onclick="bookCorporateService()">
+                        Confirm Corporate Booking
+                    </button>
+                    <button class="book-btn" style="background: linear-gradient(135deg, #0066cc 0%, #004499 100%);" onclick="contactCorporateManager()">
+                        Contact Account Manager
+                    </button>
+                </div>
+
+                <p style="margin: 15px 0;">Direct Line: <strong>(804) 972-4550</strong></p>
+                <p style="margin-bottom: 15px;" id="contactEmail"><strong>info@tntlimousine.com</strong></p>
+                <p style="font-size: 14px; opacity: 0.9;" id="serviceFeatures">
+                    Professional drivers • GPS tracking • 24/7 support
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/platform-detection.js"></script>
+    <script src="js/airport-zone-pricing.js"></script>
+    <script>
+        // TNT Adaptive Pricing System
+        let currentPlatform = 'retail'; // Default
+        
+        // Initialize platform detection
+        document.addEventListener('DOMContentLoaded', function() {
+            // Platform detection is handled by platform-detection.js
+            setTimeout(() => {
+                const platformInfo = window.getPlatform();
+                currentPlatform = platformInfo.platform;
+                updatePlatformUI(platformInfo);
+            }, 100);
+        });
+
+        function updatePlatformUI(platformInfo) {
+            const badge = document.getElementById('platformBadge');
+            const info = document.getElementById('platformInfo');
+            const resultsTitle = document.getElementById('resultsTitle');
+            const rateLabel = document.getElementById('rateLabel');
+            const contactEmail = document.getElementById('contactEmail');
+            const serviceFeatures = document.getElementById('serviceFeatures');
+
+            switch (platformInfo.platform) {
+                case 'gnet':
+                    badge.textContent = 'GNET Partner Portal';
+                    badge.classList.add('show');
+                    info.textContent = 'Partner Booking & Commission Tracking';
+                    resultsTitle.textContent = 'GNET Partner Quote & Commission';
+                    rateLabel.textContent = 'Client Rate';
+                    contactEmail.innerHTML = '<strong>partners@tntlimousine.com</strong>';
+                    serviceFeatures.textContent = 'Commission tracking • Monthly reporting • Priority support';
+                    break;
+                    
+                case 'groundspan':
+                    badge.textContent = 'Capital One Corporate Account';
+                    badge.classList.add('show');
+                    info.textContent = 'Executive Transportation Services for Capital One Associates';
+                    resultsTitle.textContent = 'Corporate Transportation Quote';
+                    rateLabel.textContent = 'Corporate Rate';
+                    contactEmail.innerHTML = '<strong>corporate@tntlimousine.com</strong>';
+                    serviceFeatures.textContent = 'Priority scheduling • Dedicated account management • Professional service';
+                    break;
+                    
+                default: // retail
+                    badge.classList.remove('show');
+                    info.textContent = 'Premium Transportation Services';
+                    resultsTitle.textContent = 'Your Transportation Quote';
+                    rateLabel.textContent = 'Total Rate';
+                    contactEmail.innerHTML = '<strong>info@tntlimousine.com</strong>';
+                    serviceFeatures.textContent = 'Professional drivers • GPS tracking • 24/7 support';
+            }
+        }
+
+        // Service option management
+        function updateServiceOptions() {
+            const serviceType = document.getElementById('serviceType').value;
+            const hourlyOptions = document.getElementById('hourlyOptions');
+            const airportOptions = document.getElementById('airportOptions');
+            const p2pOptions = document.getElementById('pointToPointOptions');
+
+            // Hide all option groups
+            hourlyOptions.style.display = 'none';
+            airportOptions.style.display = 'none';
+            p2pOptions.style.display = 'none';
+
+            // Show relevant options
+            switch (serviceType) {
+                case 'airport':
+                    airportOptions.style.display = 'grid';
+                    updateAirportOptions();
+                    break;
+                case 'point-to-point':
+                    p2pOptions.style.display = 'grid';
+                    break;
+                default: // hourly
+                    hourlyOptions.style.display = 'grid';
+            }
+        }
+
+        function updateAirportOptions() {
+            const vehicleType = document.getElementById('vehicleType').value;
+            const pickupZone = document.getElementById('pickupZone').value;
+            const airportSelect = document.getElementById('airportCode');
+            
+            if (!AirportZonePricing) return;
+            
+            const availableAirports = AirportZonePricing.getAvailableAirports(vehicleType, pickupZone);
+            
+            airportSelect.innerHTML = '';
+            
+            if (availableAirports.length === 0) {
+                const option = document.createElement('option');
+                option.value = '';
+                option.textContent = 'No airports available from this zone';
+                option.disabled = true;
+                airportSelect.appendChild(option);
+                return;
+            }
+            
+            availableAirports.forEach(airportCode => {
+                const airportName = AirportZonePricing.airports[airportCode];
+                if (airportName) {
+                    const option = document.createElement('option');
+                    option.value = airportCode;
+                    option.textContent = airportName;
+                    airportSelect.appendChild(option);
+                }
+            });
+        }
+
+        function updateVehicleInfo() {
+            // Update any vehicle-specific information
+            if (document.getElementById('serviceType').value === 'airport') {
+                updateAirportOptions();
+            }
+        }
+
+        // Platform-specific pricing rates
+        const PlatformRates = {
+            retail: {
+                hourly: {
+                    'sedan': 100, 'transit': 137, 'executive-mini-bus': 142, 
+                    'mini-bus-sofa': 142, 'stretch-limo': 160, 'sprinter-limo': 160, 'limo-bus': 208
+                },
+                discounts: {
+                    'multi-vehicle': 0.10, 'advance-booking': 0.15, 'weekly-discount': 0.10
+                }
+            },
+            gnet: {
+                hourly: {
+                    'sedan': 100, 'transit': 137, 'executive-mini-bus': 142,
+                    'mini-bus-sofa': 142, 'stretch-limo': 160, 'sprinter-limo': 160, 'limo-bus': 208
+                },
+                commission: {
+                    standard: 0.12, // 12%
+                    premium: 0.15   // 15% for airports/luxury
+                }
+            },
+            groundspan: {
+                hourly: {
+                    'sedan': 110, 'transit': 147, 'executive-mini-bus': 152,
+                    'mini-bus-sofa': 152, 'stretch-limo': 170, 'sprinter-limo': 170, 'limo-bus': 218
+                },
+                airport: {
+                    'sedan': { national: 485, dulles: 495, bwi: 705 },
+                    'transit': { national: 750, dulles: 760, bwi: 915 },
+                    'stretch-limo': { national: 875, dulles: 885, bwi: 1090 },
+                    'sprinter-limo': { national: 830, dulles: 845, bwi: 970 },
+                    'limo-bus': { national: 1090, dulles: 1115, bwi: 1350 }
+                }
+            }
+        };
+
+        // Main pricing calculation
+        function calculateAdaptivePrice() {
+            const serviceType = document.getElementById('serviceType').value;
+            const vehicleType = document.getElementById('vehicleType').value;
+            let totalPrice = 0;
+            let serviceDetails = [];
+
+            // Get platform-specific rates
+            const rates = PlatformRates[currentPlatform];
+            
+            // Add platform indicator
+            const platformNames = {
+                'retail': 'Standard Customer',
+                'gnet': 'GNET Partner',
+                'groundspan': 'Corporate Client'
+            };
+            
+            serviceDetails.push({
+                item: 'Platform',
+                value: platformNames[currentPlatform]
+            });
+
+            if (serviceType === 'hourly') {
+                const hours = parseInt(document.getElementById('hours').value);
+                const actualHours = Math.max(hours, 3);
+                
+                totalPrice = rates.hourly[vehicleType] * actualHours;
+                
+                serviceDetails.push({
+                    item: 'Service Type',
+                    value: `Hourly Charter (${actualHours} hours)`
+                });
+                
+                serviceDetails.push({
+                    item: 'Hourly Rate',
+                    value: `$${rates.hourly[vehicleType]}/hour`
+                });
+
+            } else if (serviceType === 'airport') {
+                const pickupZone = document.getElementById('pickupZone').value;
+                const airportCode = document.getElementById('airportCode').value;
+                
+                if (currentPlatform === 'groundspan' && rates.airport[vehicleType]?.[airportCode]) {
+                    // Use Groundspan corporate airport rates
+                    totalPrice = rates.airport[vehicleType][airportCode];
+                } else if (AirportZonePricing) {
+                    // Use zone-based pricing for retail and GNET
+                    totalPrice = AirportZonePricing.getRate(vehicleType, pickupZone, airportCode) || 0;
+                }
+                
+                serviceDetails.push({
+                    item: 'Service Type',
+                    value: 'Airport Transfer'
+                });
+                
+                serviceDetails.push({
+                    item: 'Route',
+                    value: `${AirportZonePricing?.zones[pickupZone] || 'Selected zone'} → ${AirportZonePricing?.airports[airportCode] || 'Selected airport'}`
+                });
+
+            } else { // point-to-point
+                // Simplified P2P calculation
+                totalPrice = rates.hourly[vehicleType] * 2; // Estimate 2 hours
+                
+                serviceDetails.push({
+                    item: 'Service Type',
+                    value: 'Point-to-Point Transfer'
+                });
+            }
+
+            // Add vehicle info
+            serviceDetails.push({
+                item: 'Vehicle',
+                value: getVehicleName(vehicleType)
+            });
+
+            displayResults(serviceDetails, totalPrice);
+        }
+
+        function getVehicleName(vehicleType) {
+            const names = {
+                'sedan': 'Executive Sedan (Lincoln MKT/Aviator)',
+                'transit': 'Transit Van',
+                'executive-mini-bus': 'Executive Mini Bus',
+                'mini-bus-sofa': 'Mini Bus with Sofa Seating',
+                'stretch-limo': 'Stretch Limousine (Lincoln Continental)',
+                'sprinter-limo': 'Sprinter Limousine',
+                'limo-bus': 'Executive Limo Bus'
+            };
+            return names[vehicleType] || 'Selected Vehicle';
+        }
+
+        function displayResults(serviceDetails, totalPrice) {
+            const resultsDiv = document.getElementById('results');
+            const serviceDetailsDiv = document.getElementById('serviceDetails');
+            const totalPriceDiv = document.getElementById('totalPrice');
+            const commissionDiv = document.getElementById('commissionDisplay');
+            const commissionPriceDiv = document.getElementById('commissionPrice');
+
+            // Clear previous results
+            serviceDetailsDiv.innerHTML = '';
+
+            // Add service details
+            serviceDetails.forEach(detail => {
+                const detailDiv = document.createElement('div');
+                detailDiv.className = 'summary-item';
+                detailDiv.innerHTML = `<span>${detail.item}:</span><span><strong>${detail.value}</strong></span>`;
+                serviceDetailsDiv.appendChild(detailDiv);
+            });
+
+            // Set total price
+            totalPriceDiv.textContent = `$${totalPrice.toFixed(2)}`;
+
+            // Handle GNET commission display
+            if (currentPlatform === 'gnet') {
+                const rates = PlatformRates.gnet;
+                const commissionRate = document.getElementById('serviceType').value === 'airport' ? 
+                    rates.commission.premium : rates.commission.standard;
+                const commissionAmount = totalPrice * commissionRate;
+                
+                commissionPriceDiv.textContent = `$${commissionAmount.toFixed(2)}`;
+                document.getElementById('commissionRate').textContent = 
+                    `${(commissionRate * 100).toFixed(0)}% ${commissionRate === rates.commission.premium ? 'Premium' : 'Standard'} Commission`;
+            }
+
+            // Show results
+            resultsDiv.classList.add('show');
+            resultsDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Platform-specific booking functions
+        function bookRetailService() {
+            alert('Retail Booking: Thank you for choosing TNT Limousine! Our team will contact you within 15 minutes to confirm your reservation and process payment.');
+        }
+
+        function bookGNETService() {
+            alert('GNET Partner Booking: Your reservation has been submitted to TNT dispatch with commission tracking. You will receive confirmation and tracking details via email within 10 minutes.');
+        }
+
+        function bookCorporateService() {
+            alert('Corporate Booking Confirmed: Your Capital One transportation has been scheduled with priority service. Monthly billing will be processed automatically.');
+        }
+
+        function exportToGNET() {
+            alert('Exporting to GNET Partner System: Booking data exported to your partner dashboard for commission tracking and client management.');
+        }
+
+        function contactForQuote() {
+            alert('Custom Quote Request: Our team will prepare a detailed quote based on your specific requirements. Expect contact within 2 hours.');
+        }
+
+        function contactCorporateManager() {
+            alert('Corporate Account Manager: Connecting you with your dedicated TNT corporate account manager for special arrangements and account management.');
+        }
+
+        // Initialize
+        document.getElementById('serviceDate').valueAsDate = new Date();
+        const now = new Date();
+        now.setHours(now.getHours() + 2);
+        document.getElementById('serviceTime').value = now.toTimeString().slice(0, 5);
+    </script>
+</body>
+</html>

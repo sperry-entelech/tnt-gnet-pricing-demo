@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TNT Limousine - Admin Rate Management System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: white;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .admin-header {
+            background: linear-gradient(45deg, #DC2626 0%, #B91C1C 100%);
+            padding: 15px 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .admin-title {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+
+        .admin-badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .admin-section {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            color: #DC2626;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #DC2626;
+        }
+
+        .rate-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .rate-table th,
+        .rate-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .rate-table th {
+            background: rgba(220, 38, 38, 0.2);
+            color: #DC2626;
+            font-weight: bold;
+        }
+
+        .rate-input {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            width: 80px;
+        }
+
+        .rate-input:focus {
+            outline: none;
+            border-color: #DC2626;
+            box-shadow: 0 0 10px rgba(220, 38, 38, 0.3);
+        }
+
+        .save-btn {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .save-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(16, 185, 129, 0.3);
+        }
+
+        .danger-btn {
+            background: linear-gradient(135deg, #DC2626 0%, #B91C1C 100%);
+        }
+
+        .corporate-section {
+            background: linear-gradient(135deg, rgba(255, 193, 7, 0.1) 0%, rgba(255, 152, 0, 0.1) 100%);
+            border: 1px solid #ffc107;
+        }
+
+        .corporate-section .section-title {
+            color: #ffc107;
+            border-bottom-color: #ffc107;
+        }
+
+        .discount-rule {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            margin: 10px 0;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            border-left: 4px solid #DC2626;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #DC2626;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+
+        .audit-log {
+            max-height: 300px;
+            overflow-y: auto;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            padding: 15px;
+        }
+
+        .log-entry {
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 13px;
+        }
+
+        .log-entry:last-child {
+            border-bottom: none;
+        }
+
+        .log-timestamp {
+            color: #10b981;
+            font-weight: bold;
+        }
+
+        .competitive-analysis {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .competitor-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .competitor-name {
+            font-weight: bold;
+            color: #DC2626;
+            margin-bottom: 10px;
+        }
+
+        .competitor-rate {
+            font-size: 1.2rem;
+            color: #10b981;
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        .status-active {
+            background: #10b981;
+        }
+
+        .status-pending {
+            background: #ffc107;
+        }
+
+        .status-inactive {
+            background: #DC2626;
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        @media (max-width: 1200px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .competitive-analysis {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-header">
+        <div class="admin-title">TNT Rate Management System</div>
+        <div class="admin-badge">ADMIN ACCESS</div>
+    </div>
+
+    <div class="container">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value" id="totalBookings">1,247</div>
+                <div class="stat-label">Total Bookings (30 days)</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="avgRate">$145</div>
+                <div class="stat-label">Average Rate</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="gnetCommission">$18,234</div>
+                <div class="stat-label">GNET Commission (30 days)</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="corporateRevenue">$87,523</div>
+                <div class="stat-label">Corporate Revenue (30 days)</div>
+            </div>
+        </div>
+
+        <div class="dashboard-grid">
+            <div class="admin-section">
+                <div class="section-title">Standard Hourly Rates Management</div>
+                
+                <table class="rate-table">
+                    <thead>
+                        <tr>
+                            <th>Vehicle Type</th>
+                            <th>Base Rate</th>
+                            <th>Gratuity</th>
+                            <th>Fuel</th>
+                            <th>Mileage</th>
+                            <th>Total</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Sedan</strong></td>
+                            <td><input type="number" class="rate-input" value="60" id="sedan_base"></td>
+                            <td><input type="number" class="rate-input" value="12" id="sedan_gratuity"></td>
+                            <td><input type="number" class="rate-input" value="10" id="sedan_fuel"></td>
+                            <td><input type="number" class="rate-input" value="18" id="sedan_mileage"></td>
+                            <td><strong id="sedan_total">$100</strong></td>
+                            <td><button class="save-btn" onclick="saveVehicleRate('sedan')">Save</button></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Transit</strong></td>
+                            <td><input type="number" class="rate-input" value="90" id="transit_base"></td>
+                            <td><input type="number" class="rate-input" value="19" id="transit_gratuity"></td>
+                            <td><input type="number" class="rate-input" value="10" id="transit_fuel"></td>
+                            <td><input type="number" class="rate-input" value="18" id="transit_mileage"></td>
+                            <td><strong id="transit_total">$137</strong></td>
+                            <td><button class="save-btn" onclick="saveVehicleRate('transit')">Save</button></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Executive Mini Bus</strong></td>
+                            <td><input type="number" class="rate-input" value="95" id="exec_bus_base"></td>
+                            <td><input type="number" class="rate-input" value="19" id="exec_bus_gratuity"></td>
+                            <td><input type="number" class="rate-input" value="10" id="exec_bus_fuel"></td>
+                            <td><input type="number" class="rate-input" value="18" id="exec_bus_mileage"></td>
+                            <td><strong id="exec_bus_total">$142</strong></td>
+                            <td><button class="save-btn" onclick="saveVehicleRate('exec_bus')">Save</button></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Mini Bus (Sofa)</strong></td>
+                            <td><input type="number" class="rate-input" value="95" id="mini_bus_base"></td>
+                            <td><input type="number" class="rate-input" value="19" id="mini_bus_gratuity"></td>
+                            <td><input type="number" class="rate-input" value="10" id="mini_bus_fuel"></td>
+                            <td><input type="number" class="rate-input" value="18" id="mini_bus_mileage"></td>
+                            <td><strong id="mini_bus_total">$142</strong></td>
+                            <td><button class="save-btn" onclick="saveVehicleRate('mini_bus')">Save</button></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Stretch Limo</strong></td>
+                            <td><input type="number" class="rate-input" value="113" id="stretch_base"></td>
+                            <td><input type="number" class="rate-input" value="19" id="stretch_gratuity"></td>
+                            <td><input type="number" class="rate-input" value="10" id="stretch_fuel"></td>
+                            <td><input type="number" class="rate-input" value="18" id="stretch_mileage"></td>
+                            <td><strong id="stretch_total">$160</strong></td>
+                            <td><button class="save-btn" onclick="saveVehicleRate('stretch')">Save</button></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Sprinter Limo</strong></td>
+                            <td><input type="number" class="rate-input" value="113" id="sprinter_base"></td>
+                            <td><input type="number" class="rate-input" value="19" id="sprinter_gratuity"></td>
+                            <td><input type="number" class="rate-input" value="10" id="sprinter_fuel"></td>
+                            <td><input type="number" class="rate-input" value="18" id="sprinter_mileage"></td>
+                            <td><strong id="sprinter_total">$160</strong></td>
+                            <td><button class="save-btn" onclick="saveVehicleRate('sprinter')">Save</button></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Limo Bus</strong></td>
+                            <td><input type="number" class="rate-input" value="152" id="limo_bus_base"></td>
+                            <td><input type="number" class="rate-input" value="28" id="limo_bus_gratuity"></td>
+                            <td><input type="number" class="rate-input" value="10" id="limo_bus_fuel"></td>
+                            <td><input type="number" class="rate-input" value="18" id="limo_bus_mileage"></td>
+                            <td><strong id="limo_bus_total">$208</strong></td>
+                            <td><button class="save-btn" onclick="saveVehicleRate('limo_bus')">Save</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <button class="save-btn" onclick="saveAllRates()">Save All Standard Rates</button>
+                <button class="save-btn danger-btn" onclick="resetToDefaults()">Reset to Defaults</button>
+            </div>
+
+            <div class="admin-section corporate-section">
+                <div class="section-title">Groundspan Corporate Premium Rates</div>
+                
+                <table class="rate-table">
+                    <thead>
+                        <tr>
+                            <th>Vehicle Type</th>
+                            <th>Standard Rate</th>
+                            <th>Premium Rate</th>
+                            <th>Premium Amount</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Sedan</strong></td>
+                            <td>$100/hr</td>
+                            <td><input type="number" class="rate-input" value="110" id="gs_sedan"></td>
+                            <td><span id="gs_sedan_premium">+$10</span></td>
+                            <td><span class="status-indicator status-active"></span>Active</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Transit</strong></td>
+                            <td>$137/hr</td>
+                            <td><input type="number" class="rate-input" value="147" id="gs_transit"></td>
+                            <td><span id="gs_transit_premium">+$10</span></td>
+                            <td><span class="status-indicator status-active"></span>Active</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Executive Mini Bus</strong></td>
+                            <td>$142/hr</td>
+                            <td><input type="number" class="rate-input" value="152" id="gs_exec_bus"></td>
+                            <td><span id="gs_exec_bus_premium">+$10</span></td>
+                            <td><span class="status-indicator status-active"></span>Active</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Mini Bus (Sofa)</strong></td>
+                            <td>$142/hr</td>
+                            <td><input type="number" class="rate-input" value="152" id="gs_mini_bus"></td>
+                            <td><span id="gs_mini_bus_premium">+$10</span></td>
+                            <td><span class="status-indicator status-active"></span>Active</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Stretch Limo</strong></td>
+                            <td>$160/hr</td>
+                            <td><input type="number" class="rate-input" value="170" id="gs_stretch"></td>
+                            <td><span id="gs_stretch_premium">+$10</span></td>
+                            <td><span class="status-indicator status-active"></span>Active</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Sprinter Limo</strong></td>
+                            <td>$160/hr</td>
+                            <td><input type="number" class="rate-input" value="170" id="gs_sprinter"></td>
+                            <td><span id="gs_sprinter_premium">+$10</span></td>
+                            <td><span class="status-indicator status-active"></span>Active</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Limo Bus</strong></td>
+                            <td>$208/hr</td>
+                            <td><input type="number" class="rate-input" value="218" id="gs_limo_bus"></td>
+                            <td><span id="gs_limo_bus_premium">+$10</span></td>
+                            <td><span class="status-indicator status-active"></span>Active</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div style="background: rgba(255, 193, 7, 0.1); padding: 15px; border-radius: 10px; margin: 15px 0;">
+                    <strong style="color: #ffc107;">Corporate Premium Justification:</strong>
+                    <ul style="margin: 10px 0; padding-left: 20px; font-size: 14px;">
+                        <li>Priority booking and scheduling</li>
+                        <li>Dedicated account management</li>
+                        <li>Enhanced vehicle maintenance standards</li>
+                        <li>Monthly consolidated billing</li>
+                        <li>Real-time GPS tracking and alerts</li>
+                        <li>Executive driver training and appearance standards</li>
+                    </ul>
+                </div>
+
+                <button class="save-btn" onclick="saveGroundspanRates()">Save Corporate Rates</button>
+                <button class="save-btn danger-btn" onclick="suspendCorporateRates()">Suspend Contract</button>
+            </div>
+        </div>
+
+        <div class="dashboard-grid">
+            <div class="admin-section">
+                <div class="section-title">Discount Rules & Surcharges</div>
+                
+                <div class="discount-rule">
+                    <div>
+                        <strong>Monday-Thursday Discount</strong>
+                        <div style="font-size: 12px; opacity: 0.8;">Applied to hourly and point-to-point services</div>
+                    </div>
+                    <div>
+                        <input type="number" class="rate-input" value="10" id="weekday_discount" style="width: 60px;"> %
+                        <button class="save-btn" onclick="saveDiscountRule('weekday')">Save</button>
+                    </div>
+                </div>
+
+                <div class="discount-rule">
+                    <div>
+                        <strong>6+ Hour Trip Discount</strong>
+                        <div style="font-size: 12px; opacity: 0.8;">Applied to extended hourly services</div>
+                    </div>
+                    <div>
+                        <input type="number" class="rate-input" value="10" id="long_trip_discount" style="width: 60px;"> %
+                        <button class="save-btn" onclick="saveDiscountRule('longtrip')">Save</button>
+                    </div>
+                </div>
+
+                <div class="discount-rule">
+                    <div>
+                        <strong>Short Notice Discount</strong>
+                        <div style="font-size: 12px; opacity: 0.8;">Same day / next day bookings</div>
+                    </div>
+                    <div>
+                        <input type="number" class="rate-input" value="15" id="short_notice_discount" style="width: 60px;"> %
+                        <button class="save-btn" onclick="saveDiscountRule('shortnotice')">Save</button>
+                    </div>
+                </div>
+
+                <div class="discount-rule">
+                    <div>
+                        <strong>Multi-Vehicle Discount</strong>
+                        <div style="font-size: 12px; opacity: 0.8;">2+ vehicles on same booking</div>
+                    </div>
+                    <div>
+                        <input type="number" class="rate-input" value="10" id="multi_vehicle_discount" style="width: 60px;"> %
+                        <button class="save-btn" onclick="saveDiscountRule('multivehicle')">Save</button>
+                    </div>
+                </div>
+
+                <div class="discount-rule">
+                    <div>
+                        <strong>Holiday Surcharge</strong>
+                        <div style="font-size: 12px; opacity: 0.8;">Major holidays and special events</div>
+                    </div>
+                    <div>
+                        <input type="number" class="rate-input" value="25" id="holiday_surcharge" style="width: 60px;"> %
+                        <button class="save-btn" onclick="saveDiscountRule('holiday')">Save</button>
+                    </div>
+                </div>
+
+                <div class="discount-rule">
+                    <div>
+                        <strong>After-Hours Fee</strong>
+                        <div style="font-size: 12px; opacity: 0.8;">11pm - 6am pickups</div>
+                    </div>
+                    <div>
+                        $<input type="number" class="rate-input" value="20" id="after_hours_fee" style="width: 60px;">
+                        <button class="save-btn" onclick="saveDiscountRule('afterhours')">Save</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="admin-section">
+                <div class="section-title">Competitive Rate Analysis</div>
+                
+                <div class="competitive-analysis">
+                    <div class="competitor-card">
+                        <div class="competitor-name">Premier Limousine</div>
+                        <div class="competitor-rate">$95/hr</div>
+                        <div style="font-size: 12px; margin-top: 5px; opacity: 0.7;">Sedan Rate</div>
+                    </div>
+                    
+                    <div class="competitor-card">
+                        <div class="competitor-name">Executive Transport</div>
+                        <div class="competitor-rate">$105/hr</div>
+                        <div style="font-size: 12px; margin-top: 5px; opacity: 0.7;">Sedan Rate</div>
+                    </div>
+                    
+                    <div class="competitor-card">
+                        <div class="competitor-name">Luxury Rides RVA</div>
+                        <div class="competitor-rate">$85/hr</div>
+                        <div style="font-size: 12px; margin-top: 5px; opacity: 0.7;">Sedan Rate</div>
+                    </div>
+                </div>
+
+                <div style="background: rgba(255, 255, 255, 0.05); padding: 15px; border-radius: 10px; margin: 15px 0;">
+                    <strong style="color: #10b981;">Market Position Analysis:</strong>
+                    <div style="font-size: 14px; margin: 10px 0;">
+                        • TNT Sedan Rate: <strong>$100/hr</strong> (Market Average: $95/hr)<br>
+                        • Position: <span style="color: #ffc107;">Premium Pricing (+5%)</span><br>
+                        • Justification: Superior service quality, newer fleet, professional drivers<br>
+                        • Recommendation: <span style="color: #10b981;">Maintain current pricing</span>
+                    </div>
+                </div>
+
+                <div class="section-title" style="margin-top: 30px;">GNET Commission Management</div>
+                
+                <div class="discount-rule">
+                    <div>
+                        <strong>Standard Commission Rate</strong>
+                        <div style="font-size: 12px; opacity: 0.8;">Applied to hourly and point-to-point</div>
+                    </div>
+                    <div>
+                        <input type="number" class="rate-input" value="12" id="gnet_standard" style="width: 60px;"> %
+                        <button class="save-btn" onclick="saveGNETCommission('standard')">Save</button>
+                    </div>
+                </div>
+
+                <div class="discount-rule">
+                    <div>
+                        <strong>Premium Commission Rate</strong>
+                        <div style="font-size: 12px; opacity: 0.8;">Airport transfers and luxury vehicles</div>
+                    </div>
+                    <div>
+                        <input type="number" class="rate-input" value="15" id="gnet_premium" style="width: 60px;"> %
+                        <button class="save-btn" onclick="saveGNETCommission('premium')">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="admin-section full-width">
+            <div class="section-title">System Activity Audit Log</div>
+            
+            <div class="audit-log" id="auditLog">
+                <div class="log-entry">
+                    <span class="log-timestamp">2025-01-04 14:32</span> - 
+                    <span>Groundspan corporate rates updated for all vehicle types</span> - 
+                    <span style="color: #10b981;">Admin User</span>
+                </div>
+                <div class="log-entry">
+                    <span class="log-timestamp">2025-01-04 11:15</span> - 
+                    <span>GNET standard commission adjusted from 10% to 12%</span> - 
+                    <span style="color: #10b981;">Admin User</span>
+                </div>
+                <div class="log-entry">
+                    <span class="log-timestamp">2025-01-03 16:45</span> - 
+                    <span>Holiday surcharge activated for New Year period</span> - 
+                    <span style="color: #10b981;">System Auto</span>
+                </div>
+                <div class="log-entry">
+                    <span class="log-timestamp">2025-01-03 09:20</span> - 
+                    <span>Standard hourly rates updated across all vehicle types</span> - 
+                    <span style="color: #10b981;">Admin User</span>
+                </div>
+                <div class="log-entry">
+                    <span class="log-timestamp">2025-01-02 13:55</span> - 
+                    <span>New corporate client rate structure created</span> - 
+                    <span style="color: #10b981;">Admin User</span>
+                </div>
+                <div class="log-entry">
+                    <span class="log-timestamp">2025-01-02 10:30</span> - 
+                    <span>Airport transfer rates synchronized with fuel cost increases</span> - 
+                    <span style="color: #ffc107;">System Auto</span>
+                </div>
+                <div class="log-entry">
+                    <span class="log-timestamp">2025-01-01 23:59</span> - 
+                    <span>System backup completed successfully</span> - 
+                    <span style="color: #10b981;">System Auto</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Admin functionality for rate management
+        function saveVehicleRate(vehicleId) {
+            const base = document.getElementById(`${vehicleId}_base`).value;
+            const gratuity = document.getElementById(`${vehicleId}_gratuity`).value;
+            const fuel = document.getElementById(`${vehicleId}_fuel`).value;
+            const mileage = document.getElementById(`${vehicleId}_mileage`).value;
+            const total = parseInt(base) + parseInt(gratuity) + parseInt(fuel) + parseInt(mileage);
+            
+            document.getElementById(`${vehicleId}_total`).textContent = `$${total}`;
+            
+            addAuditLogEntry(`${vehicleId.replace('_', ' ')} rate updated to $${total}/hr (Base: $${base}, Gratuity: $${gratuity}, Fuel: $${fuel}, Mileage: $${mileage})`);
+            
+            alert(`${vehicleId.replace('_', ' ')} rate saved successfully!\\nNew total: $${total}/hr`);
+        }
+
+        function saveAllRates() {
+            const vehicles = ['sedan', 'transit', 'exec_bus', 'mini_bus', 'stretch', 'sprinter', 'limo_bus'];
+            vehicles.forEach(vehicle => {
+                saveVehicleRate(vehicle);
+            });
+            
+            addAuditLogEntry('All standard vehicle rates updated simultaneously');
+            alert('All standard rates saved successfully!');
+        }
+
+        function resetToDefaults() {
+            if (confirm('Are you sure you want to reset all rates to default values? This action cannot be undone.')) {
+                // Reset to original values
+                const defaults = {
+                    sedan: { base: 60, gratuity: 12, fuel: 10, mileage: 18 },
+                    transit: { base: 90, gratuity: 19, fuel: 10, mileage: 18 },
+                    exec_bus: { base: 95, gratuity: 19, fuel: 10, mileage: 18 },
+                    mini_bus: { base: 95, gratuity: 19, fuel: 10, mileage: 18 },
+                    stretch: { base: 113, gratuity: 19, fuel: 10, mileage: 18 },
+                    sprinter: { base: 113, gratuity: 19, fuel: 10, mileage: 18 },
+                    limo_bus: { base: 152, gratuity: 28, fuel: 10, mileage: 18 }
+                };
+                
+                Object.keys(defaults).forEach(vehicle => {
+                    document.getElementById(`${vehicle}_base`).value = defaults[vehicle].base;
+                    document.getElementById(`${vehicle}_gratuity`).value = defaults[vehicle].gratuity;
+                    document.getElementById(`${vehicle}_fuel`).value = defaults[vehicle].fuel;
+                    document.getElementById(`${vehicle}_mileage`).value = defaults[vehicle].mileage;
+                    
+                    const total = defaults[vehicle].base + defaults[vehicle].gratuity + defaults[vehicle].fuel + defaults[vehicle].mileage;
+                    document.getElementById(`${vehicle}_total`).textContent = `$${total}`;
+                });
+                
+                addAuditLogEntry('All rates reset to factory defaults');
+                alert('All rates have been reset to default values.');
+            }
+        }
+
+        function saveGroundspanRates() {
+            const vehicles = ['sedan', 'transit', 'exec_bus', 'mini_bus', 'stretch', 'sprinter', 'limo_bus'];
+            const standardRates = { sedan: 100, transit: 137, exec_bus: 142, mini_bus: 142, stretch: 160, sprinter: 160, limo_bus: 208 };
+            
+            vehicles.forEach(vehicle => {
+                const premiumRate = document.getElementById(`gs_${vehicle}`).value;
+                const premium = premiumRate - standardRates[vehicle];
+                document.getElementById(`gs_${vehicle}_premium`).textContent = premium >= 0 ? `+$${premium}` : `-$${Math.abs(premium)}`;
+            });
+            
+            addAuditLogEntry('Groundspan corporate premium rates updated for all vehicle types');
+            alert('Groundspan corporate rates saved successfully!');
+        }
+
+        function suspendCorporateRates() {
+            if (confirm('Are you sure you want to suspend the Groundspan corporate contract? This will revert all bookings to standard rates.')) {
+                addAuditLogEntry('Groundspan corporate contract suspended - rates reverted to standard');
+                alert('Corporate contract suspended. All future bookings will use standard rates.');
+            }
+        }
+
+        function saveDiscountRule(ruleType) {
+            const value = document.getElementById(`${ruleType}_discount`) ? 
+                          document.getElementById(`${ruleType}_discount`).value : 
+                          document.getElementById(`${ruleType}_surcharge`) ? 
+                          document.getElementById(`${ruleType}_surcharge`).value :
+                          document.getElementById(`${ruleType}_fee`).value;
+            
+            const unit = ruleType === 'afterhours' ? '$' : '%';
+            addAuditLogEntry(`${ruleType.replace('_', ' ')} rule updated to ${value}${unit}`);
+            alert(`${ruleType.replace('_', ' ')} rule saved: ${value}${unit}`);
+        }
+
+        function saveGNETCommission(type) {
+            const rate = document.getElementById(`gnet_${type}`).value;
+            addAuditLogEntry(`GNET ${type} commission rate updated to ${rate}%`);
+            alert(`GNET ${type} commission rate saved: ${rate}%`);
+        }
+
+        function addAuditLogEntry(message) {
+            const now = new Date();
+            const timestamp = now.toISOString().slice(0, 16).replace('T', ' ');
+            const logEntry = document.createElement('div');
+            logEntry.className = 'log-entry';
+            logEntry.innerHTML = `
+                <span class="log-timestamp">${timestamp}</span> - 
+                <span>${message}</span> - 
+                <span style="color: #10b981;">Admin User</span>
+            `;
+            
+            const auditLog = document.getElementById('auditLog');
+            auditLog.insertBefore(logEntry, auditLog.firstChild);
+            
+            // Keep only last 20 entries
+            while (auditLog.children.length > 20) {
+                auditLog.removeChild(auditLog.lastChild);
+            }
+        }
+
+        // Auto-calculate totals when inputs change
+        document.addEventListener('DOMContentLoaded', function() {
+            const inputs = document.querySelectorAll('.rate-input');
+            inputs.forEach(input => {
+                input.addEventListener('input', function() {
+                    const vehicleId = this.id.split('_')[0];
+                    if (this.id.includes('_base') || this.id.includes('_gratuity') || this.id.includes('_fuel') || this.id.includes('_mileage')) {
+                        const base = parseInt(document.getElementById(`${vehicleId}_base`)?.value || 0);
+                        const gratuity = parseInt(document.getElementById(`${vehicleId}_gratuity`)?.value || 0);
+                        const fuel = parseInt(document.getElementById(`${vehicleId}_fuel`)?.value || 0);
+                        const mileage = parseInt(document.getElementById(`${vehicleId}_mileage`)?.value || 0);
+                        const total = base + gratuity + fuel + mileage;
+                        
+                        const totalElement = document.getElementById(`${vehicleId}_total`);
+                        if (totalElement) {
+                            totalElement.textContent = `$${total}`;
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

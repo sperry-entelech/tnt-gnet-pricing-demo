@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TNT Limousine - Luxury Transportation Services</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #2c2c2c 0%, #1a1a1a 50%, #000000 100%);
+            color: white;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .promo-badge {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(45deg, #10b981 0%, #059669 100%);
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            z-index: 1000;
+            color: white;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: rgba(220, 38, 38, 0.1);
+            backdrop-filter: blur(15px);
+            border-radius: 25px;
+            padding: 40px;
+            border: 2px solid rgba(192, 192, 192, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        
+        .logo-svg {
+            width: 300px;
+            height: 120px;
+        }
+        
+        .tnt-oval {
+            fill: url(#redGradient);
+            stroke: #C0C0C0;
+            stroke-width: 3;
+        }
+        
+        .tnt-text {
+            fill: white;
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            font-size: 48px;
+            text-anchor: middle;
+        }
+        
+        .limousine-script {
+            fill: white;
+            font-family: 'Brush Script MT', cursive;
+            font-size: 24px;
+            font-style: italic;
+            text-anchor: middle;
+        }
+
+        .tagline {
+            font-size: 1.3rem;
+            color: #10b981;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+
+        .service-area {
+            font-size: 1rem;
+            opacity: 0.9;
+            background: rgba(16, 185, 129, 0.1);
+            padding: 12px 20px;
+            border-radius: 15px;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .discounts-banner {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(5, 150, 105, 0.1) 100%);
+            border: 1px solid #10b981;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 25px 0;
+            text-align: center;
+        }
+
+        .discounts-banner h4 {
+            color: #10b981;
+            margin-bottom: 10px;
+        }
+
+        .discount-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .service-section {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 35px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #DC2626;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        select, input {
+            padding: 15px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        select:focus, input:focus {
+            outline: none;
+            border-color: #DC2626;
+            box-shadow: 0 0 20px rgba(220, 38, 38, 0.2);
+        }
+
+        select option {
+            background: #1a1a2e;
+            color: white;
+            padding: 10px;
+        }
+
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .calculate-btn {
+            background: linear-gradient(135deg, #DC2626 0%, #B91C1C 50%, #991B1B 100%);
+            color: white;
+            border: none;
+            padding: 20px 50px;
+            border-radius: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin: 25px 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .calculate-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(220, 38, 38, 0.4);
+        }
+
+        .results {
+            background: linear-gradient(135deg, rgba(220, 38, 38, 0.1) 0%, rgba(185, 28, 28, 0.1) 100%);
+            border: 2px solid #DC2626;
+            border-radius: 20px;
+            padding: 35px;
+            margin-top: 30px;
+            display: none;
+        }
+
+        .results.show {
+            display: block;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .quote-display {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .service-summary {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 25px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .summary-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #DC2626;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 2px solid #DC2626;
+            padding-bottom: 10px;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 14px;
+        }
+
+        .summary-item:last-child {
+            border-bottom: none;
+        }
+
+        .savings-item {
+            color: #10b981;
+            font-weight: bold;
+        }
+
+        .price-display {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 30px 25px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .original-price {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: line-through;
+            margin-bottom: 5px;
+        }
+
+        .rate-label {
+            font-size: 16px;
+            color: #DC2626;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .total-price {
+            font-size: 3.2rem;
+            font-weight: bold;
+            color: #DC2626;
+            margin: 15px 0;
+            text-shadow: 0 0 20px rgba(220, 38, 38, 0.3);
+        }
+
+        .savings-badge {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .gratuity-note {
+            font-size: 12px;
+            opacity: 0.8;
+            color: #10b981;
+            margin-top: 10px;
+        }
+
+        .rate-details-toggle {
+            background: none;
+            border: 1px solid rgba(220, 38, 38, 0.5);
+            color: #DC2626;
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-size: 12px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .rate-details-toggle:hover {
+            background: rgba(220, 38, 38, 0.1);
+            border-color: #DC2626;
+        }
+
+        .rate-breakdown {
+            margin-top: 15px;
+            padding: 15px;
+            background: rgba(220, 38, 38, 0.05);
+            border-radius: 10px;
+            border: 1px solid rgba(220, 38, 38, 0.2);
+            display: none;
+        }
+
+        .rate-breakdown.show {
+            display: block;
+            animation: expandDown 0.3s ease-out;
+        }
+
+        @keyframes expandDown {
+            from { opacity: 0; max-height: 0; padding: 0 15px; }
+            to { opacity: 1; max-height: 250px; padding: 15px; }
+        }
+
+        .breakdown-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+            font-size: 13px;
+            border-bottom: 1px solid rgba(220, 38, 38, 0.1);
+        }
+
+        .breakdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .breakdown-section {
+            margin-bottom: 15px;
+        }
+
+        .breakdown-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .breakdown-title {
+            font-weight: bold;
+            color: #DC2626;
+            margin-bottom: 8px;
+            font-size: 14px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid rgba(220, 38, 38, 0.3);
+        }
+
+        .savings-highlight {
+            color: #10b981;
+            font-weight: bold;
+        }
+
+        .additional-costs {
+            background: rgba(255, 193, 7, 0.1);
+            border: 1px solid rgba(255, 193, 7, 0.3);
+            border-radius: 8px;
+            padding: 12px;
+            margin-top: 15px;
+            font-size: 12px;
+        }
+
+        .additional-costs h5 {
+            color: #ffc107;
+            margin-bottom: 8px;
+            font-size: 13px;
+        }
+
+        .contact-info {
+            text-align: center;
+            margin-top: 30px;
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .book-btn {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .book-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
+        }
+
+        .call-btn {
+            background: linear-gradient(135deg, #DC2626 0%, #B91C1C 100%);
+        }
+
+        @media (max-width: 768px) {
+            .form-row, .quote-display {
+                grid-template-columns: 1fr;
+            }
+            .promo-badge {
+                position: relative;
+                top: 0;
+                right: 0;
+                margin-bottom: 20px;
+                display: inline-block;
+            }
+            .total-price {
+                font-size: 2.5rem;
+            }
+            .discount-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="promo-badge">Save Up to 25%!</div>
+    
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                <svg class="logo-svg" viewBox="0 0 300 120">
+                    <defs>
+                        <radialGradient id="redGradient" cx="50%" cy="30%" r="70%">
+                            <stop offset="0%" stop-color="#FF4444" />
+                            <stop offset="50%" stop-color="#DC2626" />
+                            <stop offset="100%" stop-color="#B91C1C" />
+                        </radialGradient>
+                    </defs>
+                    <ellipse class="tnt-oval" cx="150" cy="45" rx="140" ry="35" />
+                    <text class="tnt-text" x="150" y="58">TNT</text>
+                    <text class="limousine-script" x="150" y="105">Limousine</text>
+                </svg>
+            </div>
+            <div class="tagline">Richmond's Premier Luxury Transportation</div>
+            <div class="service-area">
+                Serving Richmond • Charlottesville • Washington DC Metro
+            </div>
+        </div>
+
+        <div class="discounts-banner">
+            <h4>Current Promotions & Discounts</h4>
+            <div class="discount-list">
+                <div>• 10% Off Monday-Thursday</div>
+                <div>• 15% Off Last-Minute Bookings</div>
+                <div>• 10% Off 6+ Hour Trips</div>
+                <div>• 10% Off Multiple Vehicles</div>
+            </div>
+        </div>
+
+        <div class="service-section">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="serviceType">Service Type</label>
+                    <select id="serviceType" onchange="updateServiceOptions()">
+                        <option value="hourly">Hourly Charter Service</option>
+                        <option value="point-to-point">Point-to-Point Transfer</option>
+                        <option value="airport">Airport Transportation</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="vehicleType">Vehicle Selection</label>
+                    <select id="vehicleType">
+                        <option value="sedan">Luxury Sedan - 3 passengers</option>
+                        <option value="transit">Executive Van - 12-15 passengers</option>
+                        <option value="executive-mini-bus">Executive Mini Bus - 12 passengers</option>
+                        <option value="mini-bus-sofa">VIP Mini Bus - 10 passengers</option>
+                        <option value="stretch-limo">Stretch Limousine - 8 passengers</option>
+                        <option value="sprinter-limo">Sprinter Limousine - 10 passengers</option>
+                        <option value="limo-bus">Luxury Coach - 18 passengers</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row" id="hourlyOptions">
+                <div class="form-group">
+                    <label for="hours">Duration</label>
+                    <select id="hours">
+                        <option value="3">3 Hours (Minimum)</option>
+                        <option value="4">4 Hours</option>
+                        <option value="5">5 Hours</option>
+                        <option value="6">6 Hours (10% Discount!)</option>
+                        <option value="8">8 Hours (10% Discount!)</option>
+                        <option value="10">10+ Hours (10% Discount!)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="dayType">Service Day</label>
+                    <select id="dayType">
+                        <option value="weekday">Monday-Thursday (10% Off!)</option>
+                        <option value="weekend">Friday-Sunday</option>
+                        <option value="holiday">Holiday (Premium)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row" id="pointToPointOptions" style="display: none;">
+                <div class="form-group">
+                    <label for="distance">Trip Distance</label>
+                    <select id="distance">
+                        <option value="local">Local Area (Richmond Metro)</option>
+                        <option value="regional">Regional (30-60 miles)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="estimatedTime">Estimated Duration</label>
+                    <select id="estimatedTime">
+                        <option value="1">1 Hour</option>
+                        <option value="1.5">1.5 Hours</option>
+                        <option value="2">2 Hours</option>
+                        <option value="2.5">2.5 Hours</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row" id="airportOptions" style="display: none;">
+                <div class="form-group">
+                    <label for="airportCode">Airport Destination</label>
+                    <select id="airportCode">
+                        <option value="richmond">Richmond International (RIC)</option>
+                        <option value="charlottesville">Charlottesville (CHO)</option>
+                        <option value="williamsburg">Williamsburg Area</option>
+                        <option value="national">Reagan National (DCA)</option>
+                        <option value="dulles">Washington Dulles (IAD)</option>
+                        <option value="bwi">Baltimore Washington (BWI)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="tripType">Trip Type</label>
+                    <select id="tripType">
+                        <option value="one-way">One Way</option>
+                        <option value="round-trip">Round Trip</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="serviceDate">Service Date</label>
+                    <input type="date" id="serviceDate">
+                </div>
+                <div class="form-group">
+                    <label for="serviceTime">Pickup Time</label>
+                    <input type="time" id="serviceTime">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="pickupLocation">Pickup Location</label>
+                    <input type="text" id="pickupLocation" placeholder="Enter pickup address">
+                </div>
+                <div class="form-group">
+                    <label for="dropoffLocation">Destination</label>
+                    <input type="text" id="dropoffLocation" placeholder="Enter destination address">
+                </div>
+            </div>
+
+            <button class="calculate-btn" onclick="calculateCustomerRate()">
+                Get Your Best Rate
+            </button>
+        </div>
+
+        <div class="results" id="results">
+            <h3 style="text-align: center; margin-bottom: 30px; color: #DC2626; font-size: 1.8rem;">
+                Your Transportation Quote
+            </h3>
+            
+            <div class="quote-display">
+                <div class="service-summary">
+                    <div class="summary-title">Trip Details</div>
+                    <div id="serviceDetails"></div>
+                </div>
+                <div class="price-display">
+                    <div class="original-price" id="originalPrice" style="display: none;">$0.00</div>
+                    <div class="rate-label">Your Rate</div>
+                    <div class="total-price" id="totalPrice">$0.00</div>
+                    <div class="savings-badge" id="savingsBadge" style="display: none;">You Save $0!</div>
+                    <div class="gratuity-note">*All-Inclusive Rate</div>
+                    <button class="rate-details-toggle" onclick="toggleCustomerRateDetails()">See What's Included</button>
+                    <div class="rate-breakdown" id="rateBreakdown">
+                        <div id="breakdownSections"></div>
+                        <div class="additional-costs">
+                            <h5>Additional Costs (When They Apply):</h5>
+                            • <strong>Tolls & Parking:</strong> Added to final bill at cost<br>
+                            • <strong>Wait Time:</strong> First 15 minutes free, then $25/hr<br>
+                            • <strong>Route Changes:</strong> No charge during trip<br>
+                            • <strong>Extra Stops:</strong> $15 per additional stop<br>
+                            • <strong>Cleaning Fee:</strong> $75 if excessive mess
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="contact-info">
+                <p style="font-size: 1.2rem; margin-bottom: 15px;">
+                    <strong>Ready to Book Your Luxury Transportation?</strong>
+                </p>
+                <button class="book-btn" onclick="bookCustomerService()">
+                    Book Online Now
+                </button>
+                <button class="book-btn call-btn" onclick="callToBook()">
+                    Call to Book
+                </button>
+                <p style="margin: 15px 0;">Phone: <strong>(804) 972-4550</strong></p>
+                <p style="margin-bottom: 15px;">Email: <strong>info@tntlimousine.com</strong></p>
+                <p style="font-size: 14px; opacity: 0.9;">
+                    Professional drivers • Luxury vehicles • 24/7 availability
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Standard Customer Rate Data
+        const CustomerRates = {
+            hourly: {
+                'sedan': { base: 60, gratuity: 12, fuel: 10, mileage: 18, total: 100 },
+                'transit': { base: 90, gratuity: 19, fuel: 10, mileage: 18, total: 137 },
+                'executive-mini-bus': { base: 95, gratuity: 19, fuel: 10, mileage: 18, total: 142 },
+                'mini-bus-sofa': { base: 95, gratuity: 19, fuel: 10, mileage: 18, total: 142 },
+                'stretch-limo': { base: 113, gratuity: 19, fuel: 10, mileage: 18, total: 160 },
+                'sprinter-limo': { base: 113, gratuity: 19, fuel: 10, mileage: 18, total: 160 },
+                'limo-bus': { base: 152, gratuity: 28, fuel: 10, mileage: 18, total: 208 }
+            },
+            pointToPoint: {
+                'sedan': { base: 95, gratuity: 40, fuel: 10, mileage: 10, total: 155 },
+                'transit': { base: 165, gratuity: 40, fuel: 10, mileage: 10, total: 225 },
+                'executive-mini-bus': { base: 170, gratuity: 50, fuel: 10, mileage: 10, total: 240 },
+                'mini-bus-sofa': { base: 170, gratuity: 50, fuel: 10, mileage: 10, total: 240 },
+                'stretch-limo': { base: 230, gratuity: 50, fuel: 10, mileage: 10, total: 300 },
+                'sprinter-limo': { base: 260, gratuity: 50, fuel: 10, mileage: 10, total: 330 },
+                'limo-bus': { base: 300, gratuity: 50, fuel: 10, mileage: 10, total: 370 }
+            },
+            airport: {
+                'sedan': { richmond: 105, charlottesville: 333, williamsburg: 280, national: 450, dulles: 460, bwi: 657 },
+                'transit': { richmond: 175, charlottesville: 525, williamsburg: 420, national: 700, dulles: 710, bwi: 854 },
+                'executive-mini-bus': { richmond: 185, charlottesville: 545, williamsburg: 440, national: 720, dulles: 730, bwi: 874 },
+                'mini-bus-sofa': { richmond: 185, charlottesville: 545, williamsburg: 440, national: 720, dulles: 730, bwi: 874 },
+                'stretch-limo': { richmond: 220, charlottesville: 625, williamsburg: 520, national: 820, dulles: 830, bwi: 1020 },
+                'sprinter-limo': { richmond: 194, charlottesville: 575, williamsburg: 480, national: 780, dulles: 790, bwi: 910 },
+                'limo-bus': { richmond: 225, charlottesville: 624, williamsburg: 525, national: 1020, dulles: 1045, bwi: 1265 }
+            },
+            vehicleNames: {
+                'sedan': 'Luxury Sedan',
+                'transit': 'Executive Van',
+                'executive-mini-bus': 'Executive Mini Bus',
+                'mini-bus-sofa': 'VIP Mini Bus',
+                'stretch-limo': 'Stretch Limousine',
+                'sprinter-limo': 'Sprinter Limousine',
+                'limo-bus': 'Luxury Coach'
+            }
+        };
+
+        function updateServiceOptions() {
+            const serviceType = document.getElementById('serviceType').value;
+            const hourlyOptions = document.getElementById('hourlyOptions');
+            const pointToPointOptions = document.getElementById('pointToPointOptions');
+            const airportOptions = document.getElementById('airportOptions');
+
+            // Hide all first
+            hourlyOptions.style.display = 'none';
+            pointToPointOptions.style.display = 'none';
+            airportOptions.style.display = 'none';
+
+            // Show appropriate options
+            if (serviceType === 'hourly') {
+                hourlyOptions.style.display = 'grid';
+            } else if (serviceType === 'point-to-point') {
+                pointToPointOptions.style.display = 'grid';
+            } else if (serviceType === 'airport') {
+                airportOptions.style.display = 'grid';
+            }
+        }
+
+        function calculateCustomerRate() {
+            const serviceType = document.getElementById('serviceType').value;
+            const vehicleType = document.getElementById('vehicleType').value;
+            
+            let basePrice = 0;
+            let finalPrice = 0;
+            let serviceDetails = [];
+            let appliedDiscounts = [];
+            
+            serviceDetails.push({
+                item: 'Vehicle',
+                value: CustomerRates.vehicleNames[vehicleType]
+            });
+            
+            if (serviceType === 'hourly') {
+                const hours = parseInt(document.getElementById('hours').value);
+                const dayType = document.getElementById('dayType').value;
+                const actualHours = Math.max(hours, 3);
+                
+                serviceDetails.push({
+                    item: 'Service Type',
+                    value: `Hourly Charter (${actualHours} hours)`
+                });
+                
+                basePrice = CustomerRates.hourly[vehicleType].total * actualHours;
+                finalPrice = basePrice;
+                
+                // Apply discounts
+                if (dayType === 'weekday') {
+                    const discount = finalPrice * 0.10;
+                    appliedDiscounts.push({ type: 'Monday-Thursday Discount', amount: discount });
+                    finalPrice -= discount;
+                } else if (dayType === 'holiday') {
+                    const surcharge = finalPrice * 0.25;
+                    finalPrice += surcharge;
+                    serviceDetails.push({ item: 'Holiday Surcharge', value: '+25%' });
+                }
+                
+                if (hours >= 6) {
+                    const discount = finalPrice * 0.10;
+                    appliedDiscounts.push({ type: '6+ Hour Discount', amount: discount });
+                    finalPrice -= discount;
+                }
+                
+            } else if (serviceType === 'point-to-point') {
+                const distance = document.getElementById('distance').value;
+                const estimatedTime = parseFloat(document.getElementById('estimatedTime').value);
+                
+                serviceDetails.push({
+                    item: 'Service Type',
+                    value: 'Point-to-Point Transfer'
+                });
+                
+                serviceDetails.push({
+                    item: 'Distance',
+                    value: distance === 'local' ? 'Local Area' : 'Regional'
+                });
+                
+                // Base P2P rate plus additional time if over 1 hour
+                basePrice = CustomerRates.pointToPoint[vehicleType].total;
+                if (estimatedTime > 1) {
+                    const additionalTime = estimatedTime - 1;
+                    const additionalRate = CustomerRates.hourly[vehicleType].total * 0.7; // 70% of hourly rate
+                    basePrice += additionalRate * additionalTime;
+                }
+                
+                finalPrice = basePrice;
+                
+                // Regional surcharge
+                if (distance === 'regional') {
+                    const regionalSurcharge = basePrice * 0.15;
+                    finalPrice += regionalSurcharge;
+                    serviceDetails.push({ item: 'Regional Surcharge', value: '+15%' });
+                }
+                
+            } else if (serviceType === 'airport') {
+                const airportCode = document.getElementById('airportCode').value;
+                const tripType = document.getElementById('tripType').value;
+                
+                const airportNames = {
+                    richmond: 'Richmond International',
+                    charlottesville: 'Charlottesville',
+                    williamsburg: 'Williamsburg Area',
+                    national: 'Reagan National',
+                    dulles: 'Washington Dulles',
+                    bwi: 'Baltimore Washington'
+                };
+                
+                serviceDetails.push({
+                    item: 'Service Type',
+                    value: 'Airport Transfer'
+                });
+                
+                serviceDetails.push({
+                    item: 'Airport',
+                    value: airportNames[airportCode]
+                });
+                
+                serviceDetails.push({
+                    item: 'Trip Type',
+                    value: tripType === 'round-trip' ? 'Round Trip' : 'One Way'
+                });
+                
+                basePrice = CustomerRates.airport[vehicleType][airportCode];
+                if (tripType === 'round-trip') {
+                    basePrice *= 1.8; // Round trip adjustment
+                }
+                
+                finalPrice = basePrice;
+            }
+            
+            // Check for after-hours
+            const serviceTime = document.getElementById('serviceTime').value;
+            if (serviceTime) {
+                const hour = parseInt(serviceTime.split(':')[0]);
+                if (hour >= 23 || hour < 6) {
+                    finalPrice += 20; // After hours fee
+                    serviceDetails.push({ item: 'After-Hours Fee', value: '+$20' });
+                }
+            }
+            
+            // Check for last-minute booking
+            const serviceDate = document.getElementById('serviceDate').value;
+            if (serviceDate) {
+                const today = new Date();
+                const service = new Date(serviceDate);
+                const diffTime = service - today;
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                
+                if (diffDays <= 1) {
+                    const discount = finalPrice * 0.15;
+                    appliedDiscounts.push({ type: 'Last-Minute Discount', amount: discount });
+                    finalPrice -= discount;
+                }
+            }
+            
+            displayCustomerResults(serviceDetails, appliedDiscounts, basePrice, finalPrice, serviceType, vehicleType, hours || estimatedTime || 1);
+        }
+        
+        function toggleCustomerRateDetails() {
+            const breakdown = document.getElementById('rateBreakdown');
+            const button = document.querySelector('.rate-details-toggle');
+            
+            if (breakdown.classList.contains('show')) {
+                breakdown.classList.remove('show');
+                button.textContent = 'See What\'s Included';
+            } else {
+                breakdown.classList.add('show');
+                button.textContent = 'Hide Details';
+            }
+        }
+        
+        function displayCustomerResults(serviceDetails, appliedDiscounts, originalPrice, finalPrice, serviceType, vehicleType, duration) {
+            const resultsDiv = document.getElementById('results');
+            const serviceDetailsDiv = document.getElementById('serviceDetails');
+            const originalPriceDiv = document.getElementById('originalPrice');
+            const totalPriceDiv = document.getElementById('totalPrice');
+            const savingsBadge = document.getElementById('savingsBadge');
+            
+            // Clear previous results
+            serviceDetailsDiv.innerHTML = '';
+            
+            // Add service details
+            serviceDetails.forEach(detail => {
+                const detailDiv = document.createElement('div');
+                detailDiv.className = 'summary-item';
+                detailDiv.innerHTML = `<span>${detail.item}:</span><span><strong>${detail.value}</strong></span>`;
+                serviceDetailsDiv.appendChild(detailDiv);
+            });
+            
+            // Add discounts applied
+            if (appliedDiscounts.length > 0) {
+                appliedDiscounts.forEach(discount => {
+                    const discountDiv = document.createElement('div');
+                    discountDiv.className = 'summary-item savings-item';
+                    discountDiv.innerHTML = `<span>${discount.type}:</span><span><strong>-$${discount.amount.toFixed(2)}</strong></span>`;
+                    serviceDetailsDiv.appendChild(discountDiv);
+                });
+            }
+            
+            // Show original price if discounts applied
+            const totalSavings = appliedDiscounts.reduce((sum, discount) => sum + discount.amount, 0);
+            if (totalSavings > 0) {
+                originalPriceDiv.textContent = `$${originalPrice.toFixed(2)}`;
+                originalPriceDiv.style.display = 'block';
+                savingsBadge.textContent = `You Save $${totalSavings.toFixed(2)}!`;
+                savingsBadge.style.display = 'inline-block';
+            } else {
+                originalPriceDiv.style.display = 'none';
+                savingsBadge.style.display = 'none';
+            }
+            
+            // Set final price
+            totalPriceDiv.textContent = `$${finalPrice.toFixed(2)}`;
+            
+            // Add detailed rate breakdown
+            const breakdownSections = document.getElementById('breakdownSections');
+            breakdownSections.innerHTML = '';
+            
+            // Base rate breakdown section
+            const baseSection = document.createElement('div');
+            baseSection.className = 'breakdown-section';
+            
+            if (serviceType === 'hourly') {
+                const rateData = CustomerRates.hourly[vehicleType];
+                baseSection.innerHTML = `
+                    <div class="breakdown-title">Hourly Rate Components</div>
+                    <div class="breakdown-item"><span>Base Vehicle Rate:</span><span>$${rateData.base}/hr</span></div>
+                    <div class="breakdown-item"><span>Professional Driver:</span><span>$${rateData.gratuity}/hr</span></div>
+                    <div class="breakdown-item"><span>Fuel & Maintenance:</span><span>$${rateData.fuel}/hr</span></div>
+                    <div class="breakdown-item"><span>Insurance & Licensing:</span><span>$${rateData.mileage}/hr</span></div>
+                    <div class="breakdown-item" style="font-weight: bold; border-top: 1px solid rgba(220, 38, 38, 0.3); margin-top: 5px; padding-top: 8px;"><span>Hourly Rate:</span><span>$${rateData.total}/hr</span></div>
+                `;
+            } else if (serviceType === 'point-to-point') {
+                const rateData = CustomerRates.pointToPoint[vehicleType];
+                baseSection.innerHTML = `
+                    <div class="breakdown-title">Point-to-Point Rate Components</div>
+                    <div class="breakdown-item"><span>Base Transport Rate:</span><span>$${rateData.base}</span></div>
+                    <div class="breakdown-item"><span>Professional Driver:</span><span>$${rateData.gratuity}</span></div>
+                    <div class="breakdown-item"><span>Fuel & Maintenance:</span><span>$${rateData.fuel}</span></div>
+                    <div class="breakdown-item"><span>Trip Coordination:</span><span>$${rateData.mileage}</span></div>
+                    <div class="breakdown-item" style="font-weight: bold; border-top: 1px solid rgba(220, 38, 38, 0.3); margin-top: 5px; padding-top: 8px;"><span>Base Rate:</span><span>$${rateData.total}</span></div>
+                `;
+            } else if (serviceType === 'airport') {
+                baseSection.innerHTML = `
+                    <div class="breakdown-title">Airport Transfer Components</div>
+                    <div class="breakdown-item"><span>Base Transfer Rate:</span><span>$${(finalPrice * 0.70).toFixed(2)}</span></div>
+                    <div class="breakdown-item"><span>Professional Driver:</span><span>$${(finalPrice * 0.20).toFixed(2)}</span></div>
+                    <div class="breakdown-item"><span>Fuel & Tolls Estimate:</span><span>$${(finalPrice * 0.10).toFixed(2)}</span></div>
+                    <div class="breakdown-item" style="font-weight: bold; border-top: 1px solid rgba(220, 38, 38, 0.3); margin-top: 5px; padding-top: 8px;"><span>Airport Rate:</span><span>$${finalPrice.toFixed(2)}</span></div>
+                `;
+            }
+            
+            breakdownSections.appendChild(baseSection);
+            
+            // Discounts section if applicable
+            if (appliedDiscounts.length > 0) {
+                const discountSection = document.createElement('div');
+                discountSection.className = 'breakdown-section';
+                let discountHTML = '<div class="breakdown-title">Your Savings</div>';
+                
+                appliedDiscounts.forEach(discount => {
+                    discountHTML += `<div class="breakdown-item savings-highlight"><span>${discount.type}:</span><span>-$${discount.amount.toFixed(2)}</span></div>`;
+                });
+                
+                const totalSavings = appliedDiscounts.reduce((sum, discount) => sum + discount.amount, 0);
+                discountHTML += `<div class="breakdown-item savings-highlight" style="font-weight: bold; border-top: 1px solid #10b981; margin-top: 5px; padding-top: 8px;"><span>Total Savings:</span><span>-$${totalSavings.toFixed(2)}</span></div>`;
+                
+                discountSection.innerHTML = discountHTML;
+                breakdownSections.appendChild(discountSection);
+            }
+            
+            // Show results
+            resultsDiv.classList.add('show');
+            resultsDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        function bookCustomerService() {
+            const serviceType = document.getElementById('serviceType').value;
+            const vehicleType = document.getElementById('vehicleType').value;
+            const vehicleName = CustomerRates.vehicleNames[vehicleType];
+            const totalPrice = document.getElementById('totalPrice').textContent;
+            
+            alert(`Booking Request Submitted!\\n\\nService: ${serviceType === 'hourly' ? 'Hourly Charter' : serviceType === 'point-to-point' ? 'Point-to-Point' : 'Airport Transfer'}\\nVehicle: ${vehicleName}\\nTotal: ${totalPrice}\\n\\nYour booking request has been submitted to our dispatch team.\\n\\nYou will receive confirmation within 30 minutes via phone call and email.\\n\\nBooking Reference: TNT-${Date.now().toString().slice(-6)}\\n\\nThank you for choosing TNT Limousine!`);
+        }
+        
+        function callToBook() {
+            alert('Call TNT Limousine Now!\\n\\nPhone: (804) 972-4550\\n\\n• Immediate booking confirmation\\n• Special requests and modifications\\n• Group booking discounts\\n• Corporate account setup\\n\\nOur booking specialists are available 24/7 to assist you.');
+        }
+        
+        // Set default date to tomorrow
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        document.getElementById('serviceDate').valueAsDate = tomorrow;
+        
+        // Set default time to 6 PM
+        document.getElementById('serviceTime').value = '18:00';
+    </script>
+</body>
+</html>

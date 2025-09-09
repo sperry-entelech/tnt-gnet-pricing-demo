@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TNT Limousine - GNET Partner Portal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #2c2c2c 0%, #1a1a1a 50%, #000000 100%);
+            color: white;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .partner-badge {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            z-index: 1000;
+            color: white;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: rgba(220, 38, 38, 0.1);
+            backdrop-filter: blur(15px);
+            border-radius: 25px;
+            padding: 40px;
+            border: 2px solid rgba(192, 192, 192, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        
+        .logo-svg {
+            width: 300px;
+            height: 120px;
+        }
+        
+        .tnt-oval {
+            fill: url(#redGradient);
+            stroke: #C0C0C0;
+            stroke-width: 3;
+        }
+        
+        .tnt-text {
+            fill: white;
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            font-size: 48px;
+            text-anchor: middle;
+        }
+        
+        .limousine-script {
+            fill: white;
+            font-family: 'Brush Script MT', cursive;
+            font-size: 24px;
+            font-style: italic;
+            text-anchor: middle;
+        }
+
+        .partner-info {
+            font-size: 1.2rem;
+            color: #667eea;
+            font-weight: 500;
+            padding: 15px 25px;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            border-radius: 15px;
+            border: 1px solid rgba(102, 126, 234, 0.3);
+            margin: 20px 0;
+        }
+
+        .commission-banner {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            border: 1px solid #667eea;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 25px 0;
+            text-align: center;
+        }
+
+        .commission-banner h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .commission-rates {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .service-section {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 35px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #DC2626;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        select, input {
+            padding: 15px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        select:focus, input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 20px rgba(102, 126, 234, 0.2);
+        }
+
+        select option {
+            background: #1a1a2e;
+            color: white;
+            padding: 10px;
+        }
+
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .calculate-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 20px 50px;
+            border-radius: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin: 25px 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .calculate-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
+        }
+
+        .results {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            border: 2px solid #667eea;
+            border-radius: 20px;
+            padding: 35px;
+            margin-top: 30px;
+            display: none;
+        }
+
+        .results.show {
+            display: block;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .quote-display {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .service-summary {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 25px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .summary-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 14px;
+        }
+
+        .summary-item:last-child {
+            border-bottom: none;
+        }
+
+        .price-display {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 25px 20px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .rate-label {
+            font-size: 14px;
+            color: #667eea;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .total-price {
+            font-size: 2.2rem;
+            font-weight: bold;
+            color: #DC2626;
+            margin: 10px 0;
+            text-shadow: 0 0 20px rgba(220, 38, 38, 0.3);
+        }
+
+        .commission-display {
+            text-align: center;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            padding: 25px 20px;
+            border-radius: 15px;
+            border: 1px solid #667eea;
+        }
+
+        .commission-price {
+            font-size: 2.2rem;
+            font-weight: bold;
+            color: #667eea;
+            margin: 10px 0;
+            text-shadow: 0 0 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .gratuity-note {
+            font-size: 12px;
+            opacity: 0.8;
+            color: #10b981;
+            margin-top: 10px;
+        }
+
+        .rate-details-toggle {
+            background: none;
+            border: 1px solid rgba(102, 126, 234, 0.5);
+            color: #667eea;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 11px;
+            cursor: pointer;
+            margin-top: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .rate-details-toggle:hover {
+            background: rgba(102, 126, 234, 0.1);
+            border-color: #667eea;
+        }
+
+        .rate-breakdown {
+            margin-top: 12px;
+            padding: 12px;
+            background: rgba(102, 126, 234, 0.05);
+            border-radius: 8px;
+            border: 1px solid rgba(102, 126, 234, 0.2);
+            display: none;
+            font-size: 12px;
+        }
+
+        .rate-breakdown.show {
+            display: block;
+            animation: expandDown 0.3s ease-out;
+        }
+
+        @keyframes expandDown {
+            from { opacity: 0; max-height: 0; padding: 0 12px; }
+            to { opacity: 1; max-height: 200px; padding: 12px; }
+        }
+
+        .breakdown-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 3px 0;
+            font-size: 12px;
+            border-bottom: 1px solid rgba(102, 126, 234, 0.1);
+        }
+
+        .breakdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .breakdown-section {
+            margin-bottom: 10px;
+        }
+
+        .breakdown-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .breakdown-title {
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 6px;
+            font-size: 13px;
+            padding-bottom: 3px;
+            border-bottom: 1px solid rgba(102, 126, 234, 0.3);
+        }
+
+        .commission-breakdown {
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 6px;
+            padding: 8px;
+            margin-top: 8px;
+        }
+
+        .partner-benefits {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 8px;
+            padding: 10px;
+            margin-top: 10px;
+            font-size: 11px;
+        }
+
+        .partner-benefits h5 {
+            color: #10b981;
+            margin-bottom: 6px;
+            font-size: 12px;
+        }
+
+        .integration-info {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 25px 0;
+            text-align: center;
+        }
+
+        .integration-info h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .contact-info {
+            text-align: center;
+            margin-top: 30px;
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .book-btn {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .book-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
+        }
+
+        .partner-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        @media (max-width: 1024px) {
+            .quote-display {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            .partner-badge {
+                position: relative;
+                top: 0;
+                right: 0;
+                margin-bottom: 20px;
+                display: inline-block;
+            }
+            .commission-rates {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="partner-badge">GNET Affiliate Partner</div>
+    
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                <svg class="logo-svg" viewBox="0 0 300 120">
+                    <defs>
+                        <radialGradient id="redGradient" cx="50%" cy="30%" r="70%">
+                            <stop offset="0%" stop-color="#FF4444" />
+                            <stop offset="50%" stop-color="#DC2626" />
+                            <stop offset="100%" stop-color="#B91C1C" />
+                        </radialGradient>
+                    </defs>
+                    <ellipse class="tnt-oval" cx="150" cy="45" rx="140" ry="35" />
+                    <text class="tnt-text" x="150" y="58">TNT</text>
+                    <text class="limousine-script" x="150" y="105">Limousine</text>
+                </svg>
+            </div>
+            <div class="partner-info">
+                GNET Affiliate Partner Portal - Premium Transportation Services
+            </div>
+        </div>
+
+        <!-- Commission banner hidden unless specifically needed
+        <div class="commission-banner">
+            <h4>Partner Commission Structure</h4>
+            <div class="commission-rates">
+                <div>• Standard Services: 12% Commission</div>
+                <div>• Airport & Premium: 15% Commission</div>
+            </div>
+        </div>
+        -->
+
+        <div class="service-section">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="serviceType">Service Type</label>
+                    <select id="serviceType" onchange="updateServiceOptions()">
+                        <option value="hourly">Hourly Charter Service</option>
+                        <option value="airport">Airport Transportation</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="vehicleType">Vehicle Selection</label>
+                    <select id="vehicleType">
+                        <option value="sedan">Executive Sedan (Lincoln MKT/Aviator) - Up to 3 passengers</option>
+                        <option value="transit">Transit Van - Up to 15 passengers</option>
+                        <option value="executive-mini-bus">Executive Mini Bus (Unit 09) - Up to 12 passengers</option>
+                        <option value="mini-bus-sofa">Mini Bus with Sofa Seating (Unit 01) - Up to 10 passengers</option>
+                        <option value="stretch-limo">Stretch Limousine (Lincoln Continental, Unit 03) - Up to 8 passengers</option>
+                        <option value="sprinter-limo">Sprinter Limousine (Unit 02) - Up to 10 passengers</option>
+                        <option value="limo-bus">Executive Limo Bus (Unit 10) - Up to 18 passengers</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row" id="hourlyOptions">
+                <div class="form-group">
+                    <label for="hours">Duration</label>
+                    <select id="hours">
+                        <option value="3">3 Hours (Minimum)</option>
+                        <option value="4">4 Hours</option>
+                        <option value="5">5 Hours</option>
+                        <option value="6">6 Hours</option>
+                        <option value="8">8 Hours</option>
+                        <option value="10">10+ Hours</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="passengers">Passenger Count</label>
+                    <select id="passengers">
+                        <option value="1">1-2 Passengers</option>
+                        <option value="3">3-5 Passengers</option>
+                        <option value="6">6-10 Passengers</option>
+                        <option value="11">11+ Passengers</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row" id="airportOptions" style="display: none;">
+                <div class="form-group">
+                    <label for="airportCode">Airport Destination</label>
+                    <select id="airportCode">
+                        <option value="richmond">Richmond International (RIC)</option>
+                        <option value="charlottesville">Charlottesville (CHO)</option>
+                        <option value="williamsburg">Williamsburg Area</option>
+                        <option value="national">Reagan National (DCA)</option>
+                        <option value="dulles">Washington Dulles (IAD)</option>
+                        <option value="bwi">Baltimore Washington (BWI)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="tripType">Service Type</label>
+                    <select id="tripType">
+                        <option value="one-way">One Way Transfer</option>
+                        <option value="round-trip">Round Trip Transfer</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="serviceDate">Service Date</label>
+                    <input type="date" id="serviceDate">
+                </div>
+                <div class="form-group">
+                    <label for="serviceTime">Pickup Time</label>
+                    <input type="time" id="serviceTime">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="clientName">Client Name</label>
+                    <input type="text" id="clientName" placeholder="Enter client name">
+                </div>
+                <div class="form-group">
+                    <label for="partnerRef">Partner Reference</label>
+                    <input type="text" id="partnerRef" placeholder="Your booking reference">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="pickupLocation">Pickup Location</label>
+                    <input type="text" id="pickupLocation" placeholder="Enter pickup address">
+                </div>
+                <div class="form-group">
+                    <label for="dropoffLocation">Destination</label>
+                    <input type="text" id="dropoffLocation" placeholder="Enter destination address">
+                </div>
+            </div>
+
+            <button class="calculate-btn" onclick="calculateGNETRate()">
+                Generate Partner Quote & Commission
+            </button>
+        </div>
+
+        <div class="results" id="results">
+            <h3 style="text-align: center; margin-bottom: 30px; color: #667eea; font-size: 1.8rem;">
+                GNET Partner Quote & Commission
+            </h3>
+            
+            <div class="quote-display">
+                <div class="service-summary">
+                    <div class="summary-title">Booking Details</div>
+                    <div id="serviceDetails"></div>
+                </div>
+                <div class="price-display">
+                    <div class="rate-label">Client Rate</div>
+                    <div class="total-price" id="totalPrice">$0.00</div>
+                    <div class="gratuity-note">*All-Inclusive Rate</div>
+                </div>
+                <div class="commission-display">
+                    <div class="rate-label">Your Commission</div>
+                    <div class="commission-price" id="commissionPrice">$0.00</div>
+                    <div class="gratuity-note" id="commissionRate">12% Rate</div>
+                    <button class="rate-details-toggle" onclick="toggleCommissionDetails()">View Details</button>
+                    <div class="rate-breakdown" id="commissionBreakdown">
+                        <div id="commissionBreakdownItems"></div>
+                        <div class="partner-benefits">
+                            <h5>Partner Benefits:</h5>
+                            • Monthly commission payments<br>
+                            • Real-time booking tracking<br>
+                            • Dedicated partner support<br>
+                            • Marketing materials provided<br>
+                            • Volume bonus opportunities
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="integration-info">
+                <h4>GNET Integration Status</h4>
+                <p style="font-size: 14px; opacity: 0.9;">
+                    Quote ready for submission • FastTrack dispatch integration • Commission tracking active
+                </p>
+            </div>
+            
+            <div class="contact-info">
+                <p style="font-size: 1.2rem; margin-bottom: 15px;">
+                    <strong>Ready to Submit Partner Booking?</strong>
+                </p>
+                <button class="book-btn partner-btn" onclick="submitGNETBooking()">
+                    Submit to TNT Dispatch
+                </button>
+                <button class="book-btn" onclick="exportToGNETSystem()">
+                    Export to GNET System
+                </button>
+                <p style="margin: 15px 0;">Partner Support: <strong>(804) 972-4550</strong></p>
+                <p style="margin-bottom: 15px;">Partner Email: <strong>partners@tntlimousine.com</strong></p>
+                <p style="font-size: 14px; opacity: 0.9;">
+                    Dedicated partner support • Real-time tracking • Monthly commission reports
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // GNET Partner Rate Data (Standard TNT rates)
+        const GNETRates = {
+            hourly: {
+                'sedan': 100,
+                'transit': 137,
+                'executive-mini-bus': 142,
+                'mini-bus-sofa': 142,
+                'stretch-limo': 160,
+                'sprinter-limo': 160,
+                'limo-bus': 208
+            },
+            airport: {
+                'sedan': {
+                    richmond: 105, charlottesville: 333, williamsburg: 280,
+                    national: 450, dulles: 460, bwi: 657
+                },
+                'transit': {
+                    richmond: 175, charlottesville: 525, williamsburg: 420,
+                    national: 700, dulles: 710, bwi: 854
+                },
+                'executive-mini-bus': {
+                    richmond: 185, charlottesville: 545, williamsburg: 440,
+                    national: 720, dulles: 730, bwi: 874
+                },
+                'mini-bus-sofa': {
+                    richmond: 185, charlottesville: 545, williamsburg: 440,
+                    national: 720, dulles: 730, bwi: 874
+                },
+                'stretch-limo': {
+                    richmond: 220, charlottesville: 625, williamsburg: 520,
+                    national: 820, dulles: 830, bwi: 1020
+                },
+                'sprinter-limo': {
+                    richmond: 194, charlottesville: 575, williamsburg: 480,
+                    national: 780, dulles: 790, bwi: 910
+                },
+                'limo-bus': {
+                    richmond: 225, charlottesville: 624, williamsburg: 525,
+                    national: 1020, dulles: 1045, bwi: 1265
+                }
+            },
+            commission: {
+                standard: 0.12, // 12%
+                premium: 0.15   // 15% for airport/luxury
+            },
+            vehicleNames: {
+                'sedan': 'Executive Sedan (Lincoln MKT/Aviator)',
+                'transit': 'Transit Van',
+                'executive-mini-bus': 'Executive Mini Bus',
+                'mini-bus-sofa': 'Mini Bus with Sofa Seating',
+                'stretch-limo': 'Stretch Limousine (Lincoln Continental)',
+                'sprinter-limo': 'Sprinter Limousine',
+                'limo-bus': 'Executive Limo Bus'
+            }
+        };
+
+        function updateServiceOptions() {
+            const serviceType = document.getElementById('serviceType').value;
+            const hourlyOptions = document.getElementById('hourlyOptions');
+            const airportOptions = document.getElementById('airportOptions');
+
+            if (serviceType === 'airport') {
+                hourlyOptions.style.display = 'none';
+                airportOptions.style.display = 'grid';
+            } else {
+                hourlyOptions.style.display = 'grid';
+                airportOptions.style.display = 'none';
+            }
+        }
+
+        function calculateGNETRate() {
+            const serviceType = document.getElementById('serviceType').value;
+            const vehicleType = document.getElementById('vehicleType').value;
+            const clientName = document.getElementById('clientName').value;
+            const partnerRef = document.getElementById('partnerRef').value;
+            
+            let totalPrice = 0;
+            let commissionRate = GNETRates.commission.standard;
+            let serviceDetails = [];
+            
+            serviceDetails.push({
+                item: 'Partner',
+                value: 'GNET Affiliate'
+            });
+            
+            if (clientName) {
+                serviceDetails.push({
+                    item: 'Client',
+                    value: clientName
+                });
+            }
+            
+            if (partnerRef) {
+                serviceDetails.push({
+                    item: 'Reference',
+                    value: partnerRef
+                });
+            }
+            
+            serviceDetails.push({
+                item: 'Vehicle',
+                value: GNETRates.vehicleNames[vehicleType]
+            });
+            
+            if (serviceType === 'hourly') {
+                const hours = parseInt(document.getElementById('hours').value);
+                const actualHours = Math.max(hours, 3);
+                
+                serviceDetails.push({
+                    item: 'Service Type',
+                    value: `Hourly Charter (${actualHours} hours)`
+                });
+                
+                totalPrice = GNETRates.hourly[vehicleType] * actualHours;
+                commissionRate = GNETRates.commission.standard; // 12%
+                
+            } else if (serviceType === 'airport') {
+                const airportCode = document.getElementById('airportCode').value;
+                const tripType = document.getElementById('tripType').value;
+                
+                const airportNames = {
+                    richmond: 'Richmond International',
+                    charlottesville: 'Charlottesville',
+                    williamsburg: 'Williamsburg Area',
+                    national: 'Reagan National',
+                    dulles: 'Washington Dulles',
+                    bwi: 'Baltimore Washington'
+                };
+                
+                serviceDetails.push({
+                    item: 'Service Type',
+                    value: 'Airport Transfer'
+                });
+                
+                serviceDetails.push({
+                    item: 'Airport',
+                    value: airportNames[airportCode]
+                });
+                
+                serviceDetails.push({
+                    item: 'Trip Type',
+                    value: tripType === 'round-trip' ? 'Round Trip' : 'One Way'
+                });
+                
+                totalPrice = GNETRates.airport[vehicleType][airportCode];
+                if (tripType === 'round-trip') {
+                    totalPrice *= 1.8; // Round trip adjustment
+                }
+                
+                commissionRate = GNETRates.commission.premium; // 15% for airport
+            }
+            
+            const commissionAmount = totalPrice * commissionRate;
+            
+            displayGNETResults(serviceDetails, totalPrice, commissionAmount, commissionRate, serviceType, vehicleType, hours || 1);
+        }
+        
+        function toggleCommissionDetails() {
+            const breakdown = document.getElementById('commissionBreakdown');
+            const button = document.querySelector('.rate-details-toggle');
+            
+            if (breakdown.classList.contains('show')) {
+                breakdown.classList.remove('show');
+                button.textContent = 'View Details';
+            } else {
+                breakdown.classList.add('show');
+                button.textContent = 'Hide Details';
+            }
+        }
+        
+        function displayGNETResults(serviceDetails, totalPrice, commissionAmount, commissionRate, serviceType, vehicleType, duration) {
+            const resultsDiv = document.getElementById('results');
+            const serviceDetailsDiv = document.getElementById('serviceDetails');
+            const totalPriceDiv = document.getElementById('totalPrice');
+            const commissionPriceDiv = document.getElementById('commissionPrice');
+            const commissionRateDiv = document.getElementById('commissionRate');
+            
+            // Clear previous results
+            serviceDetailsDiv.innerHTML = '';
+            
+            // Add service details
+            serviceDetails.forEach(detail => {
+                const detailDiv = document.createElement('div');
+                detailDiv.className = 'summary-item';
+                detailDiv.innerHTML = `<span>${detail.item}:</span><span><strong>${detail.value}</strong></span>`;
+                serviceDetailsDiv.appendChild(detailDiv);
+            });
+            
+            // Add service date and time
+            const serviceDate = document.getElementById('serviceDate').value;
+            const serviceTime = document.getElementById('serviceTime').value;
+            if (serviceDate) {
+                const dateDiv = document.createElement('div');
+                dateDiv.className = 'summary-item';
+                const formattedDate = new Date(serviceDate).toLocaleDateString();
+                dateDiv.innerHTML = `<span>Date:</span><span><strong>${formattedDate}</strong></span>`;
+                serviceDetailsDiv.appendChild(dateDiv);
+            }
+            if (serviceTime) {
+                const timeDiv = document.createElement('div');
+                timeDiv.className = 'summary-item';
+                timeDiv.innerHTML = `<span>Time:</span><span><strong>${serviceTime}</strong></span>`;
+                serviceDetailsDiv.appendChild(timeDiv);
+            }
+            
+            // Set prices
+            totalPriceDiv.textContent = `$${totalPrice.toFixed(2)}`;
+            commissionPriceDiv.textContent = `$${commissionAmount.toFixed(2)}`;
+            commissionRateDiv.textContent = `${Math.round(commissionRate * 100)}% Rate`;
+            
+            // Add commission breakdown details
+            const commissionBreakdownItems = document.getElementById('commissionBreakdownItems');
+            commissionBreakdownItems.innerHTML = '';
+            
+            const clientSection = document.createElement('div');
+            clientSection.className = 'breakdown-section';
+            clientSection.innerHTML = `
+                <div class="breakdown-title">Client Billing</div>
+                <div class="breakdown-item"><span>TNT Service Rate:</span><span>$${totalPrice.toFixed(2)}</span></div>
+                <div class="breakdown-item"><span>Commission Rate:</span><span>${Math.round(commissionRate * 100)}%</span></div>
+            `;
+            commissionBreakdownItems.appendChild(clientSection);
+            
+            const partnerSection = document.createElement('div');
+            partnerSection.className = 'breakdown-section';
+            const netRevenue = totalPrice - commissionAmount;
+            partnerSection.innerHTML = `
+                <div class="breakdown-title">Revenue Split</div>
+                <div class="breakdown-item"><span>TNT Revenue:</span><span>$${netRevenue.toFixed(2)}</span></div>
+                <div class="breakdown-item" style="font-weight: bold; color: #667eea;"><span>Partner Commission:</span><span>$${commissionAmount.toFixed(2)}</span></div>
+            `;
+            commissionBreakdownItems.appendChild(partnerSection);
+            
+            // Add service-specific breakdown
+            if (serviceType === 'hourly') {
+                const hourlySection = document.createElement('div');
+                hourlySection.className = 'breakdown-section';
+                const hourlyCommission = commissionAmount / duration;
+                hourlySection.innerHTML = `
+                    <div class="breakdown-title">Hourly Breakdown</div>
+                    <div class="breakdown-item"><span>Hours:</span><span>${duration}</span></div>
+                    <div class="breakdown-item"><span>Commission per Hour:</span><span>$${hourlyCommission.toFixed(2)}</span></div>
+                `;
+                commissionBreakdownItems.appendChild(hourlySection);
+            }
+            
+            // Show results
+            resultsDiv.classList.add('show');
+            resultsDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        function submitGNETBooking() {
+            const serviceType = document.getElementById('serviceType').value;
+            const vehicleType = document.getElementById('vehicleType').value;
+            const clientName = document.getElementById('clientName').value;
+            const partnerRef = document.getElementById('partnerRef').value;
+            const totalPrice = document.getElementById('totalPrice').textContent;
+            const commissionAmount = document.getElementById('commissionPrice').textContent;
+            
+            alert(`GNET Booking Submitted to TNT Dispatch!\\n\\nBooking Details:\\nClient: ${clientName || 'Not specified'}\\nReference: ${partnerRef || 'Auto-generated'}\\nService: ${serviceType === 'hourly' ? 'Hourly Charter' : 'Airport Transfer'}\\nVehicle: ${GNETRates.vehicleNames[vehicleType]}\\nClient Rate: ${totalPrice}\\nYour Commission: ${commissionAmount}\\n\\nDispatch Status: CONFIRMED\\nTracking ID: GNET-${Date.now().toString().slice(-6)}\\n\\nYour commission will be processed monthly with detailed reporting.`);
+        }
+        
+        function exportToGNETSystem() {
+            const totalPrice = document.getElementById('totalPrice').textContent;
+            const commissionAmount = document.getElementById('commissionPrice').textContent;
+            
+            alert(`Exporting to GNET Partner System...\\n\\nBooking data exported to your GNET dashboard:\\n\\n• Client billing: ${totalPrice}\\n• Partner commission: ${commissionAmount}\\n• Booking status: Confirmed\\n• Tracking: Real-time updates enabled\\n\\nYou can monitor this booking in your GNET partner portal under active reservations.`);
+        }
+        
+        // Set default date to today
+        document.getElementById('serviceDate').valueAsDate = new Date();
+        
+        // Set default time to current hour + 2
+        const now = new Date();
+        now.setHours(now.getHours() + 2);
+        document.getElementById('serviceTime').value = now.toTimeString().slice(0, 5);
+    </script>
+</body>
+</html>

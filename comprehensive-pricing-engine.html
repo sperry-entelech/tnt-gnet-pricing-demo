@@ -1,0 +1,1523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TNT Limousine - Instant Transportation Quotes</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: white;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .platform-selector {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+            padding: 12px;
+            border-radius: 15px;
+            z-index: 1000;
+            min-width: 220px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .platform-selector select {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.95);
+            color: #333;
+            font-weight: bold;
+            font-size: 13px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border-radius: 25px;
+            padding: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .logo {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #DC2626;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px rgba(220, 38, 38, 0.3);
+        }
+
+        .subtitle {
+            font-size: 1.4rem;
+            opacity: 0.9;
+            margin-bottom: 10px;
+        }
+
+        .platform-info {
+            font-size: 1rem;
+            color: #667eea;
+            font-weight: 500;
+            padding: 12px 25px;
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 15px;
+            border: 1px solid rgba(102, 126, 234, 0.3);
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .premium-notice {
+            background: linear-gradient(135deg, rgba(255, 193, 7, 0.1) 0%, rgba(255, 152, 0, 0.1) 100%);
+            border: 1px solid #ffc107;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            display: none;
+            text-align: center;
+        }
+
+        .premium-notice.show {
+            display: block;
+        }
+
+        .premium-notice h4 {
+            color: #ffc107;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .form-section {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 35px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #DC2626;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        select, input, textarea {
+            padding: 15px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        select:focus, input:focus {
+            outline: none;
+            border-color: #DC2626;
+            box-shadow: 0 0 20px rgba(220, 38, 38, 0.2);
+        }
+
+        select option {
+            background: #1a1a2e;
+            color: white;
+            padding: 10px;
+        }
+
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .calculate-btn {
+            background: linear-gradient(135deg, #DC2626 0%, #B91C1C 50%, #991B1B 100%);
+            color: white;
+            border: none;
+            padding: 20px 60px;
+            border-radius: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin: 25px 0;
+            letter-spacing: 1px;
+        }
+
+        .calculate-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(220, 38, 38, 0.4);
+        }
+
+        .results {
+            background: linear-gradient(135deg, rgba(220, 38, 38, 0.1) 0%, rgba(185, 28, 28, 0.1) 100%);
+            border: 2px solid #DC2626;
+            border-radius: 20px;
+            padding: 40px;
+            margin-top: 30px;
+            display: none;
+        }
+
+        .results.show {
+            display: block;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .price-breakdown {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .breakdown-section {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 25px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .breakdown-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #DC2626;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 2px solid #DC2626;
+            padding-bottom: 10px;
+        }
+
+        .price-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 14px;
+        }
+
+        .price-item:last-child {
+            border-bottom: none;
+        }
+
+        .premium-item {
+            color: #ffc107;
+            font-weight: bold;
+        }
+
+        .savings-item {
+            color: #10b981;
+            font-weight: bold;
+        }
+
+        .total-price {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #DC2626;
+            text-align: center;
+            margin: 30px 0;
+            padding: 30px;
+            background: rgba(220, 38, 38, 0.1);
+            border-radius: 15px;
+            text-shadow: 0 0 20px rgba(220, 38, 38, 0.3);
+            border: 2px solid #DC2626;
+        }
+
+        .rate-comparison {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+            display: none;
+        }
+
+        .rate-comparison.show {
+            display: block;
+        }
+
+        .comparison-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #ffc107;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .comparison-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .comparison-row:last-child {
+            border-bottom: none;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .discount-summary {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(5, 150, 105, 0.1) 100%);
+            border: 1px solid #10b981;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            display: none;
+        }
+
+        .discount-summary.show {
+            display: block;
+        }
+
+        .action-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 25px 0;
+        }
+
+        .action-btn {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
+        }
+
+        .action-btn.secondary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .contact-info {
+            text-align: center;
+            margin-top: 25px;
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .integration-info {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            border: 1px solid #667eea;
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        @media (max-width: 1200px) {
+            .price-breakdown {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .form-row, .action-buttons {
+                grid-template-columns: 1fr;
+            }
+            .platform-selector {
+                position: relative;
+                top: 0;
+                right: 0;
+                margin-bottom: 20px;
+            }
+            .total-price {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="platform-selector">
+        <select id="platformType" onchange="updatePlatform()">
+            <option value="standard">Individual Customers</option>
+            <option value="gnet">Partner Network</option>
+            <option value="groundspan">Corporate Accounts</option>
+            <option value="corporate">Other Corporate Clients</option>
+        </select>
+    </div>
+    
+    <div class="container">
+        <div class="header">
+            <div class="logo">TNT LIMOUSINE</div>
+            <div class="subtitle">Professional Transportation Services</div>
+            <div class="platform-info" id="platformInfo">
+                Get Your Instant Quote
+            </div>
+        </div>
+
+        <div class="premium-notice" id="premiumNotice">
+            <h4>Premium Corporate Service</h4>
+            <p style="font-size: 14px; opacity: 0.9;">
+                Includes priority booking, dedicated account management, 
+                and our highest vehicle maintenance standards.
+            </p>
+        </div>
+
+        <div class="form-section">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="serviceType">Service Type</label>
+                    <select id="serviceType" onchange="updateForm()">
+                        <option value="hourly">Hourly Service (3-hour minimum)</option>
+                        <option value="point-to-point">Point to Point (1-hour minimum)</option>
+                        <option value="airport">Airport Transfer</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="vehicleType">Vehicle Type</label>
+                    <select id="vehicleType">
+                        <option value="sedan">Executive Sedan (Lincoln MKT/Aviator) - Up to 3 passengers</option>
+                        <option value="transit">Transit Van - Up to 15 passengers</option>
+                        <option value="executive-mini-bus">Executive Mini Bus (Unit 09) - Up to 12 passengers</option>
+                        <option value="mini-bus-sofa">Mini Bus with Sofa Seating (Unit 01) - Up to 10 passengers</option>
+                        <option value="stretch-limo">Stretch Limousine (Lincoln Continental, Unit 03) - Up to 8 passengers</option>
+                        <option value="sprinter-limo">Sprinter Limousine (Unit 02) - Up to 10 passengers</option>
+                        <option value="limo-bus">Executive Limo Bus (Unit 10) - Up to 18 passengers</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row" id="hourlyOptions">
+                <div class="form-group">
+                    <label for="hours">Number of Hours</label>
+                    <select id="hours">
+                        <option value="3">3 Hours (Minimum)</option>
+                        <option value="4">4 Hours</option>
+                        <option value="5">5 Hours</option>
+                        <option value="6">6 Hours</option>
+                        <option value="7">7 Hours</option>
+                        <option value="8">8 Hours</option>
+                        <option value="10">10 Hours</option>
+                        <option value="12">12 Hours</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="dayType">Service Day</label>
+                    <select id="dayType">
+                        <option value="weekday">Monday-Thursday (10% Discount)</option>
+                        <option value="weekend">Friday-Sunday</option>
+                        <option value="holiday">Holiday (+25% Surcharge)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row" id="pointToPointOptions" style="display: none;">
+                <div class="form-group">
+                    <label for="estimatedTime">Estimated Travel Time</label>
+                    <select id="estimatedTime">
+                        <option value="1">1 Hour (Minimum)</option>
+                        <option value="1.5">1.5 Hours</option>
+                        <option value="2">2 Hours</option>
+                        <option value="2.5">2.5 Hours</option>
+                        <option value="3">3 Hours</option>
+                        <option value="4">4+ Hours</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="distance">Estimated Distance</label>
+                    <select id="distance">
+                        <option value="local">Local (Under 30 miles)</option>
+                        <option value="regional">Regional (30-60 miles)</option>
+                        <option value="long">Long Distance (60+ miles)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row" id="airportOptions" style="display: none;">
+                <div class="form-group">
+                    <label for="pickupZone">Pickup Zone</label>
+                    <select id="pickupZone" onchange="updateAirportOptions()">
+                        <option value="central-virginia">Central Virginia</option>
+                        <option value="prince-george">Prince George</option>
+                        <option value="norfolk">Norfolk</option>
+                        <option value="charlottesville">Charlottesville</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="airportCode">Airport Destination</label>
+                    <select id="airportCode">
+                        <option value="ric">Richmond International (RIC)</option>
+                        <option value="dca">Reagan National (DCA)</option>
+                        <option value="iad">Washington Dulles (IAD)</option>
+                        <option value="bwi">Baltimore Washington (BWI)</option>
+                        <option value="cho">Charlottesville (CHO)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="serviceDate">Service Date</label>
+                    <input type="date" id="serviceDate">
+                </div>
+                <div class="form-group">
+                    <label for="serviceTime">Service Time</label>
+                    <input type="time" id="serviceTime">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="pickupLocation">Pickup Location</label>
+                    <input type="text" id="pickupLocation" placeholder="e.g., 123 Main Street, Richmond, VA">
+                </div>
+                <div class="form-group">
+                    <label for="dropoffLocation">Destination</label>
+                    <input type="text" id="dropoffLocation" placeholder="e.g., Downtown Hotel, Richmond, VA">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="multiVehicle">Multiple Vehicles</label>
+                    <select id="multiVehicle">
+                        <option value="1">Single Vehicle</option>
+                        <option value="2">2 Vehicles (10% Discount)</option>
+                        <option value="3">3 Vehicles (10% Discount)</option>
+                        <option value="4">4+ Vehicles (10% Discount)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="bookingNotice">Booking Notice</label>
+                    <select id="bookingNotice">
+                        <option value="advance">5+ Days Advance</option>
+                        <option value="standard">1-4 Days Advance</option>
+                        <option value="short">Same Day/Next Day (15% Discount)</option>
+                    </select>
+                </div>
+            </div>
+
+            <button class="calculate-btn" onclick="calculateComprehensivePrice()">
+                Get Instant Quote
+            </button>
+        </div>
+
+        <div class="results" id="results">
+            <h3 style="text-align: center; margin-bottom: 30px; color: #DC2626; font-size: 2rem;">
+                Complete TNT Rate Breakdown
+            </h3>
+            
+            <div class="price-breakdown">
+                <div class="breakdown-section">
+                    <div class="breakdown-title">Service Details</div>
+                    <div id="serviceDetails"></div>
+                </div>
+                <div class="breakdown-section">
+                    <div class="breakdown-title">Rate Components</div>
+                    <div id="rateBreakdown"></div>
+                </div>
+                <div class="breakdown-section">
+                    <div class="breakdown-title">Adjustments</div>
+                    <div id="adjustments"></div>
+                </div>
+            </div>
+            
+            <div class="rate-comparison" id="rateComparison">
+                <div class="comparison-title">Rate Analysis</div>
+                <div id="comparisonDetails"></div>
+            </div>
+            
+            <div class="discount-summary" id="discountSummary">
+                <div class="breakdown-title">Savings Summary</div>
+                <div id="savingsDetails"></div>
+            </div>
+            
+            <div class="total-price" id="totalPrice">$0.00</div>
+            
+            <div class="action-buttons">
+                <button class="action-btn" onclick="createFastTrackReservation()">
+                    Create FastTrack Reservation
+                </button>
+                <button class="action-btn secondary" onclick="exportToZohoCRM()">
+                    Export to Zoho CRM
+                </button>
+            </div>
+            
+            <div class="contact-info">
+                <p style="font-size: 1.2rem; margin-bottom: 15px;" id="bookingPrompt">
+                    <strong>Ready to Book Your Transportation?</strong>
+                </p>
+                <p style="margin-bottom: 10px;">Phone: <strong>(804) 972-4550</strong></p>
+                <p style="margin-bottom: 15px;">Email: <strong>info@tntlimousine.com</strong></p>
+                <p style="font-size: 14px; opacity: 0.9;">
+                    *All rates include driver gratuity. Tolls and parking fees additional where applicable.
+                </p>
+            </div>
+            
+            <div class="integration-info" id="integrationInfo">
+                <h4 style="color: #667eea; margin-bottom: 10px;">System Integration Status</h4>
+                <p style="font-size: 14px; opacity: 0.9;" id="integrationDescription">
+                    Quote ready for FastTrack dispatch system integration and Zoho CRM tracking.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/airport-zone-pricing.js"></script>
+    <script>
+        // Complete TNT Rate Structure Implementation
+        const TNTRateData = {
+            // Hourly rates with complete breakdown (3-hour minimum)
+            hourlyRates: {
+                'sedan': {
+                    baseRate: 60,
+                    driverGratuity: 12,
+                    fuelSurcharge: 10,
+                    mileageCharge: 18,
+                    totalStandard: 100,
+                    minimumHours: 3,
+                    name: 'Executive Sedan (Lincoln MKT/Aviator)',
+                    capacity: 3,
+                    unitNo: '04/05'
+                },
+                'transit': {
+                    baseRate: 90,
+                    driverGratuity: 19,
+                    fuelSurcharge: 10,
+                    mileageCharge: 18,
+                    totalStandard: 137,
+                    minimumHours: 3,
+                    name: 'Transit Van',
+                    capacity: '12-15',
+                    unitNo: ''
+                },
+                'executive-mini-bus': {
+                    baseRate: 95,
+                    driverGratuity: 19,
+                    fuelSurcharge: 10,
+                    mileageCharge: 18,
+                    totalStandard: 142,
+                    minimumHours: 3,
+                    name: 'Executive Mini Bus',
+                    capacity: 12,
+                    unitNo: '09'
+                },
+                'mini-bus-sofa': {
+                    baseRate: 95,
+                    driverGratuity: 19,
+                    fuelSurcharge: 10,
+                    mileageCharge: 18,
+                    totalStandard: 142,
+                    minimumHours: 3,
+                    name: 'Mini Bus with Sofa Seating',
+                    capacity: 10,
+                    unitNo: '01'
+                },
+                'stretch-limo': {
+                    baseRate: 113,
+                    driverGratuity: 19,
+                    fuelSurcharge: 10,
+                    mileageCharge: 18,
+                    totalStandard: 160,
+                    minimumHours: 3,
+                    name: 'Stretch Limousine (Lincoln Continental)',
+                    capacity: 8,
+                    unitNo: '03'
+                },
+                'sprinter-limo': {
+                    baseRate: 113,
+                    driverGratuity: 19,
+                    fuelSurcharge: 10,
+                    mileageCharge: 18,
+                    totalStandard: 160,
+                    minimumHours: 3,
+                    name: 'Sprinter Limousine',
+                    capacity: 10,
+                    unitNo: '02'
+                },
+                'limo-bus': {
+                    baseRate: 152,
+                    driverGratuity: 28,
+                    fuelSurcharge: 10,
+                    mileageCharge: 18,
+                    totalStandard: 208,
+                    minimumHours: 3,
+                    name: 'Executive Limo Bus',
+                    capacity: 18,
+                    unitNo: '10'
+                }
+            },
+
+            // Point-to-point rates (1-hour minimum, no hourly driver pay)
+            pointToPointRates: {
+                'sedan': {
+                    baseRate: 95,
+                    flatGratuity: 40,
+                    fuelSurcharge: 10,
+                    mileageCharge: 10,
+                    totalStandard: 155,
+                    minimumHours: 1,
+                    billingIncrement: 0.5 // 30-minute increments after minimum
+                },
+                'transit': {
+                    baseRate: 165,
+                    flatGratuity: 40,
+                    fuelSurcharge: 10,
+                    mileageCharge: 10,
+                    totalStandard: 225,
+                    minimumHours: 1,
+                    billingIncrement: 0.5
+                },
+                'executive-mini-bus': {
+                    baseRate: 170,
+                    flatGratuity: 50,
+                    fuelSurcharge: 10,
+                    mileageCharge: 10,
+                    totalStandard: 240,
+                    minimumHours: 1,
+                    billingIncrement: 0.5
+                },
+                'mini-bus-sofa': {
+                    baseRate: 170,
+                    flatGratuity: 50,
+                    fuelSurcharge: 10,
+                    mileageCharge: 10,
+                    totalStandard: 240,
+                    minimumHours: 1,
+                    billingIncrement: 0.5
+                },
+                'stretch-limo': {
+                    baseRate: 230,
+                    flatGratuity: 50,
+                    fuelSurcharge: 10,
+                    mileageCharge: 10,
+                    totalStandard: 300,
+                    minimumHours: 1,
+                    billingIncrement: 0.5
+                },
+                'sprinter-limo': {
+                    baseRate: 260,
+                    flatGratuity: 50,
+                    fuelSurcharge: 10,
+                    mileageCharge: 10,
+                    totalStandard: 330,
+                    minimumHours: 1,
+                    billingIncrement: 0.5
+                },
+                'limo-bus': {
+                    baseRate: 300,
+                    flatGratuity: 50,
+                    fuelSurcharge: 10,
+                    mileageCharge: 10,
+                    totalStandard: 370,
+                    minimumHours: 1,
+                    billingIncrement: 0.5
+                }
+            },
+
+            // Airport rates with detailed breakdown
+            airportRates: {
+                'sedan': {
+                    richmond: { total: 105, base: 70, gratuity: 15, fuel: 10, tolls: 5, parking: 5 },
+                    charlottesville: { total: 333, base: 250, gratuity: 40, fuel: 25, tolls: 10, parking: 8 },
+                    williamsburg: { total: 280, base: 210, gratuity: 35, fuel: 20, tolls: 10, parking: 5 },
+                    national: { total: 450, base: 340, gratuity: 50, fuel: 30, tolls: 20, parking: 10 },
+                    dulles: { total: 460, base: 350, gratuity: 50, fuel: 30, tolls: 20, parking: 10 },
+                    bwi: { total: 657, base: 500, gratuity: 70, fuel: 40, tolls: 35, parking: 12 }
+                },
+                'transit': {
+                    richmond: { total: 175, base: 125, gratuity: 20, fuel: 15, tolls: 5, parking: 10 },
+                    charlottesville: { total: 525, base: 400, gratuity: 60, fuel: 35, tolls: 20, parking: 10 },
+                    williamsburg: { total: 420, base: 320, gratuity: 50, fuel: 25, tolls: 15, parking: 10 },
+                    national: { total: 700, base: 530, gratuity: 75, fuel: 45, tolls: 35, parking: 15 },
+                    dulles: { total: 710, base: 540, gratuity: 75, fuel: 45, tolls: 35, parking: 15 },
+                    bwi: { total: 854, base: 650, gratuity: 90, fuel: 55, tolls: 44, parking: 15 }
+                },
+                'executive-mini-bus': {
+                    richmond: { total: 185, base: 135, gratuity: 22, fuel: 15, tolls: 5, parking: 8 },
+                    charlottesville: { total: 545, base: 420, gratuity: 65, fuel: 35, tolls: 15, parking: 10 },
+                    williamsburg: { total: 440, base: 340, gratuity: 55, fuel: 25, tolls: 10, parking: 10 },
+                    national: { total: 720, base: 550, gratuity: 80, fuel: 45, tolls: 30, parking: 15 },
+                    dulles: { total: 730, base: 560, gratuity: 80, fuel: 45, tolls: 30, parking: 15 },
+                    bwi: { total: 874, base: 670, gratuity: 95, fuel: 55, tolls: 39, parking: 15 }
+                },
+                'mini-bus-sofa': {
+                    richmond: { total: 185, base: 135, gratuity: 22, fuel: 15, tolls: 5, parking: 8 },
+                    charlottesville: { total: 545, base: 420, gratuity: 65, fuel: 35, tolls: 15, parking: 10 },
+                    williamsburg: { total: 440, base: 340, gratuity: 55, fuel: 25, tolls: 10, parking: 10 },
+                    national: { total: 720, base: 550, gratuity: 80, fuel: 45, tolls: 30, parking: 15 },
+                    dulles: { total: 730, base: 560, gratuity: 80, fuel: 45, tolls: 30, parking: 15 },
+                    bwi: { total: 874, base: 670, gratuity: 95, fuel: 55, tolls: 39, parking: 15 }
+                },
+                'stretch-limo': {
+                    richmond: { total: 220, base: 165, gratuity: 28, fuel: 15, tolls: 5, parking: 7 },
+                    charlottesville: { total: 625, base: 480, gratuity: 75, fuel: 40, tolls: 20, parking: 10 },
+                    williamsburg: { total: 520, base: 400, gratuity: 65, fuel: 30, tolls: 15, parking: 10 },
+                    national: { total: 820, base: 630, gratuity: 95, fuel: 50, tolls: 30, parking: 15 },
+                    dulles: { total: 830, base: 640, gratuity: 95, fuel: 50, tolls: 30, parking: 15 },
+                    bwi: { total: 1020, base: 780, gratuity: 110, fuel: 65, tolls: 50, parking: 15 }
+                },
+                'sprinter-limo': {
+                    richmond: { total: 194, base: 140, gratuity: 25, fuel: 16, tolls: 5, parking: 8 },
+                    charlottesville: { total: 575, base: 440, gratuity: 70, fuel: 35, tolls: 20, parking: 10 },
+                    williamsburg: { total: 480, base: 370, gratuity: 60, fuel: 25, tolls: 15, parking: 10 },
+                    national: { total: 780, base: 600, gratuity: 90, fuel: 45, tolls: 30, parking: 15 },
+                    dulles: { total: 790, base: 610, gratuity: 90, fuel: 45, tolls: 20, parking: 15 },
+                    bwi: { total: 910, base: 700, gratuity: 100, fuel: 55, tolls: 40, parking: 15 }
+                },
+                'limo-bus': {
+                    richmond: { total: 225, base: 165, gratuity: 30, fuel: 18, tolls: 5, parking: 7 },
+                    charlottesville: { total: 624, base: 475, gratuity: 75, fuel: 40, tolls: 24, parking: 10 },
+                    williamsburg: { total: 525, base: 400, gratuity: 65, fuel: 35, tolls: 15, parking: 10 },
+                    national: { total: 1020, base: 780, gratuity: 120, fuel: 60, tolls: 45, parking: 15 },
+                    dulles: { total: 1045, base: 800, gratuity: 120, fuel: 60, tolls: 50, parking: 15 },
+                    bwi: { total: 1265, base: 970, gratuity: 140, fuel: 75, tolls: 65, parking: 15 }
+                }
+            },
+
+            // Groundspan Corporate Premium Rates (HIGHER than standard)
+            groundspanRates: {
+                'sedan': {
+                    hourlyPremium: 110, // vs $100 standard
+                    premiumAmount: 10,
+                    breakdown: {
+                        baseRate: 60,
+                        driverGratuity: 12,
+                        fuelSurcharge: 10,
+                        mileageCharge: 18,
+                        corporatePremium: 10 // Premium service fee
+                    }
+                },
+                'transit': {
+                    hourlyPremium: 147, // vs $137 standard
+                    premiumAmount: 10,
+                    breakdown: {
+                        baseRate: 90,
+                        driverGratuity: 19,
+                        fuelSurcharge: 10,
+                        mileageCharge: 18,
+                        corporatePremium: 10
+                    }
+                },
+                'executive-mini-bus': {
+                    hourlyPremium: 152, // vs $142 standard
+                    premiumAmount: 10,
+                    breakdown: {
+                        baseRate: 95,
+                        driverGratuity: 19,
+                        fuelSurcharge: 10,
+                        mileageCharge: 18,
+                        corporatePremium: 10
+                    }
+                },
+                'mini-bus-sofa': {
+                    hourlyPremium: 152, // vs $142 standard
+                    premiumAmount: 10,
+                    breakdown: {
+                        baseRate: 95,
+                        driverGratuity: 19,
+                        fuelSurcharge: 10,
+                        mileageCharge: 18,
+                        corporatePremium: 10
+                    }
+                },
+                'stretch-limo': {
+                    hourlyPremium: 170, // vs $160 standard
+                    premiumAmount: 10,
+                    breakdown: {
+                        baseRate: 113,
+                        driverGratuity: 19,
+                        fuelSurcharge: 10,
+                        mileageCharge: 18,
+                        corporatePremium: 10
+                    }
+                },
+                'sprinter-limo': {
+                    hourlyPremium: 170, // vs $160 standard
+                    premiumAmount: 10,
+                    breakdown: {
+                        baseRate: 113,
+                        driverGratuity: 19,
+                        fuelSurcharge: 10,
+                        mileageCharge: 18,
+                        corporatePremium: 10
+                    }
+                },
+                'limo-bus': {
+                    hourlyPremium: 218, // vs $208 standard
+                    premiumAmount: 10,
+                    breakdown: {
+                        baseRate: 152,
+                        driverGratuity: 28,
+                        fuelSurcharge: 10,
+                        mileageCharge: 18,
+                        corporatePremium: 10
+                    }
+                }
+            },
+
+            // Discount and surcharge rules
+            discountRules: {
+                afterHours: 20, // +$20 for 11pm-6am
+                longTrip: 0.10, // 10% off for 6+ hours
+                weekdayDiscount: 0.10, // 10% off Mon-Thu
+                shortNotice: 0.15, // 15% off same-day/next-day
+                multiVehicle: 0.10, // 10% off for 2+ vehicles
+                holiday: 0.25, // +25% on holidays
+                corporateDiscount: 0.15 // 15% off for generic corporate
+            },
+
+            // GNET commission structure
+            gnetCommission: {
+                standard: 0.12, // 12%
+                premium: 0.15   // 15% for airport/luxury
+            }
+        };
+
+        let currentPlatform = 'standard';
+
+        function updatePlatform() {
+            currentPlatform = document.getElementById('platformType').value;
+            const platformInfo = document.getElementById('platformInfo');
+            const premiumNotice = document.getElementById('premiumNotice');
+            
+            switch(currentPlatform) {
+                case 'standard':
+                    platformInfo.textContent = 'Individual Customer Pricing - Real-time Quotes';
+                    platformInfo.style.color = '#DC2626';
+                    premiumNotice.classList.remove('show');
+                    break;
+                case 'gnet':
+                    platformInfo.textContent = 'Partner Network Pricing - Special Rates Available';
+                    platformInfo.style.color = '#667eea';
+                    premiumNotice.classList.remove('show');
+                    break;
+                case 'groundspan':
+                    platformInfo.textContent = 'Corporate Account Pricing - Premium Service Included';
+                    platformInfo.style.color = '#ffc107';
+                    premiumNotice.classList.add('show');
+                    break;
+                case 'corporate':
+                    platformInfo.textContent = 'Corporate Client Pricing - Volume Discounts Applied';
+                    platformInfo.style.color = '#10b981';
+                    premiumNotice.classList.remove('show');
+                    break;
+            }
+        }
+
+        function updateForm() {
+            const serviceType = document.getElementById('serviceType').value;
+            const hourlyOptions = document.getElementById('hourlyOptions');
+            const pointToPointOptions = document.getElementById('pointToPointOptions');
+            const airportOptions = document.getElementById('airportOptions');
+
+            // Hide all options first
+            hourlyOptions.style.display = 'none';
+            pointToPointOptions.style.display = 'none';
+            airportOptions.style.display = 'none';
+
+            // Show appropriate options
+            if (serviceType === 'hourly') {
+                hourlyOptions.style.display = 'grid';
+            } else if (serviceType === 'point-to-point') {
+                pointToPointOptions.style.display = 'grid';
+            } else if (serviceType === 'airport') {
+                airportOptions.style.display = 'grid';
+            }
+        }
+
+        function calculateDaysFromNow(serviceDate) {
+            const today = new Date();
+            const service = new Date(serviceDate);
+            const diffTime = service - today;
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            return diffDays;
+        }
+
+        function calculateComprehensivePrice() {
+            const serviceType = document.getElementById('serviceType').value;
+            const vehicleType = document.getElementById('vehicleType').value;
+            const serviceDate = document.getElementById('serviceDate').value;
+            const serviceTime = document.getElementById('serviceTime').value;
+            const multiVehicle = parseInt(document.getElementById('multiVehicle').value);
+            const bookingNotice = document.getElementById('bookingNotice').value;
+            
+            let basePrice = 0;
+            let standardPrice = 0;
+            let serviceDetails = [];
+            let rateBreakdown = [];
+            let adjustments = [];
+            let appliedDiscounts = [];
+            
+            // Get vehicle data
+            const vehicleData = TNTRateData.hourlyRates[vehicleType];
+            
+            serviceDetails.push({item: 'Vehicle', value: `${vehicleData.name} ${vehicleData.unitNo ? '(' + vehicleData.unitNo + ')' : ''}`});
+            serviceDetails.push({item: 'Capacity', value: `${vehicleData.capacity} passengers`});
+            serviceDetails.push({item: 'Platform', value: getPlatformDisplayName()});
+            
+            if (serviceType === 'hourly') {
+                const hours = parseInt(document.getElementById('hours').value);
+                const dayType = document.getElementById('dayType').value;
+                const actualHours = Math.max(hours, vehicleData.minimumHours);
+                
+                serviceDetails.push({item: 'Service Type', value: `Hourly (${actualHours} hours)`});
+                serviceDetails.push({item: 'Day Type', value: getDayTypeDisplay(dayType)});
+                
+                // Calculate based on platform
+                if (currentPlatform === 'groundspan') {
+                    const groundspanData = TNTRateData.groundspanRates[vehicleType];
+                    const breakdown = groundspanData.breakdown;
+                    
+                    // Show detailed premium breakdown
+                    rateBreakdown.push({item: `Base Vehicle Rate (${actualHours} hrs × $${breakdown.baseRate})`, amount: breakdown.baseRate * actualHours});
+                    rateBreakdown.push({item: `Driver Gratuity (${actualHours} hrs × $${breakdown.driverGratuity})`, amount: breakdown.driverGratuity * actualHours});
+                    rateBreakdown.push({item: `Fuel Surcharge (${actualHours} hrs × $${breakdown.fuelSurcharge})`, amount: breakdown.fuelSurcharge * actualHours});
+                    rateBreakdown.push({item: `Mileage Charge (${actualHours} hrs × $${breakdown.mileageCharge})`, amount: breakdown.mileageCharge * actualHours});
+                    rateBreakdown.push({item: `Corporate Premium (${actualHours} hrs × $${breakdown.corporatePremium})`, amount: breakdown.corporatePremium * actualHours, premium: true});
+                    
+                    basePrice = groundspanData.hourlyPremium * actualHours;
+                    standardPrice = vehicleData.totalStandard * actualHours;
+                    
+                } else {
+                    // Standard rate breakdown
+                    rateBreakdown.push({item: `Base Vehicle Rate (${actualHours} hrs × $${vehicleData.baseRate})`, amount: vehicleData.baseRate * actualHours});
+                    rateBreakdown.push({item: `Driver Gratuity (${actualHours} hrs × $${vehicleData.driverGratuity})`, amount: vehicleData.driverGratuity * actualHours});
+                    rateBreakdown.push({item: `Fuel Surcharge (${actualHours} hrs × $${vehicleData.fuelSurcharge})`, amount: vehicleData.fuelSurcharge * actualHours});
+                    rateBreakdown.push({item: `Mileage Charge (${actualHours} hrs × $${vehicleData.mileageCharge})`, amount: vehicleData.mileageCharge * actualHours});
+                    
+                    basePrice = vehicleData.totalStandard * actualHours;
+                    standardPrice = basePrice;
+                    
+                    // Apply standard adjustments
+                    if (dayType === 'weekday' && currentPlatform !== 'groundspan') {
+                        const discount = basePrice * TNTRateData.discountRules.weekdayDiscount;
+                        adjustments.push({item: 'Monday-Thursday Discount (10%)', amount: -discount, savings: true});
+                        appliedDiscounts.push({type: 'Weekday Discount', amount: discount});
+                        basePrice -= discount;
+                    } else if (dayType === 'holiday') {
+                        const surcharge = basePrice * TNTRateData.discountRules.holiday;
+                        adjustments.push({item: 'Holiday Surcharge (25%)', amount: surcharge});
+                        basePrice += surcharge;
+                    }
+                    
+                    if (hours >= 6 && currentPlatform !== 'groundspan') {
+                        const discount = basePrice * TNTRateData.discountRules.longTrip;
+                        adjustments.push({item: '6+ Hour Trip Discount (10%)', amount: -discount, savings: true});
+                        appliedDiscounts.push({type: '6+ Hour Discount', amount: discount});
+                        basePrice -= discount;
+                    }
+                    
+                    // Corporate discount for generic corporate clients
+                    if (currentPlatform === 'corporate') {
+                        const discount = basePrice * TNTRateData.discountRules.corporateDiscount;
+                        adjustments.push({item: 'Corporate Volume Discount (15%)', amount: -discount, savings: true});
+                        appliedDiscounts.push({type: 'Corporate Discount', amount: discount});
+                        basePrice -= discount;
+                    }
+                }
+                
+            } else if (serviceType === 'point-to-point') {
+                const estimatedTime = parseFloat(document.getElementById('estimatedTime').value);
+                const distance = document.getElementById('distance').value;
+                const p2pData = TNTRateData.pointToPointRates[vehicleType];
+                
+                serviceDetails.push({item: 'Service Type', value: `Point-to-Point (${estimatedTime} hrs estimated)`});
+                serviceDetails.push({item: 'Distance', value: getDistanceDisplay(distance)});
+                serviceDetails.push({item: 'Billing', value: 'No hourly driver pay - flat rate'});
+                
+                // Calculate billing time (30-minute increments after 1 hour minimum)
+                const billingTime = Math.max(estimatedTime, 1);
+                const additionalTime = Math.max(billingTime - 1, 0);
+                const billedAdditionalTime = Math.ceil(additionalTime / 0.5) * 0.5;
+                const totalBilledTime = 1 + billedAdditionalTime;
+                
+                if (currentPlatform === 'groundspan') {
+                    // Groundspan uses standard P2P rates with premium applied differently
+                    rateBreakdown.push({item: 'Base Vehicle Rate (1 hr minimum)', amount: p2pData.baseRate});
+                    rateBreakdown.push({item: 'Driver Gratuity (Flat)', amount: p2pData.flatGratuity});
+                    rateBreakdown.push({item: 'Fuel Surcharge', amount: p2pData.fuelSurcharge});
+                    rateBreakdown.push({item: 'Mileage Charge', amount: p2pData.mileageCharge});
+                    
+                    if (billedAdditionalTime > 0) {
+                        const additionalRate = p2pData.totalStandard * 0.7; // 70% of hourly for additional time
+                        rateBreakdown.push({item: `Additional Time (${billedAdditionalTime} hrs × $${additionalRate.toFixed(0)})`, amount: additionalRate * billedAdditionalTime});
+                    }
+                    
+                    basePrice = p2pData.totalStandard + (billedAdditionalTime * p2pData.totalStandard * 0.7);
+                    standardPrice = basePrice;
+                    
+                    // Apply 15% corporate premium to P2P
+                    const corporatePremium = basePrice * 0.15;
+                    rateBreakdown.push({item: 'Corporate Premium (15%)', amount: corporatePremium, premium: true});
+                    basePrice += corporatePremium;
+                    
+                } else {
+                    // Standard P2P calculation
+                    rateBreakdown.push({item: 'Base Vehicle Rate (1 hr minimum)', amount: p2pData.baseRate});
+                    rateBreakdown.push({item: 'Driver Gratuity (Flat)', amount: p2pData.flatGratuity});
+                    rateBreakdown.push({item: 'Fuel Surcharge', amount: p2pData.fuelSurcharge});
+                    rateBreakdown.push({item: 'Mileage Charge', amount: p2pData.mileageCharge});
+                    
+                    if (billedAdditionalTime > 0) {
+                        const additionalRate = p2pData.totalStandard * 0.7;
+                        rateBreakdown.push({item: `Additional Time (${billedAdditionalTime} hrs × $${additionalRate.toFixed(0)})`, amount: additionalRate * billedAdditionalTime});
+                    }
+                    
+                    basePrice = p2pData.totalStandard + (billedAdditionalTime * p2pData.totalStandard * 0.7);
+                    standardPrice = basePrice;
+                    
+                    // Apply weekday discount if applicable
+                    const dayType = document.getElementById('dayType') ? document.getElementById('dayType').value : 'weekend';
+                    if (dayType === 'weekday' && currentPlatform !== 'groundspan') {
+                        const discount = basePrice * TNTRateData.discountRules.weekdayDiscount;
+                        adjustments.push({item: 'Monday-Thursday Discount (10%)', amount: -discount, savings: true});
+                        appliedDiscounts.push({type: 'Weekday Discount', amount: discount});
+                        basePrice -= discount;
+                    }
+                    
+                    // Corporate discount for generic corporate clients
+                    if (currentPlatform === 'corporate') {
+                        const discount = basePrice * TNTRateData.discountRules.corporateDiscount;
+                        adjustments.push({item: 'Corporate Volume Discount (15%)', amount: -discount, savings: true});
+                        appliedDiscounts.push({type: 'Corporate Discount', amount: discount});
+                        basePrice -= discount;
+                    }
+                }
+                
+            } else if (serviceType === 'airport') {
+                const pickupZone = document.getElementById('pickupZone').value;
+                const airportCode = document.getElementById('airportCode').value;
+                
+                // Use new zone-based pricing system
+                const zoneRate = AirportZonePricing.getRate(vehicleType, pickupZone, airportCode);
+                
+                if (!zoneRate) {
+                    alert(`Airport transfer from ${AirportZonePricing.zones[pickupZone]} to ${AirportZonePricing.airports[airportCode]} is not available for this vehicle type. Please select a different combination.`);
+                    return;
+                }
+                
+                const routeDetails = AirportZonePricing.getRouteDetails(vehicleType, pickupZone, airportCode);
+                
+                serviceDetails.push({item: 'Service Type', value: 'Airport Transfer'});
+                serviceDetails.push({item: 'Pickup Zone', value: routeDetails.zone});
+                serviceDetails.push({item: 'Airport', value: routeDetails.airport});
+                serviceDetails.push({item: 'Route', value: routeDetails.route});
+                serviceDetails.push({item: 'Estimated Hours', value: `${routeDetails.estimatedHours} hours`});
+                serviceDetails.push({item: 'Rate Type', value: 'Flat Rate (zone-based)'});
+                
+                // Zone-based flat rate - no breakdown needed, it's all-inclusive
+                rateBreakdown.push({item: 'Zone-Based Flat Rate', amount: zoneRate, description: 'Includes transport, gratuity, fuel, tolls & parking'});
+                
+                basePrice = zoneRate;
+                standardPrice = basePrice;
+                
+                // Zone-based rates are already calculated as flat rates for the specific route
+                
+                // Groundspan premium for airport transfers
+                if (currentPlatform === 'groundspan') {
+                    const premium = basePrice * 0.12; // 12% premium for airport transfers
+                    rateBreakdown.push({item: 'Corporate Premium (12%)', amount: premium, premium: true});
+                    basePrice += premium;
+                }
+                
+                // Corporate discount for generic corporate clients
+                if (currentPlatform === 'corporate') {
+                    const discount = basePrice * TNTRateData.discountRules.corporateDiscount;
+                    adjustments.push({item: 'Corporate Volume Discount (15%)', amount: -discount, savings: true});
+                    appliedDiscounts.push({type: 'Corporate Discount', amount: discount});
+                    basePrice -= discount;
+                }
+            }
+            
+            // Universal adjustments (except for Groundspan premium)
+            if (currentPlatform !== 'groundspan') {
+                // After-hours surcharge
+                if (serviceTime) {
+                    const hour = parseInt(serviceTime.split(':')[0]);
+                    if (hour >= 23 || hour < 6) {
+                        adjustments.push({item: 'After-Hours Pickup Fee (11pm-6am)', amount: TNTRateData.discountRules.afterHours});
+                        basePrice += TNTRateData.discountRules.afterHours;
+                    }
+                }
+                
+                // Multi-vehicle discount
+                if (multiVehicle > 1) {
+                    const discount = basePrice * TNTRateData.discountRules.multiVehicle;
+                    adjustments.push({item: `Multi-Vehicle Discount (${multiVehicle} vehicles)`, amount: -discount, savings: true});
+                    appliedDiscounts.push({type: 'Multi-Vehicle Discount', amount: discount});
+                    basePrice -= discount;
+                }
+                
+                // Short notice discount
+                if (bookingNotice === 'short') {
+                    const discount = basePrice * TNTRateData.discountRules.shortNotice;
+                    adjustments.push({item: 'Short Notice Discount (15%)', amount: -discount, savings: true});
+                    appliedDiscounts.push({type: 'Short Notice Discount', amount: discount});
+                    basePrice -= discount;
+                }
+            }
+            
+            // Multiply by vehicle count
+            if (multiVehicle > 1) {
+                serviceDetails.push({item: 'Vehicle Count', value: `${multiVehicle} vehicles`});
+                basePrice *= multiVehicle;
+                if (standardPrice > 0) standardPrice *= multiVehicle;
+            }
+            
+            displayComprehensiveResults(serviceDetails, rateBreakdown, adjustments, appliedDiscounts, basePrice, standardPrice);
+        }
+
+        function getPlatformDisplayName() {
+            switch(currentPlatform) {
+                case 'standard': return 'Standard Rate';
+                case 'gnet': return 'GNET Partner';
+                case 'groundspan': return 'Groundspan Corporate';
+                case 'corporate': return 'Corporate Client';
+                default: return 'Standard Rate';
+            }
+        }
+
+        function getDayTypeDisplay(dayType) {
+            switch(dayType) {
+                case 'weekday': return 'Monday-Thursday';
+                case 'weekend': return 'Friday-Sunday';
+                case 'holiday': return 'Holiday';
+                default: return dayType;
+            }
+        }
+        
+        function getDistanceDisplay(distance) {
+            switch(distance) {
+                case 'local': return 'Local (Under 30 miles)';
+                case 'regional': return 'Regional (30-60 miles)';
+                case 'long': return 'Long Distance (60+ miles)';
+                default: return distance;
+            }
+        }
+        
+        function displayComprehensiveResults(serviceDetails, rateBreakdown, adjustments, appliedDiscounts, totalPrice, standardPrice) {
+            const resultsDiv = document.getElementById('results');
+            const serviceDetailsDiv = document.getElementById('serviceDetails');
+            const rateBreakdownDiv = document.getElementById('rateBreakdown');
+            const adjustmentsDiv = document.getElementById('adjustments');
+            const totalPriceDiv = document.getElementById('totalPrice');
+            const rateComparison = document.getElementById('rateComparison');
+            const comparisonDetails = document.getElementById('comparisonDetails');
+            const discountSummary = document.getElementById('discountSummary');
+            const savingsDetails = document.getElementById('savingsDetails');
+            const integrationDescription = document.getElementById('integrationDescription');
+            const bookingPrompt = document.getElementById('bookingPrompt');
+            
+            // Clear previous results
+            serviceDetailsDiv.innerHTML = '';
+            rateBreakdownDiv.innerHTML = '';
+            adjustmentsDiv.innerHTML = '';
+            comparisonDetails.innerHTML = '';
+            savingsDetails.innerHTML = '';
+            
+            // Add service details
+            serviceDetails.forEach(detail => {
+                const detailDiv = document.createElement('div');
+                detailDiv.className = 'price-item';
+                detailDiv.innerHTML = `<span>${detail.item}:</span><span>${detail.value}</span>`;
+                serviceDetailsDiv.appendChild(detailDiv);
+            });
+            
+            // Add rate breakdown
+            rateBreakdown.forEach(item => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'price-item';
+                if (item.premium) itemDiv.classList.add('premium-item');
+                itemDiv.innerHTML = `
+                    <span>${item.item}</span>
+                    <span>$${item.amount.toFixed(2)}</span>
+                `;
+                rateBreakdownDiv.appendChild(itemDiv);
+            });
+            
+            // Add adjustments
+            if (adjustments.length > 0) {
+                adjustments.forEach(adjustment => {
+                    const adjustmentDiv = document.createElement('div');
+                    adjustmentDiv.className = 'price-item';
+                    if (adjustment.savings) adjustmentDiv.classList.add('savings-item');
+                    const sign = adjustment.amount >= 0 ? '+' : '';
+                    adjustmentDiv.innerHTML = `
+                        <span>${adjustment.item}</span>
+                        <span>${sign}$${adjustment.amount.toFixed(2)}</span>
+                    `;
+                    adjustmentsDiv.appendChild(adjustmentDiv);
+                });
+            } else {
+                const noAdjustmentsDiv = document.createElement('div');
+                noAdjustmentsDiv.className = 'price-item';
+                noAdjustmentsDiv.innerHTML = '<span>No adjustments applied</span><span>$0.00</span>';
+                adjustmentsDiv.appendChild(noAdjustmentsDiv);
+            }
+            
+            // Show rate comparison for Groundspan (premium rates)
+            if (currentPlatform === 'groundspan' && standardPrice > 0) {
+                const premiumAmount = totalPrice - standardPrice;
+                
+                const standardItem = document.createElement('div');
+                standardItem.className = 'comparison-row';
+                standardItem.innerHTML = `<span>Standard TNT Rate:</span><span>$${standardPrice.toFixed(2)}</span>`;
+                comparisonDetails.appendChild(standardItem);
+                
+                const premiumItem = document.createElement('div');
+                premiumItem.className = 'comparison-row';
+                premiumItem.innerHTML = `<span>Corporate Premium:</span><span style="color: #ffc107;">+$${premiumAmount.toFixed(2)}</span>`;
+                comparisonDetails.appendChild(premiumItem);
+                
+                const totalItem = document.createElement('div');
+                totalItem.className = 'comparison-row';
+                totalItem.innerHTML = `<span><strong>Your Premium Rate:</strong></span><span style="color: #ffc107; font-weight: bold;">$${totalPrice.toFixed(2)}</span>`;
+                comparisonDetails.appendChild(totalItem);
+                
+                // Add corporate premium justification
+                const justificationDiv = document.createElement('div');
+                justificationDiv.style.marginTop = '15px';
+                justificationDiv.style.padding = '15px';
+                justificationDiv.style.backgroundColor = 'rgba(255, 193, 7, 0.1)';
+                justificationDiv.style.borderRadius = '10px';
+                justificationDiv.style.border = '1px solid #ffc107';
+                justificationDiv.innerHTML = `
+                    <div style="color: #ffc107; font-weight: bold; margin-bottom: 10px; text-align: center;">Corporate Premium Service Features</div>
+                    <div style="font-size: 13px; opacity: 0.9; line-height: 1.4;">
+                        • <strong>Priority Booking:</strong> Guaranteed vehicle availability<br>
+                        • <strong>Dedicated Account Manager:</strong> Direct contact for all needs<br>
+                        • <strong>Premium Vehicle Maintenance:</strong> Enhanced cleaning and inspection<br>
+                        • <strong>Corporate Billing:</strong> Monthly consolidated invoicing<br>
+                        • <strong>Real-time Tracking:</strong> Advanced GPS monitoring and alerts<br>
+                        • <strong>Executive Service Standards:</strong> Professional driver training and appearance
+                    </div>
+                `;
+                comparisonDetails.appendChild(justificationDiv);
+                
+                rateComparison.classList.add('show');
+            } else {
+                rateComparison.classList.remove('show');
+            }
+            
+            // Show savings summary
+            if (appliedDiscounts.length > 0) {
+                let totalSavings = 0;
+                appliedDiscounts.forEach(discount => {
+                    const savingDiv = document.createElement('div');
+                    savingDiv.className = 'price-item savings-item';
+                    savingDiv.innerHTML = `<span>${discount.type}:</span><span>-$${discount.amount.toFixed(2)}</span>`;
+                    savingsDetails.appendChild(savingDiv);
+                    totalSavings += discount.amount;
+                });
+                
+                const totalSavingDiv = document.createElement('div');
+                totalSavingDiv.className = 'price-item';
+                totalSavingDiv.style.borderTop = '2px solid #10b981';
+                totalSavingDiv.style.fontWeight = 'bold';
+                totalSavingDiv.innerHTML = `<span>Total Savings:</span><span style="color: #10b981; font-size: 16px;">-$${totalSavings.toFixed(2)}</span>`;
+                savingsDetails.appendChild(totalSavingDiv);
+                
+                discountSummary.classList.add('show');
+            } else {
+                discountSummary.classList.remove('show');
+            }
+            
+            // Set total price
+            totalPriceDiv.textContent = `$${totalPrice.toFixed(2)}`;
+            
+            // Update integration info based on platform
+            switch(currentPlatform) {
+                case 'groundspan':
+                    integrationDescription.textContent = 'Corporate premium quote ready for monthly billing and priority FastTrack dispatch.';
+                    bookingPrompt.innerHTML = '<strong>Corporate Service Quote Ready</strong>';
+                    break;
+                case 'gnet':
+                    const commission = totalPrice * TNTRateData.gnetCommission.standard;
+                    integrationDescription.textContent = `GNET affiliate commission: $${commission.toFixed(2)} (${Math.round(TNTRateData.gnetCommission.standard * 100)}%). Ready for partner submission.`;
+                    bookingPrompt.innerHTML = '<strong>Partner Network Quote Ready</strong>';
+                    break;
+                case 'corporate':
+                    integrationDescription.textContent = 'Corporate rate with volume discount applied. Net 30 billing terms available.';
+                    bookingPrompt.innerHTML = '<strong>Corporate Booking Available</strong>';
+                    break;
+                default:
+                    integrationDescription.textContent = 'Complete rate breakdown ready for booking confirmation.';
+                    bookingPrompt.innerHTML = '<strong>Ready to Book Your Transportation?</strong>';
+            }
+            
+            // Show results
+            resultsDiv.classList.add('show');
+            resultsDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        function createFastTrackReservation() {
+            const platform = getPlatformDisplayName();
+            const vehicleType = document.getElementById('vehicleType').value;
+            const serviceType = document.getElementById('serviceType').value;
+            const totalPrice = document.getElementById('totalPrice').textContent;
+            const vehicleData = TNTRateData.hourlyRates[vehicleType];
+            
+            // Generate reservation data
+            const reservationData = {
+                platform: currentPlatform,
+                platformName: platform,
+                vehicleType: vehicleData.name,
+                unitNumber: vehicleData.unitNo,
+                serviceType: serviceType,
+                totalAmount: totalPrice,
+                rateStructure: getRateStructureForFastTrack(),
+                billingType: getBillingTypeForPlatform(),
+                corporateClient: currentPlatform === 'groundspan' || currentPlatform === 'corporate',
+                priorityBooking: currentPlatform === 'groundspan',
+                commissionTracking: currentPlatform === 'gnet'
+            };
+            
+            alert(`FastTrack Invision Integration: Creating ${platform} reservation...\n\nReservation Details:\n• Vehicle: ${reservationData.vehicleType} ${reservationData.unitNumber}\n• Service: ${serviceType.charAt(0).toUpperCase() + serviceType.slice(1)}\n• Amount: ${totalPrice}\n• Billing: ${reservationData.billingType}\n• Platform: ${platform}\n\nDispatch Integration:\n• Direct system entry (bypassing portal)\n• Vehicle assignment with rate breakdown\n• Driver payment calculation included\n• Real-time tracking activation\n• ${reservationData.priorityBooking ? 'Priority scheduling enabled' : 'Standard scheduling'}\n\nReservation created successfully in FastTrack system!`);
+        }
+        
+        function getRateStructureForFastTrack() {
+            const serviceType = document.getElementById('serviceType').value;
+            const vehicleType = document.getElementById('vehicleType').value;
+            
+            if (currentPlatform === 'groundspan') {
+                return `Corporate Premium Rate: ${TNTRateData.groundspanRates[vehicleType].hourlyPremium}/hr (includes $10/hr premium)`;
+            } else if (serviceType === 'hourly') {
+                return `Standard Hourly: ${TNTRateData.hourlyRates[vehicleType].totalStandard}/hr`;
+            } else if (serviceType === 'point-to-point') {
+                return `Point-to-Point: ${TNTRateData.pointToPointRates[vehicleType].totalStandard} base`;
+            } else {
+                return 'Airport transfer rate';
+            }
+        }
+        
+        function getBillingTypeForPlatform() {
+            switch(currentPlatform) {
+                case 'groundspan': return 'Monthly Corporate Billing';
+                case 'corporate': return 'Net 30 Terms';
+                case 'gnet': return 'Partner Commission (12%)';
+                default: return 'Standard Billing';
+            }
+        }
+        
+        function exportToZohoCRM() {
+            const platform = getPlatformDisplayName();
+            alert(`Zoho CRM Integration: Exporting ${platform} lead...\n\nCreating CRM record with:\n• Complete rate breakdown\n• Service details and preferences\n• Platform-specific tags\n• Follow-up automation triggers\n• Commission tracking (if GNET)\n\nCustomer information and quote details will be automatically logged.`);
+        }
+        
+        // Update service options based on selection
+        function updateServiceOptions() {
+            const serviceType = document.getElementById('serviceType').value;
+            const hourlyOptions = document.getElementById('hourlyOptions');
+            const p2pOptions = document.getElementById('p2pOptions');
+            const airportOptions = document.getElementById('airportOptions');
+
+            if (serviceType === 'airport') {
+                hourlyOptions.style.display = 'none';
+                p2pOptions.style.display = 'none';
+                airportOptions.style.display = 'grid';
+                updateAirportOptions(); // Initialize airport options
+            } else if (serviceType === 'point-to-point') {
+                hourlyOptions.style.display = 'none';
+                p2pOptions.style.display = 'grid';
+                airportOptions.style.display = 'none';
+            } else {
+                hourlyOptions.style.display = 'grid';
+                p2pOptions.style.display = 'none';
+                airportOptions.style.display = 'none';
+            }
+        }
+
+        // Update airport options based on selected zone and vehicle
+        function updateAirportOptions() {
+            const vehicleType = document.getElementById('vehicleType').value;
+            const pickupZone = document.getElementById('pickupZone').value;
+            const airportSelect = document.getElementById('airportCode');
+            
+            if (!AirportZonePricing) return;
+            
+            // Get available airports for this zone and vehicle
+            const availableAirports = AirportZonePricing.getAvailableAirports(vehicleType, pickupZone);
+            
+            // Clear existing options
+            airportSelect.innerHTML = '';
+            
+            // Add available airports
+            availableAirports.forEach(airportCode => {
+                const airportName = AirportZonePricing.airports[airportCode];
+                if (airportName) {
+                    const option = document.createElement('option');
+                    option.value = airportCode;
+                    option.textContent = airportName;
+                    airportSelect.appendChild(option);
+                }
+            });
+            
+            // If no airports available, show message
+            if (availableAirports.length === 0) {
+                const option = document.createElement('option');
+                option.value = '';
+                option.textContent = 'No airports available from this zone';
+                option.disabled = true;
+                airportSelect.appendChild(option);
+            }
+        }
+
+        // Set default date to today
+        document.getElementById('serviceDate').valueAsDate = new Date();
+        
+        // Set default time to current hour + 2
+        const now = new Date();
+        now.setHours(now.getHours() + 2);
+        document.getElementById('serviceTime').value = now.toTimeString().slice(0, 5);
+        
+        // Initialize platform
+        updatePlatform();
+        updateForm();
+    </script>
+</body>
+</html>

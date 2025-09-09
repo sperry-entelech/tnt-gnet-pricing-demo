@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TNT Limousine - Capital One Transportation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #2c2c2c 0%, #1a1a1a 50%, #000000 100%);
+            color: white;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .corporate-badge {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(45deg, #DC2626 0%, #B91C1C 100%);
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            z-index: 1000;
+            color: white;
+            border: 2px solid #C0C0C0;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(220, 38, 38, 0.1);
+            backdrop-filter: blur(15px);
+            border-radius: 25px;
+            padding: 40px;
+            border: 2px solid rgba(192, 192, 192, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        
+        .logo-svg {
+            width: 300px;
+            height: 120px;
+        }
+        
+        .tnt-oval {
+            fill: url(#redGradient);
+            stroke: #C0C0C0;
+            stroke-width: 3;
+        }
+        
+        .tnt-text {
+            fill: white;
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            font-size: 48px;
+            text-anchor: middle;
+        }
+        
+        .limousine-script {
+            fill: white;
+            font-family: 'Brush Script MT', cursive;
+            font-size: 24px;
+            font-style: italic;
+            text-anchor: middle;
+        }
+
+        .corporate-info {
+            font-size: 1.2rem;
+            color: #C0C0C0;
+            font-weight: 500;
+            padding: 15px 25px;
+            background: linear-gradient(135deg, rgba(220, 38, 38, 0.1) 0%, rgba(185, 28, 28, 0.1) 100%);
+            border-radius: 15px;
+            border: 1px solid rgba(192, 192, 192, 0.3);
+            margin: 20px 0;
+        }
+
+        .service-section {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 35px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #DC2626;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        select, input {
+            padding: 15px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        select:focus, input:focus {
+            outline: none;
+            border-color: #DC2626;
+            box-shadow: 0 0 20px rgba(220, 38, 38, 0.2);
+        }
+
+        select option {
+            background: #1a1a2e;
+            color: white;
+            padding: 10px;
+        }
+
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .calculate-btn {
+            background: linear-gradient(135deg, #DC2626 0%, #B91C1C 100%);
+            color: white;
+            border: none;
+            padding: 20px 50px;
+            border-radius: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin: 25px 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 1px solid #C0C0C0;
+        }
+
+        .calculate-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(220, 38, 38, 0.4);
+        }
+
+        .results {
+            background: linear-gradient(135deg, rgba(220, 38, 38, 0.1) 0%, rgba(185, 28, 28, 0.1) 100%);
+            border: 2px solid #DC2626;
+            border-radius: 20px;
+            padding: 35px;
+            margin-top: 30px;
+            display: none;
+        }
+
+        .results.show {
+            display: block;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .quote-display {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .service-summary {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 25px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .summary-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #0066cc;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 2px solid #0066cc;
+            padding-bottom: 10px;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 14px;
+        }
+
+        .summary-item:last-child {
+            border-bottom: none;
+        }
+
+        .price-display {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 30px 25px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .rate-label {
+            font-size: 16px;
+            color: #0066cc;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .total-price {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #DC2626;
+            margin: 15px 0;
+            text-shadow: 0 0 20px rgba(220, 38, 38, 0.3);
+        }
+
+        .gratuity-note {
+            font-size: 12px;
+            opacity: 0.8;
+            color: #10b981;
+            margin-top: 10px;
+        }
+
+        .rate-details-toggle {
+            background: none;
+            border: 1px solid rgba(0, 102, 204, 0.5);
+            color: #0066cc;
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-size: 12px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .rate-details-toggle:hover {
+            background: rgba(0, 102, 204, 0.1);
+            border-color: #0066cc;
+        }
+
+        .rate-breakdown {
+            margin-top: 15px;
+            padding: 15px;
+            background: rgba(0, 102, 204, 0.05);
+            border-radius: 10px;
+            border: 1px solid rgba(0, 102, 204, 0.2);
+            display: none;
+        }
+
+        .rate-breakdown.show {
+            display: block;
+            animation: expandDown 0.3s ease-out;
+        }
+
+        @keyframes expandDown {
+            from { opacity: 0; max-height: 0; padding: 0 15px; }
+            to { opacity: 1; max-height: 200px; padding: 15px; }
+        }
+
+        .breakdown-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+            font-size: 13px;
+            border-bottom: 1px solid rgba(0, 102, 204, 0.1);
+        }
+
+        .breakdown-item:last-child {
+            border-bottom: none;
+            font-weight: bold;
+            margin-top: 5px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(0, 102, 204, 0.3);
+        }
+
+        .additional-costs {
+            background: rgba(255, 193, 7, 0.1);
+            border: 1px solid rgba(255, 193, 7, 0.3);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 15px;
+            font-size: 13px;
+        }
+
+        .additional-costs h5 {
+            color: #ffc107;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .contact-info {
+            text-align: center;
+            margin-top: 30px;
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .book-btn {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .book-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
+        }
+
+        .special-notice {
+            background: linear-gradient(135deg, rgba(255, 193, 7, 0.1) 0%, rgba(255, 152, 0, 0.1) 100%);
+            border: 1px solid #ffc107;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .zone-restriction {
+            background: rgba(220, 38, 38, 0.1);
+            border: 1px solid #DC2626;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .form-row, .quote-display {
+                grid-template-columns: 1fr;
+            }
+            .corporate-badge {
+                position: relative;
+                top: 0;
+                right: 0;
+                margin-bottom: 20px;
+                display: inline-block;
+            }
+            .total-price {
+                font-size: 2.2rem;
+            }
+            select, input {
+                font-size: 14px;
+                padding: 12px;
+            }
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="corporate-badge">Capital One Corporate Account</div>
+    
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                <svg class="logo-svg" viewBox="0 0 300 120">
+                    <defs>
+                        <radialGradient id="redGradient" cx="50%" cy="30%" r="70%">
+                            <stop offset="0%" stop-color="#FF4444" />
+                            <stop offset="50%" stop-color="#DC2626" />
+                            <stop offset="100%" stop-color="#B91C1C" />
+                        </radialGradient>
+                    </defs>
+                    <ellipse class="tnt-oval" cx="150" cy="45" rx="140" ry="35" />
+                    <text class="tnt-text" x="150" y="58">TNT</text>
+                    <text class="limousine-script" x="150" y="105">Limousine</text>
+                </svg>
+            </div>
+            <div class="corporate-info">
+                Executive Transportation Services for Capital One Associates
+            </div>
+        </div>
+
+
+        <div class="service-section">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="serviceType">Service Type</label>
+                    <select id="serviceType" onchange="updateServiceOptions()">
+                        <option value="hourly">Round Trip Service</option>
+                        <option value="airport">Airport Transfer</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="vehicleType">Vehicle Selection</label>
+                    <select id="vehicleType">
+                        <option value="sedan">Executive Sedan (Lincoln MKT/Aviator) - Up to 3 passengers</option>
+                        <option value="transit">Transit Van - Up to 15 passengers</option>
+                        <option value="executive-mini-bus">Executive Mini Bus - Up to 12 passengers</option>
+                        <option value="mini-bus-sofa">Mini Bus with Sofa Seating - Up to 10 passengers</option>
+                        <option value="stretch-limo">Stretch Limousine (Lincoln Continental) - Up to 8 passengers</option>
+                        <option value="sprinter-limo">Sprinter Limousine - Up to 10 passengers</option>
+                        <option value="limo-bus">Executive Limo Bus - Up to 18 passengers</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row" id="hourlyOptions">
+                <div class="form-group">
+                    <label for="hours">Duration</label>
+                    <select id="hours">
+                        <option value="3">3 Hours (Minimum)</option>
+                        <option value="4">4 Hours</option>
+                        <option value="5">5 Hours</option>
+                        <option value="6">6 Hours</option>
+                        <option value="8">8 Hours</option>
+                        <option value="10">10 Hours</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="passengers">Number of Passengers</label>
+                    <select id="passengers">
+                        <option value="1">1 Passenger</option>
+                        <option value="2">2 Passengers</option>
+                        <option value="3">3 Passengers</option>
+                        <option value="4">4 Passengers</option>
+                        <option value="5">5+ Passengers</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row" id="airportOptions" style="display: none;">
+                <div class="form-group">
+                    <label for="airportCode">Airport Destination</label>
+                    <select id="airportCode">
+                        <option value="national">Reagan National (DCA)</option>
+                        <option value="dulles">Washington Dulles (IAD)</option>
+                        <option value="bwi">Baltimore Washington (BWI)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="tripType">Service Type</label>
+                    <select id="tripType">
+                        <option value="one-way">One Way Transfer</option>
+                        <option value="round-trip">Round Trip Transfer</option>
+                    </select>
+                </div>
+            </div>
+
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="serviceDate">Service Date</label>
+                    <input type="date" id="serviceDate">
+                </div>
+                <div class="form-group">
+                    <label for="serviceTime">Pickup Time</label>
+                    <input type="time" id="serviceTime">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="pickupLocation">Pickup Location</label>
+                    <input type="text" id="pickupLocation" placeholder="Enter pickup address">
+                </div>
+                <div class="form-group">
+                    <label for="dropoffLocation">Destination</label>
+                    <input type="text" id="dropoffLocation" placeholder="Enter destination address">
+                </div>
+            </div>
+
+            <button class="calculate-btn" onclick="calculateCapitalOneRate()">
+                Get Corporate Rate Quote
+            </button>
+        </div>
+
+        <div class="results" id="results">
+            <h3 style="text-align: center; margin-bottom: 30px; color: #DC2626; font-size: 1.8rem;">
+                Your Corporate Transportation Quote
+            </h3>
+            
+            <div class="quote-display">
+                <div class="service-summary">
+                    <div class="summary-title">Service Details</div>
+                    <div id="serviceDetails"></div>
+                </div>
+                <div class="price-display">
+                    <div class="rate-label">Corporate Rate</div>
+                    <div class="total-price" id="totalPrice">$0.00</div>
+                    <div class="gratuity-note">*All-Inclusive Rate</div>
+                    <button class="rate-details-toggle" onclick="toggleRateDetails()">View Rate Details</button>
+                    <div class="rate-breakdown" id="rateBreakdown">
+                        <div id="breakdownItems"></div>
+                        <div class="additional-costs">
+                            <h5>Additional Costs (When Applicable):</h5>
+                            • Tolls: Pass-through cost<br>
+                            • Parking fees: Pass-through cost<br>
+                            • Wait time over 15 minutes: Included in corporate rate<br>
+                            • Route changes: No additional charge<br>
+                            • After-hours service: Included in corporate rate
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="contact-info">
+                <p style="font-size: 1.2rem; margin-bottom: 15px;">
+                    <strong>Ready to Book Your Corporate Transportation?</strong>
+                </p>
+                <button class="book-btn" onclick="bookCapitalOneService()">
+                    Confirm Booking
+                </button>
+                <button class="book-btn" style="background: linear-gradient(135deg, #0066cc 0%, #004499 100%);" onclick="contactForModifications()">
+                    Request Modifications
+                </button>
+                <p style="margin: 15px 0;">Direct Line: <strong>(804) 972-4550</strong></p>
+                <p style="margin-bottom: 15px;">Corporate Email: <strong>corporate@tntlimousine.com</strong></p>
+                <p style="font-size: 14px; opacity: 0.9;">
+                    Monthly billing • Priority scheduling • Dedicated account management
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Capital One Corporate Rate Data (original corporate rates)
+        const CapitalOneRates = {
+            hourly: {
+                'sedan': 110,
+                'transit': 147,
+                'executive-mini-bus': 152,
+                'mini-bus-sofa': 152,
+                'stretch-limo': 170,
+                'sprinter-limo': 170,
+                'limo-bus': 218
+            },
+            airport: {
+                'sedan': {
+                    national: 485,
+                    dulles: 495,
+                    bwi: 705
+                },
+                'transit': {
+                    national: 750,
+                    dulles: 760,
+                    bwi: 915
+                },
+                'executive-mini-bus': {
+                    national: 770,
+                    dulles: 780,
+                    bwi: 935
+                },
+                'stretch-limo': {
+                    national: 875,
+                    dulles: 885,
+                    bwi: 1090
+                },
+                'sprinter-limo': {
+                    national: 830,
+                    dulles: 845,
+                    bwi: 970
+                },
+                'limo-bus': {
+                    national: 1090,
+                    dulles: 1115,
+                    bwi: 1350
+                }
+            },
+            vehicleNames: {
+                'sedan': 'Executive Sedan (Lincoln MKT/Aviator)',
+                'transit': 'Transit Van',
+                'executive-mini-bus': 'Executive Mini Bus',
+                'mini-bus-sofa': 'Mini Bus with Sofa Seating',
+                'stretch-limo': 'Stretch Limousine (Lincoln Continental)',
+                'sprinter-limo': 'Sprinter Limousine',
+                'limo-bus': 'Executive Limo Bus'
+            }
+        };
+
+        function updateServiceOptions() {
+            const serviceType = document.getElementById('serviceType').value;
+            const hourlyOptions = document.getElementById('hourlyOptions');
+            const airportOptions = document.getElementById('airportOptions');
+
+            if (serviceType === 'airport') {
+                hourlyOptions.style.display = 'none';
+                airportOptions.style.display = 'grid';
+            } else {
+                hourlyOptions.style.display = 'grid';
+                airportOptions.style.display = 'none';
+            }
+        }
+
+        function calculateCapitalOneRate() {
+            const serviceType = document.getElementById('serviceType').value;
+            const vehicleType = document.getElementById('vehicleType').value;
+            
+            let totalPrice = 0;
+            let serviceDetails = [];
+            
+            serviceDetails.push({
+                item: 'Account',
+                value: 'Capital One Corporate'
+            });
+            
+            serviceDetails.push({
+                item: 'Vehicle',
+                value: CapitalOneRates.vehicleNames[vehicleType]
+            });
+            
+            if (serviceType === 'hourly') {
+                const hours = parseInt(document.getElementById('hours').value);
+                const actualHours = Math.max(hours, 3);
+                
+                serviceDetails.push({
+                    item: 'Service Type',
+                    value: `Round Trip Service (${actualHours} hours)`
+                });
+                
+                serviceDetails.push({
+                    item: 'Service Zone',
+                    value: 'McLean & Reston Area'
+                });
+                
+                totalPrice = CapitalOneRates.hourly[vehicleType] * actualHours;
+                
+            } else if (serviceType === 'airport') {
+                const airportCode = document.getElementById('airportCode').value;
+                const tripType = document.getElementById('tripType').value;
+                
+                const airportNames = {
+                    national: 'Reagan National (DCA)',
+                    dulles: 'Washington Dulles (IAD)',
+                    bwi: 'Baltimore Washington (BWI)'
+                };
+                
+                serviceDetails.push({
+                    item: 'Service Type',
+                    value: 'Airport Transfer'
+                });
+                
+                serviceDetails.push({
+                    item: 'Airport',
+                    value: airportNames[airportCode]
+                });
+                
+                serviceDetails.push({
+                    item: 'Trip Type',
+                    value: tripType === 'round-trip' ? 'Round Trip' : 'One Way'
+                });
+                
+                totalPrice = CapitalOneRates.airport[vehicleType][airportCode];
+                if (tripType === 'round-trip') {
+                    totalPrice *= 2; // Standard round trip calculation (2x one way)
+                }
+            }
+            
+            displayCapitalOneResults(serviceDetails, totalPrice, serviceType, vehicleType, hours || 1);
+        }
+        
+        function toggleRateDetails() {
+            const breakdown = document.getElementById('rateBreakdown');
+            const button = document.querySelector('.rate-details-toggle');
+            
+            if (breakdown.classList.contains('show')) {
+                breakdown.classList.remove('show');
+                button.textContent = 'View Rate Details';
+            } else {
+                breakdown.classList.add('show');
+                button.textContent = 'Hide Rate Details';
+            }
+        }
+        
+        function displayCapitalOneResults(serviceDetails, totalPrice, serviceType, vehicleType, hours) {
+            const resultsDiv = document.getElementById('results');
+            const serviceDetailsDiv = document.getElementById('serviceDetails');
+            const totalPriceDiv = document.getElementById('totalPrice');
+            
+            // Clear previous results
+            serviceDetailsDiv.innerHTML = '';
+            
+            // Add service details
+            serviceDetails.forEach(detail => {
+                const detailDiv = document.createElement('div');
+                detailDiv.className = 'summary-item';
+                detailDiv.innerHTML = `<span>${detail.item}:</span><span><strong>${detail.value}</strong></span>`;
+                serviceDetailsDiv.appendChild(detailDiv);
+            });
+            
+            // Add billing type
+            const billingDiv = document.createElement('div');
+            billingDiv.className = 'summary-item';
+            billingDiv.innerHTML = `<span>Billing:</span><span><strong>Monthly Corporate</strong></span>`;
+            serviceDetailsDiv.appendChild(billingDiv);
+            
+            // Set total price
+            totalPriceDiv.textContent = `$${totalPrice.toFixed(2)}`;
+            
+            // Add rate breakdown details
+            const breakdownItems = document.getElementById('breakdownItems');
+            breakdownItems.innerHTML = '';
+            
+            if (serviceType === 'hourly') {
+                const hourlyRate = CapitalOneRates.hourly[vehicleType];
+                const standardRate = vehicleType === 'sedan' ? 100 :      // Mercedes S-Class standard rate
+                                   vehicleType === 'suv' ? 137 :          // Lincoln/Cadillac standard rate 
+                                   vehicleType === 'van' ? 137 :          // Ford Transit standard rate
+                                   vehicleType === 'limousine' ? 160 : 100; // Town Car Stretch standard rate
+                
+                const breakdownDiv = document.createElement('div');
+                breakdownDiv.innerHTML = `
+                    <div class="breakdown-item"><span>Standard TNT Rate:</span><span>$${standardRate}/hour</span></div>
+                    <div class="breakdown-item"><span>Corporate Premium Service:</span><span>+$${hourlyRate - standardRate}/hour</span></div>
+                    <div class="breakdown-item"><span>Hours:</span><span>${hours}</span></div>
+                    <div class="breakdown-item"><span>Total Corporate Rate:</span><span>$${totalPrice.toFixed(2)}</span></div>
+                `;
+                breakdownItems.appendChild(breakdownDiv);
+            } else if (serviceType === 'airport') {
+                const breakdownDiv = document.createElement('div');
+                breakdownDiv.innerHTML = `
+                    <div class="breakdown-item"><span>Base Airport Rate:</span><span>$${(totalPrice * 0.75).toFixed(2)}</span></div>
+                    <div class="breakdown-item"><span>Driver Gratuity:</span><span>$${(totalPrice * 0.15).toFixed(2)}</span></div>
+                    <div class="breakdown-item"><span>Corporate Premium:</span><span>$${(totalPrice * 0.10).toFixed(2)}</span></div>
+                    <div class="breakdown-item"><span>Total Corporate Rate:</span><span>$${totalPrice.toFixed(2)}</span></div>
+                `;
+                breakdownItems.appendChild(breakdownDiv);
+            }
+            
+            // Show results
+            resultsDiv.classList.add('show');
+            resultsDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        function showBookingForm() {
+            const bookingForm = document.getElementById('bookingForm');
+            bookingForm.style.display = 'block';
+            bookingForm.scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        function validateBooking() {
+            const serviceType = document.getElementById('serviceType').value;
+            const vehicleType = document.getElementById('vehicleType').value;
+            const pickupLocation = document.getElementById('pickupLocation').value;
+            const dropoffLocation = document.getElementById('dropoffLocation').value;
+            const serviceDate = document.getElementById('serviceDate').value;
+            const serviceTime = document.getElementById('serviceTime').value;
+            
+            // Validate service area (McLean/Reston only)
+            const validAreas = ['mclean', 'reston', 'tysons', 'capital one'];
+            const pickupValid = validAreas.some(area => 
+                pickupLocation.toLowerCase().includes(area)
+            );
+            const dropoffValid = validAreas.some(area => 
+                dropoffLocation.toLowerCase().includes(area)
+            );
+            
+            if (!pickupValid && !dropoffValid) {
+                alert('Service Error: Both pickup and destination must be within McLean/Reston corporate service area.\\n\\nFor locations outside this area, please call (804) 972-4550 for special arrangements.');
+                return false;
+            }
+            
+            // Validate booking date (not in past)
+            const today = new Date();
+            const booking = new Date(serviceDate + 'T' + serviceTime);
+            if (booking <= today) {
+                alert('Booking Error: Service date and time must be in the future.');
+                return false;
+            }
+            
+            // Validate airport service for corporate
+            if (serviceType === 'airport') {
+                const airportCode = document.getElementById('airportCode').value;
+                if (!['national', 'dulles', 'bwi'].includes(airportCode)) {
+                    alert('Service Restriction: Capital One corporate rates apply to DCA, IAD, and BWI only.\\n\\nFor other airports, please call for custom pricing.');
+                    return false;
+                }
+            }
+            
+            return true;
+        }
+        
+        function confirmCapitalOneBooking() {
+            // Validate form fields
+            const contactName = document.getElementById('bookingContactName').value;
+            const email = document.getElementById('bookingEmail').value;
+            const phone = document.getElementById('bookingPhone').value;
+            const department = document.getElementById('bookingDepartment').value;
+            
+            if (!contactName || !email || !phone || !department) {
+                alert('Please fill in all required fields to complete your reservation.');
+                return;
+            }
+            
+            // Validate email is Capital One domain
+            if (!email.toLowerCase().includes('capitalone.com')) {
+                alert('Corporate Booking Error: Please use your Capital One corporate email address.');
+                return;
+            }
+            
+            if (!validateBooking()) {
+                return;
+            }
+            
+            const serviceType = document.getElementById('serviceType').value;
+            const vehicleType = document.getElementById('vehicleType').value;
+            const vehicleName = CapitalOneRates.vehicleNames[vehicleType];
+            const totalPrice = document.getElementById('totalPrice').textContent;
+            const serviceDate = document.getElementById('serviceDate').value;
+            const serviceTime = document.getElementById('serviceTime').value;
+            const pickupLocation = document.getElementById('pickupLocation').value;
+            const dropoffLocation = document.getElementById('dropoffLocation').value;
+            
+            // Generate booking reference
+            const bookingRef = 'CO-' + Date.now().toString().slice(-6);
+            
+            // Hide booking form and show confirmation
+            document.getElementById('bookingForm').style.display = 'none';
+            const confirmationMessage = document.getElementById('confirmationMessage');
+            const confirmationDetails = document.getElementById('confirmationDetails');
+            
+            confirmationDetails.innerHTML = `
+                <strong>Booking Reference:</strong> ${bookingRef}<br>
+                <strong>Service:</strong> ${serviceType === 'hourly' ? 'Hourly Charter' : 'Airport Transfer'}<br>
+                <strong>Vehicle:</strong> ${vehicleName}<br>
+                <strong>Date/Time:</strong> ${new Date(serviceDate).toLocaleDateString()} at ${serviceTime}<br>
+                <strong>Route:</strong> ${pickupLocation} → ${dropoffLocation}<br>
+                <strong>Total:</strong> ${totalPrice}<br>
+                <strong>Contact:</strong> ${contactName} (${department})
+            `;
+            
+            confirmationMessage.classList.add('show');
+            confirmationMessage.scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        function contactForModifications() {
+            alert('For service modifications or destinations outside McLean/Reston:\\n\\nCall: (804) 972-4550\\nEmail: corporate@tntlimousine.com\\n\\nOur dedicated Capital One account manager will assist with special requests, extended routes, or multi-city transportation needs.');
+        }
+        
+        // Set default date to today
+        document.getElementById('serviceDate').valueAsDate = new Date();
+        
+        // Set default time to current hour + 2
+        const now = new Date();
+        now.setHours(now.getHours() + 2);
+        document.getElementById('serviceTime').value = now.toTimeString().slice(0, 5);
+    </script>
+</body>
+</html>

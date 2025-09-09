@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TNT Limousine - Transportation Services</title>
+    <script>
+        // Automatic platform detection and redirect
+        window.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const pathname = window.location.pathname;
+            const hostname = window.location.hostname;
+            const referrer = document.referrer;
+            
+            let targetUrl = 'adaptive-pricing-tool.html';
+            let platform = 'retail'; // default
+            
+            // Platform detection logic
+            if (urlParams.has('partner') || urlParams.get('source') === 'gnet' || 
+                hostname.includes('gnet') || hostname.includes('partner') ||
+                pathname.includes('gnet') || pathname.includes('partner')) {
+                platform = 'gnet';
+                targetUrl += '?platform=gnet&source=partner';
+                
+            } else if (urlParams.has('corporate') || urlParams.get('client') === 'capitalone' ||
+                      hostname.includes('corporate') || hostname.includes('capitalone') ||
+                      pathname.includes('corporate') || pathname.includes('groundspan')) {
+                platform = 'groundspan';
+                targetUrl += '?platform=groundspan&client=capitalone';
+                
+            } else {
+                // Default retail with any existing parameters
+                const params = urlParams.toString();
+                if (params) {
+                    targetUrl += '?' + params;
+                }
+            }
+            
+            // Redirect to adaptive tool with platform detection
+            setTimeout(() => {
+                window.location.href = targetUrl;
+            }, 1000);
+        });
+    </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #2c2c2c 0%, #1a1a1a 50%, #000000 100%);
+            color: white;
+        }
+        .loading {
+            text-align: center;
+        }
+        .spinner {
+            border: 4px solid #333;
+            border-top: 4px solid #DC2626;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="loading">
+        <div class="spinner"></div>
+        <h2>Loading TNT Limousine Services...</h2>
+        <p>Detecting your platform and redirecting...</p>
+    </div>
+</body>
+</html>
