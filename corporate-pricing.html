@@ -29,7 +29,7 @@
             backdrop-filter: blur(15px);
             border-radius: 25px;
             padding: 40px;
-            border: 1px solid rgba(255, 215, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
         }
 
@@ -42,14 +42,14 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
         }
 
         .tnt-logo {
-            width: 200px;
+            width: 300px;
             height: auto;
-            margin-bottom: 15px;
-            filter: drop-shadow(0 4px 8px rgba(255, 215, 0, 0.3));
+            margin-bottom: 20px;
+            filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4));
         }
 
         .company-name {
@@ -284,30 +284,10 @@
     <div class="container">
         <div class="header">
             <div class="logo-container">
-                <svg class="tnt-logo" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
-                    <defs>
-                        <linearGradient id="redGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" style="stop-color:#ff4444;stop-opacity:1" />
-                            <stop offset="50%" style="stop-color:#dc2626;stop-opacity:1" />
-                            <stop offset="100%" style="stop-color:#b91c1c;stop-opacity:1" />
-                        </linearGradient>
-                        <linearGradient id="silverGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" style="stop-color:#f1f5f9;stop-opacity:1" />
-                            <stop offset="50%" style="stop-color:#cbd5e1;stop-opacity:1" />
-                            <stop offset="100%" style="stop-color:#94a3b8;stop-opacity:1" />
-                        </linearGradient>
-                    </defs>
-                    <ellipse cx="200" cy="80" rx="180" ry="65" fill="url(#redGradient)" stroke="url(#silverGradient)" stroke-width="8"/>
-                    <text x="200" y="95" font-family="Arial Black, sans-serif" font-size="48" font-weight="900" 
-                          text-anchor="middle" fill="white" stroke="url(#silverGradient)" stroke-width="1">TNT</text>
-                    <text x="200" y="130" font-family="Arial, sans-serif" font-size="24" font-style="italic" 
-                          text-anchor="middle" fill="white" opacity="0.95">Limousine</text>
-                </svg>
-                <div class="company-name">Executive Transportation Solutions</div>
-                <div class="corporate-badge">Premium Corporate Service</div>
+                <img src="tnt-logo-original.png" alt="TNT Limousine" class="tnt-logo">
             </div>
-            <div class="subtitle">Enterprise Pricing Platform</div>
-            <div class="partnership">Dedicated Account Management & Priority Booking</div>
+            <div class="subtitle">Live Pricing Calculator</div>
+            <div class="partnership">Real-Time Pricing & Instant Quotes</div>
         </div>
 
 

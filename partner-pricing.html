@@ -42,13 +42,13 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
         }
 
         .tnt-logo {
-            width: 200px;
+            width: 300px;
             height: auto;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             filter: drop-shadow(0 4px 8px rgba(102, 126, 234, 0.3));
         }
 
@@ -310,30 +310,10 @@
     <div class="container">
         <div class="header">
             <div class="logo-container">
-                <svg class="tnt-logo" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
-                    <defs>
-                        <linearGradient id="redGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" style="stop-color:#ff4444;stop-opacity:1" />
-                            <stop offset="50%" style="stop-color:#dc2626;stop-opacity:1" />
-                            <stop offset="100%" style="stop-color:#b91c1c;stop-opacity:1" />
-                        </linearGradient>
-                        <linearGradient id="silverGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" style="stop-color:#f1f5f9;stop-opacity:1" />
-                            <stop offset="50%" style="stop-color:#cbd5e1;stop-opacity:1" />
-                            <stop offset="100%" style="stop-color:#94a3b8;stop-opacity:1" />
-                        </linearGradient>
-                    </defs>
-                    <ellipse cx="200" cy="80" rx="180" ry="65" fill="url(#redGradient)" stroke="url(#silverGradient)" stroke-width="8"/>
-                    <text x="200" y="95" font-family="Arial Black, sans-serif" font-size="48" font-weight="900" 
-                          text-anchor="middle" fill="white" stroke="url(#silverGradient)" stroke-width="1">TNT</text>
-                    <text x="200" y="130" font-family="Arial, sans-serif" font-size="24" font-style="italic" 
-                          text-anchor="middle" fill="white" opacity="0.95">Limousine</text>
-                </svg>
-                <div class="company-name">Partner Network Transportation</div>
-                <div class="partner-badge">GNET Partner Platform</div>
+                <img src="tnt-logo-original.png" alt="TNT Limousine" class="tnt-logo">
             </div>
-            <div class="subtitle">Partnership Pricing Portal</div>
-            <div class="partnership">Real-Time Partner Pricing & Commission Tracking</div>
+            <div class="subtitle">Live Pricing Calculator</div>
+            <div class="partnership">Real-Time Pricing & Instant Quotes</div>
         </div>
 
 
@@ -388,13 +368,6 @@
             </button>
         </div>
 
-        <div class="commission-notice" id="commissionNotice">
-            <h4 style="color: #667eea;">Commission Information</h4>
-            <p style="font-size: 14px; opacity: 0.9;">
-                Partner commission rates: 12-15% based on service type and volume.
-                Commission calculated on net service amount excluding taxes and fees.
-            </p>
-        </div>
 
         <div class="results" id="results">
             <h3>Partner Network Quote</h3>
@@ -415,7 +388,6 @@
         function calculatePrice() {
             // Partner calculation with commission tracking
             document.getElementById('results').classList.add('show');
-            document.getElementById('commissionNotice').classList.add('show');
         }
 
         function updateForm() {
