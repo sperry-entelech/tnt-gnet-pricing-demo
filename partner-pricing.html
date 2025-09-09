@@ -29,7 +29,7 @@
             backdrop-filter: blur(15px);
             border-radius: 25px;
             padding: 40px;
-            border: 1px solid rgba(102, 126, 234, 0.3);
+            border: 1px solid rgba(220, 38, 38, 0.3);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
         }
 
@@ -73,10 +73,10 @@
         .partnership {
             font-family: 'Inter', sans-serif;
             font-size: 0.9rem;
-            color: #667eea;
+            color: #DC2626;
             font-weight: 500;
-            background: rgba(102, 126, 234, 0.1);
-            border: 1px solid rgba(102, 126, 234, 0.3);
+            background: rgba(220, 38, 38, 0.1);
+            border: 1px solid rgba(220, 38, 38, 0.3);
             border-radius: 15px;
             padding: 12px 25px;
             margin: 20px 0;
@@ -84,7 +84,7 @@
         }
 
         .partner-badge {
-            background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(45deg, #DC2626 0%, #B91C1C 100%);
             color: white;
             padding: 8px 20px;
             border-radius: 20px;
@@ -96,20 +96,20 @@
 
         .partner-benefits {
             background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
-            border: 1px solid #667eea;
+            border: 1px solid #DC2626;
             border-radius: 15px;
             padding: 20px;
             margin: 20px 0;
         }
 
         .partner-benefits h4 {
-            color: #667eea;
+            color: #DC2626;
             margin-bottom: 10px;
         }
 
         .commission-notice {
-            background: rgba(102, 126, 234, 0.1);
-            border: 1px solid #667eea;
+            background: rgba(220, 38, 38, 0.1);
+            border: 1px solid #DC2626;
             border-radius: 15px;
             padding: 15px;
             margin: 15px 0;
@@ -145,7 +145,7 @@
             margin-bottom: 10px;
             font-family: 'Inter', sans-serif;
             font-weight: 600;
-            color: #667eea;
+            color: #DC2626;
             font-size: 13px;
             text-transform: uppercase;
             letter-spacing: 0.8px;
@@ -153,15 +153,17 @@
 
         select, input, textarea {
             padding: 16px;
-            border: 2px solid rgba(102, 126, 234, 0.3);
+            border: 2px solid rgba(220, 38, 38, 0.3);
             background: rgba(255, 255, 255, 0.15);
             color: white;
             border-radius: 12px;
             font-family: 'Inter', sans-serif;
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 400;
-            line-height: 1.4;
+            line-height: 1.2;
             transition: all 0.3s ease;
+            width: 100%;
+            box-sizing: border-box;
         }
 
         input[type="date"], input[type="time"] {
@@ -178,8 +180,8 @@
 
         select:focus, input:focus {
             outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 20px rgba(102, 126, 234, 0.2);
+            border-color: #DC2626;
+            box-shadow: 0 0 20px rgba(220, 38, 38, 0.2);
         }
 
         select option {
@@ -193,7 +195,7 @@
         }
 
         .calculate-btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #5b21b6 100%);
+            background: linear-gradient(135deg, #DC2626 0%, #B91C1C 50%, #991B1B 100%);
             color: white;
             border: none;
             padding: 18px 50px;
@@ -209,7 +211,7 @@
 
         .calculate-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 15px 35px rgba(220, 38, 38, 0.4);
         }
 
         .results {
@@ -234,7 +236,7 @@
         .results h3 {
             text-align: center;
             margin-bottom: 25px;
-            color: #667eea;
+            color: #DC2626;
             font-size: 1.8rem;
         }
 
@@ -255,14 +257,14 @@
         }
 
         .price-item.commission {
-            background: rgba(102, 126, 234, 0.1);
-            border-color: #667eea;
+            background: rgba(220, 38, 38, 0.1);
+            border-color: #DC2626;
         }
 
         .total-price {
             font-size: 2.2rem;
             font-weight: 700;
-            color: #667eea;
+            color: #DC2626;
             text-align: center;
             margin: 25px 0;
             text-shadow: 0 0 20px rgba(102, 126, 234, 0.3);
@@ -277,7 +279,7 @@
         .export-btn {
             flex: 1;
             background: rgba(102, 126, 234, 0.2);
-            border: 1px solid #667eea;
+            border: 1px solid #DC2626;
             color: white;
             padding: 12px;
             border-radius: 10px;
@@ -310,10 +312,10 @@
             <div class="logo-container">
                 <svg class="tnt-logo" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
                     <defs>
-                        <linearGradient id="partnerGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
-                            <stop offset="50%" style="stop-color:#764ba2;stop-opacity:1" />
-                            <stop offset="100%" style="stop-color:#5b21b6;stop-opacity:1" />
+                        <linearGradient id="redGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#ff4444;stop-opacity:1" />
+                            <stop offset="50%" style="stop-color:#dc2626;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#b91c1c;stop-opacity:1" />
                         </linearGradient>
                         <linearGradient id="silverGradient" x1="0%" y1="0%" x2="100%" y2="100%">
                             <stop offset="0%" style="stop-color:#f1f5f9;stop-opacity:1" />
@@ -321,7 +323,7 @@
                             <stop offset="100%" style="stop-color:#94a3b8;stop-opacity:1" />
                         </linearGradient>
                     </defs>
-                    <ellipse cx="200" cy="80" rx="180" ry="65" fill="url(#partnerGradient)" stroke="url(#silverGradient)" stroke-width="8"/>
+                    <ellipse cx="200" cy="80" rx="180" ry="65" fill="url(#redGradient)" stroke="url(#silverGradient)" stroke-width="8"/>
                     <text x="200" y="95" font-family="Arial Black, sans-serif" font-size="48" font-weight="900" 
                           text-anchor="middle" fill="white" stroke="url(#silverGradient)" stroke-width="1">TNT</text>
                     <text x="200" y="130" font-family="Arial, sans-serif" font-size="24" font-style="italic" 
@@ -334,15 +336,6 @@
             <div class="partnership">Real-Time Partner Pricing & Commission Tracking</div>
         </div>
 
-        <div class="partner-benefits">
-            <h4>Partner Network Benefits</h4>
-            <p style="font-size: 14px; opacity: 0.9;">
-                • Competitive partner rates with transparent pricing<br>
-                • Real-time availability and instant booking confirmation<br>
-                • Commission tracking and automated reporting<br>
-                • Direct integration with TNT dispatch systems
-            </p>
-        </div>
 
         <div class="form-section">
             <div class="form-row">
@@ -414,13 +407,6 @@
                 <button class="export-btn" onclick="createBooking()">Create Booking</button>
             </div>
 
-            <div class="partner-benefits">
-                <h4>Service Features</h4>
-                <p style="font-size: 14px; opacity: 0.9;">
-                    Professional chauffeur, real-time tracking, 24/7 dispatch support, 
-                    and seamless partner integration for commission tracking.
-                </p>
-            </div>
         </div>
     </div>
 

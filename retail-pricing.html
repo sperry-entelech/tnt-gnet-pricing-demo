@@ -84,7 +84,7 @@
         }
 
         .retail-badge {
-            background: linear-gradient(45deg, #10b981 0%, #059669 100%);
+            background: linear-gradient(45deg, #DC2626 0%, #B91C1C 100%);
             color: white;
             padding: 8px 20px;
             border-radius: 20px;
@@ -131,10 +131,12 @@
             color: white;
             border-radius: 12px;
             font-family: 'Inter', sans-serif;
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 400;
-            line-height: 1.4;
+            line-height: 1.2;
             transition: all 0.3s ease;
+            width: 100%;
+            box-sizing: border-box;
         }
 
         input[type="date"], input[type="time"] {
@@ -236,18 +238,6 @@
             text-shadow: 0 0 20px rgba(220, 38, 38, 0.3);
         }
 
-        .retail-features {
-            background: rgba(16, 185, 129, 0.1);
-            border: 1px solid #10b981;
-            border-radius: 15px;
-            padding: 20px;
-            margin: 20px 0;
-        }
-
-        .retail-features h4 {
-            color: #10b981;
-            margin-bottom: 10px;
-        }
 
         @media (max-width: 768px) {
             .form-row {
@@ -290,15 +280,6 @@
             <div class="partnership">Real-Time Pricing & Instant Quotes</div>
         </div>
 
-        <div class="retail-features">
-            <h4>Retail Customer Benefits</h4>
-            <p style="font-size: 14px; opacity: 0.9;">
-                • Full transparent pricing with detailed breakdowns<br>
-                • Weekend and advance booking discounts<br>
-                • Promotional rates and seasonal specials<br>
-                • Complete service area coverage
-            </p>
-        </div>
 
         <div class="form-section">
             <!-- Form content will go here - same as comprehensive engine but retail-focused -->
@@ -356,14 +337,6 @@
             <h3>Detailed Price Breakdown</h3>
             <div class="price-breakdown" id="priceBreakdown"></div>
             <div class="total-price" id="totalPrice">$0.00</div>
-            
-            <div class="retail-features">
-                <h4>What's Included</h4>
-                <p style="font-size: 14px; opacity: 0.9;">
-                    Professional chauffeur, fuel, insurance, gratuity, and all taxes. 
-                    Free Wi-Fi, bottled water, and climate control included.
-                </p>
-            </div>
         </div>
     </div>
 
