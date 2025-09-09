@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TNT Limousine - Partner Network Pricing</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #2a2a2a 100%);
+            color: white;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border-radius: 25px;
+            padding: 40px;
+            border: 1px solid rgba(102, 126, 234, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .logo-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .tnt-logo {
+            width: 200px;
+            height: auto;
+            margin-bottom: 15px;
+            filter: drop-shadow(0 4px 8px rgba(102, 126, 234, 0.3));
+        }
+
+        .company-name {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        .subtitle {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 15px;
+            letter-spacing: 0.8px;
+        }
+
+        .partnership {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            color: #667eea;
+            font-weight: 500;
+            background: rgba(102, 126, 234, 0.1);
+            border: 1px solid rgba(102, 126, 234, 0.3);
+            border-radius: 15px;
+            padding: 12px 25px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .partner-badge {
+            background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        .partner-benefits {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            border: 1px solid #667eea;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .partner-benefits h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .commission-notice {
+            background: rgba(102, 126, 234, 0.1);
+            border: 1px solid #667eea;
+            border-radius: 15px;
+            padding: 15px;
+            margin: 15px 0;
+            text-align: center;
+            display: none;
+        }
+
+        .commission-notice.show {
+            display: block;
+        }
+
+        .form-section {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 35px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(102, 126, 234, 0.1);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: 10px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            color: #667eea;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+        select, input, textarea {
+            padding: 16px;
+            border: 2px solid rgba(102, 126, 234, 0.3);
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border-radius: 12px;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            font-weight: 400;
+            line-height: 1.4;
+            transition: all 0.3s ease;
+        }
+
+        input[type="date"], input[type="time"] {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            color-scheme: dark;
+        }
+
+        input[type="date"]::-webkit-calendar-picker-indicator,
+        input[type="time"]::-webkit-calendar-picker-indicator {
+            filter: invert(1);
+            cursor: pointer;
+        }
+
+        select:focus, input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 20px rgba(102, 126, 234, 0.2);
+        }
+
+        select option {
+            background: #1a1a1a;
+            color: white;
+        }
+
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 400;
+        }
+
+        .calculate-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #5b21b6 100%);
+            color: white;
+            border: none;
+            padding: 18px 50px;
+            border-radius: 15px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin: 25px 0;
+            letter-spacing: 1px;
+        }
+
+        .calculate-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
+        }
+
+        .results {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            border: 2px solid #667eea;
+            border-radius: 20px;
+            padding: 40px;
+            margin-top: 30px;
+            display: none;
+        }
+
+        .results.show {
+            display: block;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .results h3 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #667eea;
+            font-size: 1.8rem;
+        }
+
+        .price-breakdown {
+            display: grid;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .price-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            border: 1px solid rgba(102, 126, 234, 0.1);
+        }
+
+        .price-item.commission {
+            background: rgba(102, 126, 234, 0.1);
+            border-color: #667eea;
+        }
+
+        .total-price {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #667eea;
+            text-align: center;
+            margin: 25px 0;
+            text-shadow: 0 0 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .export-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .export-btn {
+            flex: 1;
+            background: rgba(102, 126, 234, 0.2);
+            border: 1px solid #667eea;
+            color: white;
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .export-btn:hover {
+            background: rgba(102, 126, 234, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            .container {
+                padding: 25px;
+                margin: 10px;
+            }
+            .export-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo-container">
+                <svg class="tnt-logo" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="partnerGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+                            <stop offset="50%" style="stop-color:#764ba2;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#5b21b6;stop-opacity:1" />
+                        </linearGradient>
+                        <linearGradient id="silverGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#f1f5f9;stop-opacity:1" />
+                            <stop offset="50%" style="stop-color:#cbd5e1;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#94a3b8;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    <ellipse cx="200" cy="80" rx="180" ry="65" fill="url(#partnerGradient)" stroke="url(#silverGradient)" stroke-width="8"/>
+                    <text x="200" y="95" font-family="Arial Black, sans-serif" font-size="48" font-weight="900" 
+                          text-anchor="middle" fill="white" stroke="url(#silverGradient)" stroke-width="1">TNT</text>
+                    <text x="200" y="130" font-family="Arial, sans-serif" font-size="24" font-style="italic" 
+                          text-anchor="middle" fill="white" opacity="0.95">Limousine</text>
+                </svg>
+                <div class="company-name">Partner Network Transportation</div>
+                <div class="partner-badge">GNET Partner Platform</div>
+            </div>
+            <div class="subtitle">Partnership Pricing Portal</div>
+            <div class="partnership">Real-Time Partner Pricing & Commission Tracking</div>
+        </div>
+
+        <div class="partner-benefits">
+            <h4>Partner Network Benefits</h4>
+            <p style="font-size: 14px; opacity: 0.9;">
+                • Competitive partner rates with transparent pricing<br>
+                • Real-time availability and instant booking confirmation<br>
+                • Commission tracking and automated reporting<br>
+                • Direct integration with TNT dispatch systems
+            </p>
+        </div>
+
+        <div class="form-section">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="serviceType">Service Type</label>
+                    <select id="serviceType" onchange="updateForm()">
+                        <option value="hourly">Hourly Service (3-hour minimum)</option>
+                        <option value="point-to-point">Point to Point Transfer</option>
+                        <option value="airport">Airport Transfer</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="vehicleType">Vehicle Type</label>
+                    <select id="vehicleType">
+                        <option value="sedan">Executive Sedan (Lincoln MKT/Aviator) - Up to 3 passengers</option>
+                        <option value="transit">Transit Van - Up to 15 passengers</option>
+                        <option value="executive-mini-bus">Executive Mini Bus (Unit 09) - Up to 12 passengers</option>
+                        <option value="mini-bus-sofa">Mini Bus with Sofa Seating (Unit 01) - Up to 10 passengers</option>
+                        <option value="stretch-limo">Stretch Limousine (Lincoln Continental, Unit 03) - Up to 8 passengers</option>
+                        <option value="sprinter-limo">Sprinter Limousine (Unit 02) - Up to 10 passengers</option>
+                        <option value="limo-bus">Executive Limo Bus (Unit 10) - Up to 18 passengers</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="serviceDate">Service Date</label>
+                    <input type="date" id="serviceDate">
+                </div>
+                <div class="form-group">
+                    <label for="serviceTime">Service Time</label>
+                    <input type="time" id="serviceTime">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="pickupLocation">Pickup Location</label>
+                    <input type="text" id="pickupLocation" placeholder="e.g., Client Address, Hotel">
+                </div>
+                <div class="form-group">
+                    <label for="dropoffLocation">Destination</label>
+                    <input type="text" id="dropoffLocation" placeholder="e.g., Meeting Location, Airport">
+                </div>
+            </div>
+
+            <button class="calculate-btn" onclick="calculatePrice()">
+                Generate Partner Quote
+            </button>
+        </div>
+
+        <div class="commission-notice" id="commissionNotice">
+            <h4 style="color: #667eea;">Commission Information</h4>
+            <p style="font-size: 14px; opacity: 0.9;">
+                Partner commission rates: 12-15% based on service type and volume.
+                Commission calculated on net service amount excluding taxes and fees.
+            </p>
+        </div>
+
+        <div class="results" id="results">
+            <h3>Partner Network Quote</h3>
+            <div class="price-breakdown" id="priceBreakdown"></div>
+            <div class="total-price" id="totalPrice">$0.00</div>
+            
+            <div class="export-actions">
+                <button class="export-btn" onclick="exportToPartner()">Export to Partner System</button>
+                <button class="export-btn" onclick="sendToCRM()">Send to CRM</button>
+                <button class="export-btn" onclick="createBooking()">Create Booking</button>
+            </div>
+
+            <div class="partner-benefits">
+                <h4>Service Features</h4>
+                <p style="font-size: 14px; opacity: 0.9;">
+                    Professional chauffeur, real-time tracking, 24/7 dispatch support, 
+                    and seamless partner integration for commission tracking.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Partner-specific pricing logic here
+        function calculatePrice() {
+            // Partner calculation with commission tracking
+            document.getElementById('results').classList.add('show');
+            document.getElementById('commissionNotice').classList.add('show');
+        }
+
+        function updateForm() {
+            // Form update logic
+        }
+
+        function exportToPartner() {
+            alert('Exporting quote to partner network system...');
+        }
+
+        function sendToCRM() {
+            alert('Sending lead information to CRM system...');
+        }
+
+        function createBooking() {
+            alert('Creating booking in TNT dispatch system...');
+        }
+    </script>
+</body>
+</html>

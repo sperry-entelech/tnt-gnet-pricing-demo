@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TNT Limousine - Corporate Transportation Solutions</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #2a2a2a 100%);
+            color: white;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border-radius: 25px;
+            padding: 40px;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .logo-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .tnt-logo {
+            width: 200px;
+            height: auto;
+            margin-bottom: 15px;
+            filter: drop-shadow(0 4px 8px rgba(255, 215, 0, 0.3));
+        }
+
+        .company-name {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        .subtitle {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 15px;
+            letter-spacing: 0.8px;
+        }
+
+        .partnership {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            color: #fbbf24;
+            font-weight: 500;
+            background: rgba(251, 191, 36, 0.1);
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            border-radius: 15px;
+            padding: 12px 25px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .corporate-badge {
+            background: linear-gradient(45deg, #fbbf24 0%, #f59e0b 100%);
+            color: #1a1a1a;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        .premium-notice {
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.1) 0%, rgba(245, 158, 11, 0.1) 100%);
+            border: 1px solid #fbbf24;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .premium-notice h4 {
+            color: #fbbf24;
+            margin-bottom: 10px;
+        }
+
+        .form-section {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 35px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(251, 191, 36, 0.1);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: 10px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            color: #fbbf24;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+        select, input, textarea {
+            padding: 16px;
+            border: 2px solid rgba(251, 191, 36, 0.3);
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border-radius: 12px;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            font-weight: 400;
+            line-height: 1.4;
+            transition: all 0.3s ease;
+        }
+
+        input[type="date"], input[type="time"] {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            color-scheme: dark;
+        }
+
+        input[type="date"]::-webkit-calendar-picker-indicator,
+        input[type="time"]::-webkit-calendar-picker-indicator {
+            filter: invert(1);
+            cursor: pointer;
+        }
+
+        select:focus, input:focus {
+            outline: none;
+            border-color: #fbbf24;
+            box-shadow: 0 0 20px rgba(251, 191, 36, 0.2);
+        }
+
+        select option {
+            background: #1a1a1a;
+            color: white;
+        }
+
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 400;
+        }
+
+        .calculate-btn {
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%);
+            color: #1a1a1a;
+            border: none;
+            padding: 18px 50px;
+            border-radius: 15px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin: 25px 0;
+            letter-spacing: 1px;
+        }
+
+        .calculate-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(251, 191, 36, 0.4);
+        }
+
+        .results {
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.1) 0%, rgba(245, 158, 11, 0.1) 100%);
+            border: 2px solid #fbbf24;
+            border-radius: 20px;
+            padding: 40px;
+            margin-top: 30px;
+            display: none;
+        }
+
+        .results.show {
+            display: block;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .results h3 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #fbbf24;
+            font-size: 1.8rem;
+        }
+
+        .price-breakdown {
+            display: grid;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .price-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            border: 1px solid rgba(251, 191, 36, 0.1);
+        }
+
+        .price-item.premium {
+            background: rgba(251, 191, 36, 0.1);
+            border-color: #fbbf24;
+        }
+
+        .total-price {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #fbbf24;
+            text-align: center;
+            margin: 25px 0;
+            text-shadow: 0 0 20px rgba(251, 191, 36, 0.3);
+        }
+
+        .corporate-features {
+            background: rgba(251, 191, 36, 0.1);
+            border: 1px solid #fbbf24;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .corporate-features h4 {
+            color: #fbbf24;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            .container {
+                padding: 25px;
+                margin: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo-container">
+                <svg class="tnt-logo" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#fbbf24;stop-opacity:1" />
+                            <stop offset="50%" style="stop-color:#f59e0b;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#d97706;stop-opacity:1" />
+                        </linearGradient>
+                        <linearGradient id="silverGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#f1f5f9;stop-opacity:1" />
+                            <stop offset="50%" style="stop-color:#cbd5e1;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#94a3b8;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    <ellipse cx="200" cy="80" rx="180" ry="65" fill="url(#goldGradient)" stroke="url(#silverGradient)" stroke-width="8"/>
+                    <text x="200" y="95" font-family="Arial Black, sans-serif" font-size="48" font-weight="900" 
+                          text-anchor="middle" fill="white" stroke="url(#silverGradient)" stroke-width="1">TNT</text>
+                    <text x="200" y="130" font-family="Arial, sans-serif" font-size="24" font-style="italic" 
+                          text-anchor="middle" fill="white" opacity="0.95">Limousine</text>
+                </svg>
+                <div class="company-name">Executive Transportation Solutions</div>
+                <div class="corporate-badge">Premium Corporate Service</div>
+            </div>
+            <div class="subtitle">Enterprise Pricing Platform</div>
+            <div class="partnership">Dedicated Account Management & Priority Booking</div>
+        </div>
+
+        <div class="premium-notice">
+            <h4>Corporate Premium Service Features</h4>
+            <p style="font-size: 14px; opacity: 0.9;">
+                • Dedicated account management and priority booking<br>
+                • Enhanced vehicle maintenance and presentation standards<br>
+                • Corporate billing and monthly invoicing available<br>
+                • Premium rates include executive-level service standards
+            </p>
+        </div>
+
+        <div class="form-section">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="serviceType">Service Type</label>
+                    <select id="serviceType" onchange="updateForm()">
+                        <option value="hourly">Executive Hourly Service (3-hour minimum)</option>
+                        <option value="point-to-point">Executive Point to Point</option>
+                        <option value="airport">Corporate Airport Transfer</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="vehicleType">Vehicle Type</label>
+                    <select id="vehicleType">
+                        <option value="sedan">Executive Sedan (Lincoln MKT/Aviator) - Up to 3 passengers</option>
+                        <option value="transit">Executive Transit Van - Up to 15 passengers</option>
+                        <option value="executive-mini-bus">Executive Mini Bus (Unit 09) - Up to 12 passengers</option>
+                        <option value="mini-bus-sofa">Mini Bus with Premium Seating (Unit 01) - Up to 10 passengers</option>
+                        <option value="stretch-limo">Stretch Limousine (Lincoln Continental, Unit 03) - Up to 8 passengers</option>
+                        <option value="sprinter-limo">Sprinter Limousine (Unit 02) - Up to 10 passengers</option>
+                        <option value="limo-bus">Executive Limo Bus (Unit 10) - Up to 18 passengers</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="serviceDate">Service Date</label>
+                    <input type="date" id="serviceDate">
+                </div>
+                <div class="form-group">
+                    <label for="serviceTime">Service Time</label>
+                    <input type="time" id="serviceTime">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="pickupLocation">Pickup Location</label>
+                    <input type="text" id="pickupLocation" placeholder="e.g., Corporate Office, Downtown Richmond">
+                </div>
+                <div class="form-group">
+                    <label for="dropoffLocation">Destination</label>
+                    <input type="text" id="dropoffLocation" placeholder="e.g., Airport, Meeting Venue">
+                </div>
+            </div>
+
+            <button class="calculate-btn" onclick="calculatePrice()">
+                Get Corporate Quote
+            </button>
+        </div>
+
+        <div class="results" id="results">
+            <h3>Corporate Service Quote</h3>
+            <div class="price-breakdown" id="priceBreakdown"></div>
+            <div class="total-price" id="totalPrice">$0.00</div>
+            
+            <div class="corporate-features">
+                <h4>Executive Service Includes</h4>
+                <p style="font-size: 14px; opacity: 0.9;">
+                    Professional executive chauffeur, premium vehicle presentation, 
+                    priority scheduling, corporate billing options, and dedicated account support.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Corporate-specific pricing logic here
+        function calculatePrice() {
+            // Corporate calculation with premium rates
+            document.getElementById('results').classList.add('show');
+        }
+
+        function updateForm() {
+            // Form update logic
+        }
+    </script>
+</body>
+</html>
